@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,7 +19,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "react": ["./node_modules/@types/react"],
+      "@/components/*": ["src/components/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/styles/*": ["src/app/styles/*"],
+      "@/app/*": ["src/app/*"],
+      "@/supabase/*": ["src/lib/supabase/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

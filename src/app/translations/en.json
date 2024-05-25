@@ -1,0 +1,15 @@
+{
+  "language": "English",
+  "landing": {
+    "metadata": {
+      "title": "Portfolio",
+      "description": "Full Stack Web Developer"
+    }
+  },
+  "projects": {
+    "introduction": {
+      "heading": "Text",
+      "description": "Description"
+    }
+  }
+}

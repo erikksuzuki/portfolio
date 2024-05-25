@@ -1,0 +1,15 @@
+{
+  "language": "Japanese",
+  "landing": {
+    "metadata": {
+      "title": "ポートフォリオ",
+      "description": "Full Stack Web Developer"
+    }
+  },
+  "projects": {
+    "introduction": {
+      "heading": "Text",
+      "description": "Description"
+    }
+  }
+}
