@@ -1,9 +1,6 @@
 import BitriaAccountCard from '@/components/BitriaAccountCard'
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
 
-import { useRef } from 'react'
-import { gsap } from 'gsap'
-
 // https://www.youtube.com/watch?v=PeFqGrEHnp0
 
 export default function Home() {
