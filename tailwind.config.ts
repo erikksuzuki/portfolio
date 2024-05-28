@@ -13,6 +13,8 @@ module.exports = {
         emoji: ['var(--font-emoji)'],
         'real-nova': ['var(--font-ibarra-real-nova)'],
         'unica-one': ['var(--font-unica-one)'],
+        roboto: ['var(--font-roboto)'],
+        'open-sans': ['var(--font-open-sans)'],
         'noto-thai': ['var(--font-noto-sans-thai)'],
         'noto-jp': ['var(--font-noto-sans-jp)'],
         'sawabi-jp': ['var(--font-sawabi-jp)'],

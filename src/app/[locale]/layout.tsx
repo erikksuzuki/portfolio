@@ -11,6 +11,8 @@ import {
   Space_Grotesk,
   Exo,
   Noto_Emoji,
+  Roboto,
+  Open_Sans,
 } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
@@ -91,6 +93,20 @@ const exo = Exo({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
+const roboto = Roboto({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
+  weight: ['100', '300', '400', '500', '700', '900'],
+})
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-open-sans',
+  weight: ['300', '400', '500', '600', '700', '800'],
+})
+
 const emoji = Noto_Emoji({
   subsets: [],
   display: 'swap',
@@ -118,11 +134,13 @@ const RootLayout = async ({
           spaceGrotesk.variable,
           exo.variable,
           emoji.variable,
+          roboto.variable,
+          openSans.variable,
           'font-space'
         )}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <main className="font-exo">{children}</main>
         </NextIntlClientProvider>
       </body>
     </html>
