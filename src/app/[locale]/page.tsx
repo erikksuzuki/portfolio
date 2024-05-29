@@ -1,11 +1,13 @@
 import BitriaAccountCard from '@/components/BitriaAccountCard'
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
+import WorkGemini from '@/components/WorkGemini'
+import WorkFreeport from '@/components/WorkFreeport'
 
 // https://www.youtube.com/watch?v=PeFqGrEHnp0
 
 export default function Home() {
   return (
-    <main className="py-24 px-8 w-full mx-auto max-w-[1280px] border border-white">
+    <main className="py-24 px-8 w-full mx-auto max-w-[1024px] border border-white">
       <section className="text-center mb-8 px-4">
         <h1 className="text-theme-xs mb-2">Full Stack Web Developer</h1>
         <h1 className="text-theme-heading-md font-poppins mb-3">
@@ -83,6 +85,10 @@ export default function Home() {
           <div className="p-4 rounded-md border border-white">some content</div>
         </div>
       </section>
+      <div className="px-4">
+        <WorkGemini />
+        <WorkFreeport />
+      </div>
     </main>
   )
 }
