@@ -4,8 +4,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { useLayoutEffect, useEffect, useRef } from 'react'
 
-import GeminiLogo from '@/assets/geminiBitriaLogo.png'
-import BitriaAccountCard from './BitriaAccountCard'
 import WorkDescription from './WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -13,7 +11,7 @@ import { useBreakpoint } from '@/hooks/useBreakpoint'
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
-export default function WorkGemini() {
+export default function WorkFreelance() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -41,39 +39,32 @@ export default function WorkGemini() {
 
   return (
     <section
-      className="grid grid-cols-1 md:grid-cols-2 gap-x-8 my-14"
+      className="grid grid-cols-1 md:grid-cols-2 gap-x-8"
       ref={isAboveMd ? triggerRef : null}
     >
       <WorkDescription
-        title="Gemini"
+        title="Freelance"
         technologies={[
-          'React',
-          'React Context',
-          'Storybook',
-          'Jest',
-          'Chart.js',
-          'Material UI',
+          'HTML',
+          'CSS',
+          'Javascript',
+          'jQuery',
+          'Wordpress',
+          'Adobe Photoshop',
         ]}
       >
         <p className="mb-3">
-          BITRIA was a digital turnkey asset management startup for
-          cryptocurrencies, and Gemini Trust Company, LLC is an American
-          cryptocurrency exchange and custodian bank.
+          Before working with modern JavaScript frameworks and becoming a
+          full-time software developer, I worked with several companies and
+          clients building websites either in Wordpress or traditional HTML.
         </p>
-        <p className="mb-3">
-          During my time at the company, I built many new features for their and
-          improved several others. My work included:
-        </p>
+        <p className="mb-3"></p>
         <ul className="list-disc ml-4">
-          <li>Built transaction details page</li>
-          <li>Built responsive, animated onboarding page</li>
-          <li>Built white labeling functions</li>
-          <li>Built loading skeletons for tables</li>
-          <li>Unit testing, code reviews, Github project management</li>
-          <li>Created Custom SVG icons made in Adobe Illustrator</li>
-          <li>Refactored class components into functional components</li>
-          <li>Several refactors to state management and context API files</li>
-          <li>Code splitting and asynchronous loading</li>
+          <li>Built promotional sites for Ichikawa Ebizo in 2014 and 2015</li>
+          <li>Led the project managmenet at a design agency</li>
+          <li>Configured the DNS and hosting for several clients</li>
+          <li>Built company-specific themes through Wordpress</li>
+          <li>Designed logos, pamplets and invitation cards</li>
         </ul>
       </WorkDescription>
       <div
@@ -81,7 +72,7 @@ export default function WorkGemini() {
         ref={isBelowMd ? triggerRef : null}
       >
         <div className="company-logo border border-white h-[500px] w-full flex flex-row items-center justify-center relative">
-          <img src={GeminiLogo.src} className="h-10 w-auto" />
+          Placeholder text
         </div>
       </div>
     </section>

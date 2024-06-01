@@ -32,3 +32,29 @@ body {
     text-wrap: balance;
   }
 }
+
+.code-block-wrapper span:first-child,
+.code-block-wrapper-light span:first-child {
+  background-color: transparent !important;
+}
+.code-block-wrapper span:first-child code:first-child {
+  color: #eee;
+}
+.code-block-wrapper-light span:first-child code:first-child {
+  color: black;
+}
+.code-block-wrapper .literal-property {
+  color: #c792ea !important;
+}
+.code-block-wrapper-light .literal-property {
+  color: black !important;
+}
+
+.linenumber {
+  min-width: 3.25em !important;
+}
+
+.linenumber {
+  min-width: 3.25em !important;
+  user-select: text !important;
+}
