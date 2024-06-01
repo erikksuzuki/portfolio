@@ -69,7 +69,7 @@ export default function Home() {
           Work Experience
         </h1>
       </section>
-      <div className="grid gap-[56px]">
+      <div className="">
         <WorkBlockscope />
         <WorkFreeport />
         <WorkGemini />

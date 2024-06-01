@@ -128,51 +128,50 @@ export default function WorkBlockscope() {
   }, [])
 
   return (
-    <section
-      className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 mt-14 mb-14"
-      ref={isAboveMd ? triggerRef : null}
-    >
-      <WorkDescription
-        title="Blockscope"
-        technologies={[
-          'React',
-          'React Query',
-          'Bootstrap',
-          'Redux',
-          'Zustand',
-          'react-flame-graph',
-          'EchartsJS',
-          'react-code-blocks',
-        ]}
-      >
-        <p className="mb-3">
-          Blockscope is a Web3 data platform that enables anyone interested in
-          on-chain data to quickly spin up live or historical data pipelines.{' '}
-        </p>
-        <p className="mb-3">
-          During my time at the company, I built many new features for their
-          core products and improved several others. Features that I built
-          include:
-        </p>
-        <ul className="list-disc ml-4">
-          <li>Built Product landing pages</li>
-          <li>Built Internal API documentation</li>
-          <li>Built Gas profiler using react-flame-chart</li>
-          <li>Created Custom SVG icons made in Adobe Illustrator</li>
-          <li>Built Web3 Hacks Directory Dashboard and pages</li>
-          <li>Refactored Trace Call Tree</li>
-          <li>Refactored Web3 Entities Directory Pages</li>
-          <li>Refactored Decode visibility charts </li>
-          <li>Improvements to existing data tables </li>
-        </ul>
-      </WorkDescription>
-      <div className="overflow-hidden" ref={isBelowMd ? triggerRef : null}>
-        <div className="h-[500px] relative">
-          <SlideShowLogo />
-          <SlideShowIcons />
-          <SlideShowCodeBlock />
+    <div ref={isAboveMd ? triggerRef : null}>
+      <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 mt-14 mb-14 py-14">
+        <WorkDescription
+          title="Blockscope"
+          technologies={[
+            'React',
+            'React Query',
+            'Bootstrap',
+            'Redux',
+            'Zustand',
+            'react-flame-graph',
+            'EchartsJS',
+            'react-code-blocks',
+          ]}
+        >
+          <p className="mb-3">
+            Blockscope is a Web3 data platform that enables anyone interested in
+            on-chain data to quickly spin up live or historical data pipelines.{' '}
+          </p>
+          <p className="mb-3">
+            During my time at the company, I built many new features for their
+            core products and improved several others. Features that I built
+            include:
+          </p>
+          <ul className="list-disc ml-4">
+            <li>Built Product landing pages</li>
+            <li>Built Internal API documentation</li>
+            <li>Built Gas profiler using react-flame-chart</li>
+            <li>Created Custom SVG icons made in Adobe Illustrator</li>
+            <li>Built Web3 Hacks Directory Dashboard and pages</li>
+            <li>Refactored Trace Call Tree</li>
+            <li>Refactored Web3 Entities Directory Pages</li>
+            <li>Refactored Decode visibility charts </li>
+            <li>Improvements to existing data tables </li>
+          </ul>
+        </WorkDescription>
+        <div className="overflow-hidden" ref={isBelowMd ? triggerRef : null}>
+          <div className="h-[500px] relative">
+            <SlideShowLogo />
+            <SlideShowIcons />
+            <SlideShowCodeBlock />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   )
 }
