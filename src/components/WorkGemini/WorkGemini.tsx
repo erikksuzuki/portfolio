@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { useLayoutEffect, useEffect, useRef } from 'react'
 
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
-import BitriaAccountCard from '../BitriaAccountCard'
+import BitriaAccountCard from './BitriaAccountCard'
 import WorkDescription from '../WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -36,18 +36,56 @@ export default function WorkGemini() {
       })
       .to('.gemini-logo', {
         opacity: '0',
+        translateY: '-30px',
         ease: 'none',
         duration: 1,
       })
-      .to(
-        '.gemini-logo',
+      .fromTo(
+        '.gemini-account-header',
         {
-          translateY: '-30px',
-          ease: 'none',
-          duration: 1,
+          translateY: '30px',
+          opacity: 0,
         },
-        '<'
+        {
+          translateY: '0px',
+          opacity: 1,
+          ease: 'back',
+          stagger: 0.1,
+          duration: 0.5,
+        }
       )
+      .fromTo(
+        '.gemini-account-card',
+        {
+          translateY: '30px',
+          opacity: 0,
+        },
+        {
+          translateY: '0px',
+          opacity: 1,
+          ease: 'back',
+          stagger: 0.1,
+          duration: 0.5,
+        }
+      )
+      .fromTo(
+        '.gemini-account-add',
+        {
+          translateY: '30px',
+          opacity: 0,
+        },
+        {
+          translateY: '0px',
+          opacity: 1,
+          ease: 'back',
+          duration: 0.5,
+        }
+      )
+      .to('.gemini-onboarding', {
+        translateY: '-76px',
+        ease: 'back',
+        duration: 2,
+      })
     return () => {
       pin.kill()
     }
@@ -76,8 +114,7 @@ export default function WorkGemini() {
           <p className="mb-3">
             I joined the company early and helped to modernize and refactor much
             of the front-end architecture. I also built many new UI elements,
-            improved existing ones and had ownership of several features. My
-            work included:
+            improved existing ones and had ownership of several features.
           </p>
           <ul className="list-disc ml-4">
             <li>Refactored class components into functional components</li>

@@ -151,8 +151,7 @@ export default function WorkBlockscope() {
           </p>
           <p className="mb-3">
             During my time at the company, I built many new features for their
-            core products and improved several others. Features that I built
-            include:
+            core products and improved several others.
           </p>
           <ul className="list-disc ml-4">
             <li>Built Product landing pages</li>

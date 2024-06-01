@@ -1,4 +1,4 @@
-import BitriaAccountCard from '@/components/BitriaAccountCard'
+import BitriaAccountCard from '@/components/WorkGemini/BitriaAccountCard'
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
 import WorkGemini from '@/components/WorkGemini/WorkGemini'
 import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
