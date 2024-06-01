@@ -13,6 +13,8 @@ import SlideShowLogo from './SlideShowLogo'
 import SlideShowIcons from './SlideShowIcons'
 import SlideShowCodeBlock from './SlideShowCodeBlock'
 
+import BlockscopeBackground from '@/assets/backgrounds/blockscope.jpg'
+
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -96,7 +98,7 @@ export default function WorkBlockscope() {
         }
       )
       .to('.code-section', {
-        translateY: '-48px',
+        translateY: '-36px',
         ease: 'back',
         duration: 2,
       })
@@ -158,14 +160,21 @@ export default function WorkBlockscope() {
             <li>Built Gas profiler using react-flame-chart</li>
             <li>Created Custom SVG icons made in Adobe Illustrator</li>
             <li>Built Web3 Hacks Directory Dashboard and pages</li>
-            <li>Refactored Trace Call Tree</li>
-            <li>Refactored Web3 Entities Directory Pages</li>
-            <li>Refactored Decode visibility charts </li>
-            <li>Improvements to existing data tables </li>
+            <li>
+              Redesigned and refactored Trace Call Tree, Web3 Entities Directory
+              Pages, Decode visibility charts and data tables
+            </li>
           </ul>
         </WorkDescription>
         <div className="overflow-hidden" ref={isBelowMd ? triggerRef : null}>
-          <div className="h-[500px] relative">
+          <div
+            className="h-[500px] relative rounded-2xl"
+            style={{
+              backgroundImage: `url(${BlockscopeBackground.src})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
             <SlideShowLogo />
             <SlideShowIcons />
             <SlideShowCodeBlock />
