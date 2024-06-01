@@ -1,7 +1,7 @@
 import BitriaAccountCard from '@/components/BitriaAccountCard'
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
-import WorkGemini from '@/components/WorkGemini'
-import WorkFreeport from '@/components/WorkFreeport'
+import WorkGemini from '@/components/WorkGemini/WorkGemini'
+import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
 import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
 import WorkFreelance from '@/components/WorkFreelance'
 
