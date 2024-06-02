@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import GeminiBitriaLogo from '@/assets/geminiBitriaLogo.png'
+import GeminiBitriaLogo from '@/assets/gemini/gemini-logo.png'
 
 const SlideShowLogo = () => {
   return (

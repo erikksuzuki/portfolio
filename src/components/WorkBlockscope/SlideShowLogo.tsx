@@ -1,4 +1,4 @@
-import BlockscopeLogo from '@/assets/icons/blockscope-cube.svg'
+import BlockscopeLogo from '@/assets/icons/blockscope-icons/blockscope-cube.svg'
 import Image from 'next/image'
 
 const SlideShowLogo = () => {
