@@ -4,7 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { TextPlugin } from 'gsap/dist/TextPlugin'
 import { useLayoutEffect, useEffect, useRef } from 'react'
-import WorkDescription from '../WorkDescription'
+import WorkDescription from '../common/WorkDescription'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 import 'simplebar-react/dist/simplebar.min.css'

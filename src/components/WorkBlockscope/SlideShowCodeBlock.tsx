@@ -1,5 +1,5 @@
 import { CodeBlock, nord } from 'react-code-blocks'
-import IconBxsWalletAlt from '@/assets/icons/BxsWalletAlt'
+import IconBxsWalletAlt from '@/assets/icons/common/BxsWalletAlt'
 import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
 import CurlIcon from '@/assets/icons/blockscope-icons/curl-svgrepo.svg'

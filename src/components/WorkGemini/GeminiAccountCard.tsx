@@ -1,8 +1,8 @@
-import IconBxCalendarEvent from '@/assets/icons/BxCalendarEvent'
-import IconBxsCheckCircle from '@/assets/icons/BxsCheckCircle'
-import IconBxsWalletAlt from '@/assets/icons/BxsWalletAlt'
-import IconClockCircle from '@/assets/icons/ClockCircle'
-import IconShieldCheckOutline from '@/assets/icons/ShieldCheckOutline'
+import IconBxCalendarEvent from '@/assets/icons/common/BxCalendarEvent'
+import IconBxsCheckCircle from '@/assets/icons/common/BxsCheckCircle'
+import IconBxsWalletAlt from '@/assets/icons/common/BxsWalletAlt'
+import IconClockCircle from '@/assets/icons/common/ClockCircle'
+import IconShieldCheckOutline from '@/assets/icons/common/ShieldCheckOutline'
 
 const GeminiAccountCard = () => {
   return (

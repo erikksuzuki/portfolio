@@ -6,7 +6,7 @@ import { useLayoutEffect, useEffect, useRef } from 'react'
 
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
 import BitriaAccountCard from './GeminiAccountCard'
-import WorkDescription from '../WorkDescription'
+import WorkDescription from '../common/WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 
