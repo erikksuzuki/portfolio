@@ -13,7 +13,7 @@ const SocialLinks = ({
   label?: string
 }) => {
   return (
-    <section className={clsx(className, 'flex flex-col gap-2')}>
+    <section className={clsx(className, 'flex flex-col gap-4')}>
       <p className="text-theme-sm">{label}</p>
       <div className="flex flex-row gap-6 items-end">
         <Link target="_blank" href="https://github.com/erikksuzuki/portfolio">
