@@ -4,14 +4,6 @@ const withNextIntl = createNextIntlPlugin()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['images.ctfassets.net'],
-  },
-  experimental: {
-    images: {
-      allowFutureImage: true,
-    },
-  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
