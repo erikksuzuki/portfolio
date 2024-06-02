@@ -13,6 +13,7 @@ import {
   Noto_Emoji,
   Roboto,
   Open_Sans,
+  Fira_Code,
 } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
@@ -44,11 +45,11 @@ const poppins = Poppins({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
-const ibarraRealNova = Ibarra_Real_Nova({
+const firaCode = Fira_Code({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-ibarra-real-nova',
-  weight: ['400', '700'],
+  variable: '--font-fira-code',
+  weight: ['300', '400', '500', '600', '700'],
 })
 
 const unicaOne = Unica_One({
@@ -125,7 +126,7 @@ const RootLayout = async ({
       <body
         className={clsx(
           'bg-[#0A2B3E] text-white',
-          ibarraRealNova.variable,
+          firaCode.variable,
           notoSansThai.variable,
           notoSansJapanese.variable,
           sawabiMincho.variable,

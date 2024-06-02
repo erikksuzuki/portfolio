@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         // 👇 Add CSS variables
+        'fira-code': ['var(--font-fira-code)'],
         space: ['var(--font-space)'],
         exo: ['var(--font-exo)'],
         poppins: ['var(--font-poppins)'],
