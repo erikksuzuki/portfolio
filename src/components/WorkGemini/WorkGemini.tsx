@@ -93,7 +93,7 @@ export default function WorkGemini() {
 
   return (
     <div ref={isAboveMd ? triggerRef : null}>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 pb-28">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <WorkDescription
           title="Gemini"
           technologies={[
