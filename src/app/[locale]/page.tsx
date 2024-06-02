@@ -27,7 +27,7 @@ export default function Home() {
               crypto-related companies such as Gemini and Freeport and my career
               has featured Web3 projects prominently. I&apos;m a major geek,
               sci-fi fan and film aficionado, and my other hobbies and interests
-              include metaphysics, religion and rock music and literature.
+              include metaphysics, religion, classic rock and literature.
             </p>
             <div className="mt-5 text-theme-sm">
               <h2>Technologies I work with most:</h2>
