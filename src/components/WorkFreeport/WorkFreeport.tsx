@@ -125,8 +125,8 @@ export default function WorkFreeport() {
           translateX: '0px',
           opacity: 1,
           ease: 'back',
-          stagger: 0.1,
-          duration: 0.5,
+          stagger: 0.2,
+          duration: 3,
         },
         '<'
       )
@@ -137,7 +137,7 @@ export default function WorkFreeport() {
           opacity: 1,
           duration: 0.5,
         },
-        '<'
+        '<2'
       )
       .fromTo(
         '.fp-purchase-line',
