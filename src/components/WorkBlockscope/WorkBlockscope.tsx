@@ -144,6 +144,7 @@ export default function WorkBlockscope() {
               'react-flame-graph',
               'EchartsJS',
               'react-code-blocks',
+              'Adobe Illustrator',
             ]}
           >
             <p className="mb-3">
