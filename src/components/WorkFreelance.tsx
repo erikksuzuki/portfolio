@@ -39,7 +39,7 @@ export default function WorkFreelance() {
 
   return (
     <div ref={isAboveMd ? triggerRef : null}>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 py-14">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 pb-14">
         <WorkDescription
           title="Freelance"
           technologies={[

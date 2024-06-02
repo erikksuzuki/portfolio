@@ -4,7 +4,7 @@ import IconBxsWalletAlt from '@/assets/icons/BxsWalletAlt'
 import IconClockCircle from '@/assets/icons/ClockCircle'
 import IconShieldCheckOutline from '@/assets/icons/ShieldCheckOutline'
 
-const BitriaAccountCard = () => {
+const GeminiAccountCard = () => {
   return (
     <div className="w-[300px] shadow-md bg-white font-open-sans rounded-md p-4 text-black relative">
       <IconShieldCheckOutline className="w-[22px] h-[22px] absolute top-[16px] right-[16px] text-[#dd9900]" />
@@ -43,4 +43,4 @@ const BitriaAccountCard = () => {
   )
 }
 
-export default BitriaAccountCard
+export default GeminiAccountCard

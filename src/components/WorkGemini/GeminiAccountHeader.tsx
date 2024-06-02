@@ -1,4 +1,4 @@
-const BitriaAccountHeader = () => {
+const GeminiAccountHeader = () => {
   return (
     <div className="w-[300px] shadow-md bg-[#262536] font-open-sans rounded-md px-4 py-5 text-white relative">
       <div className="flex items-end justify-between">
@@ -18,4 +18,4 @@ const BitriaAccountHeader = () => {
   )
 }
 
-export default BitriaAccountHeader
+export default GeminiAccountHeader

@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { useLayoutEffect, useEffect, useRef } from 'react'
 
 import GeminiLogo from '@/assets/geminiBitriaLogo.png'
-import BitriaAccountCard from './BitriaAccountCard'
+import BitriaAccountCard from './GeminiAccountCard'
 import WorkDescription from '../WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -93,7 +93,7 @@ export default function WorkGemini() {
 
   return (
     <div ref={isAboveMd ? triggerRef : null}>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 py-14">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 pb-28">
         <WorkDescription
           title="Gemini"
           technologies={[

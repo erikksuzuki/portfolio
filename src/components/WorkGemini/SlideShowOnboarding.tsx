@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import BitriaAccountCard from './BitriaAccountCard'
-import BitriaAccountHeader from './BitriaAccountHeader'
+import GeminiAccountCard from './GeminiAccountCard'
+import GeminiAccountHeader from './GeminiAccountHeader'
 
 const SlideShowOnboarding = () => {
   return (
@@ -10,13 +10,13 @@ const SlideShowOnboarding = () => {
         style={{ translate: '0px 100px 0px', height: '800px' }}
       >
         <div className="gemini-account-header mb-3">
-          <BitriaAccountHeader />
+          <GeminiAccountHeader />
         </div>
         <div className="gemini-account-card mb-3">
-          <BitriaAccountCard />
+          <GeminiAccountCard />
         </div>
         <div className="gemini-account-card mb-3">
-          <BitriaAccountCard />
+          <GeminiAccountCard />
         </div>
         <div className="gemini-account-add flex flex-col justify-center py-6 items-center text-theme-sm m-6 border-[3px] rounded-lg border-dotted border-white text-white opacity-[0.7]">
           <div className="text-theme-heading-xl" style={{ lineHeight: '34px' }}>
