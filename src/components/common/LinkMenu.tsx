@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import clsx from 'clsx'
 import IconChevonDown from '@/assets/icons/common/IconChevonDown'
+import { useState } from 'react'
 
 interface ExperienceLink {
   label: string
@@ -26,25 +27,40 @@ const links: ExperienceLink[] = [
 ]
 
 const LinkMenu = () => {
+  const [menuOpen, setMenuOpen] = useState(false)
   return (
-    <div>
-      <div className="bg-black text-theme-sm rounded-md shadow-lg px-3 py-2 flex gap-2 items-center">
+    <nav className="relative">
+      <button
+        onClick={() => setMenuOpen(!menuOpen)}
+        className="bg-black text-theme-sm rounded-md shadow-lg px-3 py-2 flex gap-2 items-center"
+      >
         Links <IconChevonDown className="w-4 h-4" />
-      </div>
-
-      {links.map((link: ExperienceLink, index: number) => (
-        <Link key={link.label} href={link.href}>
-          <div
-            className={clsx('px-3 py-2', {
-              'border-b border-[rgba(255,255,255,0.3)]':
-                index !== links.length - 1,
-            })}
-          >
-            {link.label}
-          </div>
-        </Link>
-      ))}
-    </div>
+      </button>
+      <ul
+        className={clsx(
+          'absolute top-[42px] rounded-md overflow-hidden right-0',
+          {
+            hidden: !menuOpen,
+          }
+        )}
+      >
+        {links.map((link: ExperienceLink, index: number) => (
+          <Link key={link.label} href={link.href}>
+            <li
+              className={clsx(
+                'px-3 py-2 bg-black whitespace-nowrap text-theme-sm',
+                {
+                  'border-b border-[rgba(255,255,255,0.3)]':
+                    index !== links.length - 1,
+                }
+              )}
+            >
+              {link.label}
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </nav>
   )
 }
 
