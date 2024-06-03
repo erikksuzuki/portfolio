@@ -9,13 +9,13 @@ const IconFreeportCircle = ({
       className={className}
       viewBox="0 0 256 256"
     >
-      <g fill="none" fill-rule="evenodd">
+      <g fill="none" fillRule="evenodd">
         <circle
           cx="128"
           cy="128"
           r="120"
           stroke="currentColor"
-          stroke-width="16"
+          strokeWidth="16"
         ></circle>
         <rect
           width="146"

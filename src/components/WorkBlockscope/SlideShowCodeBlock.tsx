@@ -1,3 +1,5 @@
+'use client'
+
 import { CodeBlock, nord } from 'react-code-blocks'
 import IconBxsWalletAlt from '@/assets/icons/common/BxsWalletAlt'
 import SimpleBar from 'simplebar-react'
@@ -81,10 +83,7 @@ const SlideShowCodeBlock = () => {
             }}
             autoHide
           >
-            <code
-              className="block code-block-wrapper text-theme-xs w-[640px]"
-              style={{ marginLeft: '-0.3rem' }}
-            >
+            <code className="block code-block-wrapper text-theme-xs w-[640px] ml-[-0.3rem]">
               <CodeBlock
                 text={`import axios from 'axios'
 
