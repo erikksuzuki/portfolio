@@ -1,24 +1,26 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import LinkMenu from './LinkMenu'
+import LinkMenu, { ExperienceLink } from './LinkMenu'
 
 interface WorkDescriptionProps {
   title?: string
   children?: ReactNode
+  links?: ExperienceLink[]
   technologies?: string[]
 }
 
 const WorkDescription = ({
   title = 'Company',
   children,
+  links,
   technologies = [],
 }: WorkDescriptionProps) => {
   return (
     <div className="justify-center flex flex-col">
       <div className="w-full flex justify-between items-center mb-3">
         <h1 className="text-theme-heading-xs font-poppins">{title}</h1>
-        <LinkMenu />
+        <LinkMenu experienceLinks={links} />
       </div>
       <div className="text-theme-sm font-exo text-[rgba(255,255,255,0.7)]">
         {children}

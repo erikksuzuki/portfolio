@@ -10,8 +10,11 @@ import SlideShowLogo from './SlideShowLogo'
 import SlideShowArtworks from './SlideShowArtworks'
 
 import FreeportBackground from '@/assets/backgrounds/freeport-dark.jpg'
-import FreeportInvestmentCard from './FreeportInvestmentCard'
 import SlideShowPurchase from './SlideShowPurchase'
+
+import FreeportIcon from '@/assets/link-icons/freeport.png'
+import WaybackMachineIcon from '@/assets/link-icons/waybackmachine.ico'
+import ArtNewsIcon from '@/assets/link-icons/artnews.png'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -163,6 +166,23 @@ export default function WorkFreeport() {
         <div className="md:order-2 flex items-center">
           <WorkDescription
             title="Freeport"
+            links={[
+              {
+                label: 'ARTnews',
+                href: 'https://www.artnews.com/art-news/news/freeport-nfts-andy-warhol-jane-holzer-1234667558/',
+                iconSrc: ArtNewsIcon.src,
+              },
+              {
+                label: 'Wayback Machine',
+                href: 'https://web.archive.org/web/20230411000251/https://freeport.app/',
+                iconSrc: WaybackMachineIcon.src,
+              },
+              {
+                label: 'Website',
+                href: 'https://freeport.app',
+                iconSrc: FreeportIcon.src,
+              },
+            ]}
             technologies={[
               'React',
               'Next.js 14',

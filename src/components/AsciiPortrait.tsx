@@ -64,11 +64,19 @@ const AsciiPortrait = () => {
 
   gsap.registerPlugin(TextPlugin)
   useIsomorphicLayoutEffect(() => {
-    const animation = gsap.timeline().to('.ascii-character', {
-      opacity: '1',
-      stagger: 0.001,
-      duration: 0.1,
-    })
+    const animation = gsap.timeline().fromTo(
+      '.ascii-line',
+      {
+        opacity: '0',
+        translateY: '20px',
+      },
+      {
+        opacity: '1',
+        translateY: '0px',
+        stagger: 0.1,
+        duration: 1,
+      }
+    )
   }, [])
 
   return (
@@ -77,11 +85,14 @@ const AsciiPortrait = () => {
         {portraitLines.map((line, lineIndex) => {
           const characters = line.split('')
           return (
-            <div key={lineIndex.toString()} className="leading-[7px] h-[7px]">
+            <div
+              key={lineIndex.toString()}
+              className="ascii-line leading-[7px] h-[7px] opacity-0"
+            >
               {characters.map((char, charIndex) => (
                 <span
                   key={lineIndex.toString() + charIndex.toString()}
-                  className="text-[4.5px] inline-block h-[7px] w-[2.7px] leading-[7px] ascii-character opacity-0"
+                  className="text-[4.5px] inline-block h-[7px] w-[2.7px] leading-[7px] ascii-character"
                 >
                   {char === ' ' ? '\xa0' : char}
                 </span>

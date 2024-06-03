@@ -15,6 +15,10 @@ import SlideShowCodeBlock from './SlideShowCodeBlock'
 
 import BlockscopeBackground from '@/assets/backgrounds/blockscope.jpg'
 
+import CrunchbaseIcon from '@/assets/link-icons/crunchbase.png'
+import BlockscopeIcon from '@/assets/link-icons/blockscope.ico'
+import YCombinatorIcon from '@/assets/link-icons/ycombinator.ico'
+
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -135,6 +139,24 @@ export default function WorkBlockscope() {
         <div className="flex items-center">
           <WorkDescription
             title="Blockscope"
+            links={[
+              {
+                label: 'Y Combinator',
+                href: 'https://www.ycombinator.com/companies/blockscope',
+                iconSrc: YCombinatorIcon.src,
+              },
+
+              {
+                label: 'Crunchbase',
+                href: 'https://www.crunchbase.com/organization/blockscope',
+                iconSrc: CrunchbaseIcon.src,
+              },
+              {
+                label: 'Website',
+                href: 'https://blockscope.co',
+                iconSrc: BlockscopeIcon.src,
+              },
+            ]}
             technologies={[
               'React',
               'React Query',

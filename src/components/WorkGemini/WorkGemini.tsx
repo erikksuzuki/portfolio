@@ -4,8 +4,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { useLayoutEffect, useEffect, useRef } from 'react'
 
-import GeminiLogo from '@/assets/geminiBitriaLogo.png'
-import BitriaAccountCard from './GeminiAccountCard'
 import WorkDescription from '../common/WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -13,6 +11,10 @@ import { useBreakpoint } from '@/hooks/useBreakpoint'
 import GeminiBitriaBackground from '@/assets/backgrounds/gemini-bitria.jpg'
 import SlideShowLogo from './SlideShowLogo'
 import SlideShowOnboarding from './SlideShowOnboarding'
+
+import CNBCIcon from '@/assets/link-icons/cnbc.ico'
+import YouTubeIcon from '@/assets/link-icons/youtube.png'
+import CoinDeskIcon from '@/assets/link-icons/coindesk.ico'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -96,6 +98,23 @@ export default function WorkGemini() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <WorkDescription
           title="Gemini"
+          links={[
+            {
+              label: 'CNBC',
+              href: 'https://www.cnbc.com/2022/01/13/crypto-exchange-gemini-pushes-into-wealth-management-with-acquisition-of-bitria.html',
+              iconSrc: CNBCIcon.src,
+            },
+            {
+              label: 'CoinDesk',
+              href: 'CoinDeskIcon',
+              iconSrc: CoinDeskIcon.src,
+            },
+            {
+              label: 'Product Video',
+              href: 'https://www.youtube.com/watch?v=FE-8EthLBew',
+              iconSrc: YouTubeIcon.src,
+            },
+          ]}
           technologies={[
             'React',
             'React Context',
@@ -109,7 +128,8 @@ export default function WorkGemini() {
             BITRIA was a digital turnkey asset management startup for
             cryptocurrencies, a platform we built that was eventually acquired
             by Gemini Trust Company, LLC is an American cryptocurrency exchange
-            and custodian bank.
+            and custodian bank. The platform remained active until 2024 when it
+            was assimilated into Gemini&apos;s larger ecosystem.
           </p>
           <p className="mb-3">
             I joined the company early and helped to modernize and refactor much
