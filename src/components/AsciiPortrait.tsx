@@ -109,7 +109,7 @@ const AsciiPortrait = () => {
           )
         })}
       </div>
-      <div className="text-[#333] asciiportrait font-fira-code text-center absolute">
+      <div className="text-[#333] font-fira-code text-center">
         {portraitLines.map((line, lineIndex) => {
           const characters = line.split('')
           return (
