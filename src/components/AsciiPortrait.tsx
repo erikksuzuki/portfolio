@@ -64,24 +64,32 @@ const AsciiPortrait = () => {
 
   gsap.registerPlugin(TextPlugin)
   useIsomorphicLayoutEffect(() => {
-    const animation = gsap.timeline().fromTo(
-      '.ascii-line',
-      {
-        opacity: '0',
-        translateY: '20px',
-      },
-      {
-        opacity: '1',
-        translateY: '0px',
-        stagger: 0.1,
-        duration: 1,
-      }
-    )
+    const animation = gsap
+      .timeline()
+      .fromTo(
+        '.ascii-line',
+        { translateY: '40px' },
+        {
+          translateY: '0px',
+          stagger: 0.3,
+          duration: 0.4,
+        }
+      )
+      .fromTo(
+        '.ascii-line',
+        { opacity: '0' },
+        {
+          opacity: '1',
+          stagger: 0.3,
+          duration: 0.2,
+        },
+        '<'
+      )
   }, [])
 
   return (
-    <div className="text-[#00dd00] flex justasify-center items-center">
-      <div className="asciiportrait w-[334px] font-fira-code text-center">
+    <div className="text-[#00dd00] w-[334px] flex justasify-center items-center relative">
+      <div className="asciiportrait font-fira-code text-center absolute">
         {portraitLines.map((line, lineIndex) => {
           const characters = line.split('')
           return (
@@ -93,6 +101,23 @@ const AsciiPortrait = () => {
                 <span
                   key={lineIndex.toString() + charIndex.toString()}
                   className="text-[4.5px] inline-block h-[7px] w-[2.7px] leading-[7px] ascii-character"
+                >
+                  {char === ' ' ? '\xa0' : char}
+                </span>
+              ))}
+            </div>
+          )
+        })}
+      </div>
+      <div className="text-[#333] asciiportrait font-fira-code text-center absolute">
+        {portraitLines.map((line, lineIndex) => {
+          const characters = line.split('')
+          return (
+            <div key={lineIndex.toString()} className="leading-[7px] h-[7px]">
+              {characters.map((char, charIndex) => (
+                <span
+                  key={lineIndex.toString() + charIndex.toString()}
+                  className="text-[4.5px] inline-block h-[7px] w-[2.7px] leading-[7px]"
                 >
                   {char === ' ' ? '\xa0' : char}
                 </span>
