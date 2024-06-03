@@ -18,9 +18,9 @@ export default function Home() {
             <h1 className="text-theme-heading-sm font-exo mb-3">Eric Suzuki</h1>
             <p className="text-theme-sm font-exo opacity-[0.85]">
               I&apos;m a Product Engineer experienced with complex
-              Software-as-a-Service platforms, specializing in front-end
-              architecture and building pixel-perfect, customized UI component
-              libraries from the ground up using granular code.
+              Software-as-a-Service platforms, specializing in building,
+              optimizing and testing front-end features, architecture and
+              pixel-perfect component libraries from the ground up.
               <br />
               <br />
               In the past decade, I&apos;ve worked with some trailblazing

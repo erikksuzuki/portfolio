@@ -4,6 +4,7 @@ import IconLinkedin from '@/assets/icons/common/IconLinkedin'
 import IconTumblr from '@/assets/icons/common/IconTumblr'
 import Link from 'next/link'
 import clsx from 'clsx'
+import IconCv from '@/assets/icons/common/IconCv'
 
 const SocialLinks = ({
   className,
@@ -30,6 +31,12 @@ const SocialLinks = ({
         </Link>
         <Link target="_blank" href="https://emptyblueprints-blog.tumblr.com">
           <IconTumblr className="w-6 h-6" />
+        </Link>
+        <Link
+          target="_blank"
+          href="https://archived.alkemyst.app/eric_suzuki_cv_2024_lean.pdf"
+        >
+          <IconCv className="w-6 h-6" />
         </Link>
       </div>
     </section>
