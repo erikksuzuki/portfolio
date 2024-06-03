@@ -19,7 +19,7 @@ const SocialLinks = ({
         <Link target="_blank" href="https://github.com/erikksuzuki/portfolio">
           <IconGithub className="w-6 h-6" />
         </Link>
-        <Link target="_blank" href="https://www.instagram.com/erikkserafin">
+        <Link target="_blank" href="https://www.instagram.com/erikksuzuki">
           <IconInstagram className="w-6 h-6" />
         </Link>
         <Link
