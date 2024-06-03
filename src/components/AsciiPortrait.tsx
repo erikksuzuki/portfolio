@@ -70,7 +70,7 @@ const AsciiPortrait = () => {
         '.ascii-line',
         { translateY: '40px' },
         {
-          translateY: '0px',
+          translateY: '-4px',
           stagger: 0.3,
           duration: 0.4,
         }
@@ -89,7 +89,7 @@ const AsciiPortrait = () => {
 
   return (
     <div className="text-[#00dd00] w-[334px] flex justasify-center items-center relative">
-      <div className="asciiportrait font-fira-code text-center absolute">
+      <div className="asciiportrait font-fira-code text-center absolute rounded-2xl overflow-hidden">
         {portraitLines.map((line, lineIndex) => {
           const characters = line.split('')
           return (
@@ -109,7 +109,7 @@ const AsciiPortrait = () => {
           )
         })}
       </div>
-      <div className="text-[#333] font-fira-code text-center">
+      <div className="text-[#333] font-fira-code text-center rounded-2xl overflow-hidden">
         {portraitLines.map((line, lineIndex) => {
           const characters = line.split('')
           return (
