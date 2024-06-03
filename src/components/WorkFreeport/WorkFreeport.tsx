@@ -137,7 +137,7 @@ export default function WorkFreeport() {
           opacity: 1,
           duration: 0.5,
         },
-        '<2'
+        '<1'
       )
       .fromTo(
         '.fp-purchase-line',
