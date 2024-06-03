@@ -28,6 +28,16 @@ const links: ExperienceLink[] = [
 
 const LinkMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  function handleClose() {
+    if (menuOpen) {
+      setMenuOpen(false)
+    }
+  }
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', handleClose)
+  }
+
   return (
     <nav className="relative">
       <button
@@ -39,9 +49,7 @@ const LinkMenu = () => {
       <ul
         className={clsx(
           'absolute top-[42px] rounded-md overflow-hidden right-0',
-          {
-            hidden: !menuOpen,
-          }
+          { hidden: !menuOpen }
         )}
       >
         {links.map((link: ExperienceLink, index: number) => (
