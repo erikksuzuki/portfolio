@@ -106,7 +106,7 @@ export default function WorkGemini() {
             },
             {
               label: 'CoinDesk',
-              href: 'CoinDeskIcon',
+              href: 'https://www.coindesk.com/business/2022/01/13/gemini-acquires-crypto-asset-management-platform-bitria-terms-undisclosed/',
               iconSrc: CoinDeskIcon.src,
             },
             {
