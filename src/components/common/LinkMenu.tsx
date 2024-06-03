@@ -42,7 +42,7 @@ const LinkMenu = ({ experienceLinks }: LinkMenuProps) => {
               <Link key={link.label} href={link.href} target="_blank">
                 <li
                   className={clsx(
-                    'flex gap-2 px-3 py-2 bg-black whitespace-nowrap text-theme-sm',
+                    'flex flex-row items-center gap-2 px-3 py-2 bg-black whitespace-nowrap text-theme-sm',
                     {
                       'border-b border-[rgba(255,255,255,0.3)]':
                         index !== experienceLinks.length - 1,
