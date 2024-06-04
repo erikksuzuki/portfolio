@@ -28,9 +28,9 @@ const LinkMenu = ({ experienceLinks }: LinkMenuProps) => {
         <div>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="border border-[rgba(255,255,255,0.2)] text-theme-sm rounded-md shadow-lg px-3 py-2 flex gap-2 items-center"
+            className="group border border-[rgba(255,255,255,0.2)] text-theme-sm rounded-md shadow-lg px-3 py-2 flex gap-2 items-center"
           >
-            <IconExternalPage className="w-5 h-5" />{' '}
+            <IconExternalPage className="w-5 h-5 opacity-[0.8] group-hover:opacity-[1]" />{' '}
             <IconChevonDown className="w-3 h-3" />
           </button>
           <ul
