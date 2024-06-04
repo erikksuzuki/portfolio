@@ -99,7 +99,7 @@ export default function WorkGemini() {
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
             title="Gemini BITRIA"
-            label="Web3 Asset Management"
+            label="Web 3 Asset Management"
             links={[
               {
                 label: 'CNBC',
