@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import IconChevonDown from '@/assets/icons/common/IconChevonDown'
 import { useState } from 'react'
 import Image from 'next/image'
+import IconExternalPage from '@/assets/icons/common/IconExternalPage'
 
 export interface ExperienceLink {
   label: string
@@ -27,14 +28,15 @@ const LinkMenu = ({ experienceLinks }: LinkMenuProps) => {
         <div>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="bg-black text-theme-sm rounded-md shadow-lg px-3 py-2 flex gap-2 items-center"
+            className="border border-[rgba(255,255,255,0.2)] text-theme-sm rounded-md shadow-lg px-3 py-2 flex gap-2 items-center"
           >
-            Links <IconChevonDown className="w-4 h-4" />
+            <IconExternalPage className="w-5 h-5" />{' '}
+            <IconChevonDown className="w-3 h-3" />
           </button>
           <ul
             onMouseLeave={() => handleClose()}
             className={clsx(
-              'absolute top-[42px] rounded-md overflow-hidden right-0',
+              'absolute top-[42px] rounded-md overflow-hidden right-0 shadow-lg',
               { hidden: !menuOpen }
             )}
           >

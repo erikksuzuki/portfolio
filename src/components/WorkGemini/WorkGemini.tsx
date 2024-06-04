@@ -98,7 +98,8 @@ export default function WorkGemini() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
-            title="Gemini"
+            title="Gemini BITRIA"
+            label="Web3 Asset Management"
             links={[
               {
                 label: 'CNBC',

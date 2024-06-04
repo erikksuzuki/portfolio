@@ -5,12 +5,14 @@ import LinkMenu, { ExperienceLink } from './LinkMenu'
 
 interface WorkDescriptionProps {
   title?: string
+  label?: string
   children?: ReactNode
   links?: ExperienceLink[]
   technologies?: string[]
 }
 
 const WorkDescription = ({
+  label = 'Featured Work',
   title = 'Company',
   children,
   links,
@@ -18,6 +20,9 @@ const WorkDescription = ({
 }: WorkDescriptionProps) => {
   return (
     <div className="justify-center flex flex-col">
+      <label className="uppercase text-[#0f0] text-[10px] tracking-widest">
+        {label}
+      </label>
       <div className="w-full flex justify-between items-center mb-3">
         <h1 className="text-theme-heading-xs font-poppins">{title}</h1>
         <LinkMenu experienceLinks={links} />

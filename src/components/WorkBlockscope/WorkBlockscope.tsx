@@ -139,6 +139,7 @@ export default function WorkBlockscope() {
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
             title="Blockscope"
+            label="Web 3 Analytics"
             links={[
               {
                 label: 'Y Combinator',

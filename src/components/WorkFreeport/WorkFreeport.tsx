@@ -166,6 +166,7 @@ export default function WorkFreeport() {
         <div className="md:order-2 order-2 flex items-center">
           <WorkDescription
             title="Freeport"
+            label="Fine Art NFTs"
             links={[
               {
                 label: 'ARTnews',
