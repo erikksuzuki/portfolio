@@ -12,106 +12,30 @@ import IconBlockscopeWalletProfiler from '@/assets/icons/blockscope-icons/wallet
 import IconBlockscopeWatchtower from '@/assets/icons/blockscope-icons/watchtower.svg'
 import Image from 'next/image'
 
+const iconSrcArray = [
+  IconBlockscopeAPI.src,
+  IconBlockscopeBlockBreakdown.src,
+  IconBlockscopeContractUsage.src,
+  IconBlockscopeInvestigator.src,
+  IconBlockscopeLabels.src,
+  IconBlockscopeMemos.src,
+  IconBlockscopePipelines.src,
+  IconBlockscopeSecurityMonitor.src,
+  IconBlockscopeTracer.src,
+  IconBlockscopeTransactionDecoder.src,
+  IconBlockscopeWalletProfiler.src,
+  IconBlockscopeWatchtower.src,
+]
+
 const SlideShowIcons = () => {
   return (
     <div className="overflow-hidden w-full h-[500px] flex justify-center items-center">
       <div className="icon-grid grid grid-cols-4 gap-8 absolute top-[50%] mt-[-104px]">
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeAPI.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeBlockBreakdown.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeContractUsage.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeInvestigator.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeLabels.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeMemos.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopePipelines.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeSecurityMonitor.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeTracer.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeTransactionDecoder.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeWalletProfiler.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
-        <div className="icon-img">
-          <Image
-            src={IconBlockscopeWatchtower.src}
-            width={48}
-            height={48}
-            alt="BlockScopeIcon"
-          />
-        </div>
+        {iconSrcArray.map((iconSrc: string) => (
+          <div key={iconSrc} className="icon-img">
+            <Image src={iconSrc} width={48} height={48} alt="BlockScopeIcon" />
+          </div>
+        ))}
       </div>
     </div>
   )
