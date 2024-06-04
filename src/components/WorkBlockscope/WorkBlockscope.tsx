@@ -2,8 +2,7 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { TextPlugin } from 'gsap/dist/TextPlugin'
-import { useLayoutEffect, useEffect, useRef } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 import WorkDescription from '../common/WorkDescription'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 
@@ -18,6 +17,8 @@ import BlockscopeBackground from '@/assets/backgrounds/blockscope.jpg'
 import CrunchbaseIcon from '@/assets/link-icons/crunchbase.png'
 import BlockscopeIcon from '@/assets/link-icons/blockscope.ico'
 import YCombinatorIcon from '@/assets/link-icons/ycombinator.ico'
+import clsx from 'clsx'
+import { runBlockscopeAnimation } from './animations'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -25,116 +26,17 @@ const useIsomorphicLayoutEffect =
 export default function WorkBlockscope() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
-  const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
-  gsap.registerPlugin(TextPlugin)
 
   useIsomorphicLayoutEffect(() => {
-    const pin = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: 'center center',
-          end: '1200 top',
-          scrub: 0.6,
-          pin: true,
-        },
-      })
-      .to('.blockscope-logo', {
-        opacity: '0',
-        ease: 'none',
-        duration: 1,
-      })
-      .to(
-        '.blockscope-logo',
-        {
-          translateY: '-30px',
-          ease: 'none',
-          duration: 1,
-        },
-        '<'
-      )
-      .fromTo(
-        '.icon-grid .icon-img',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 0.5,
-        }
-      )
-      .to('.icon-grid .icon-img', {
-        translateY: '30px',
-        opacity: 0,
-        ease: 'back',
-        duration: 0.5,
-      })
-      .fromTo(
-        '.code-section .code-lang-option',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 0.5,
-        }
-      )
-      .fromTo(
-        '.code-url',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          duration: 0.5,
-        }
-      )
-      .to('.code-section', {
-        translateY: '-36px',
-        ease: 'back',
-        duration: 2,
-      })
-      .fromTo(
-        '.code-block',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          duration: 0.5,
-        },
-        '<0.5'
-      )
-    // .to('.codetext', {
-    //   text: {
-    //     value:
-    //       'this is a custom text written to show my easy approaches to make the typewriting easy!',
-    //   },
-    //   duration: 5,
-    //   ease: 'none',
-    // })
+    const pin = runBlockscopeAnimation()
     return () => {
       pin.kill()
     }
   }, [])
 
   return (
-    <div ref={isAboveMd ? triggerRef : null}>
+    <div className={clsx({ 'blockscope-trigger': isAboveMd })}>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
@@ -193,8 +95,9 @@ export default function WorkBlockscope() {
           </WorkDescription>
         </div>
         <div
-          className="overflow-hidden md:order-2 order-1"
-          ref={isBelowMd ? triggerRef : null}
+          className={clsx('overflow-hidden md:order-2 order-1', {
+            'blockscope-trigger': isBelowMd,
+          })}
         >
           <div
             className="h-[500px] relative rounded-2xl"

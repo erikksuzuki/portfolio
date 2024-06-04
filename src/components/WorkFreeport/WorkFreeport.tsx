@@ -2,7 +2,7 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { useLayoutEffect, useEffect, useRef } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 import WorkDescription from '../common/WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -15,6 +15,8 @@ import SlideShowPurchase from './SlideShowPurchase'
 import FreeportIcon from '@/assets/link-icons/freeport.png'
 import WaybackMachineIcon from '@/assets/link-icons/waybackmachine.ico'
 import ArtNewsIcon from '@/assets/link-icons/artnews.png'
+import clsx from 'clsx'
+import { runFreeportAnimations } from './animations'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -22,146 +24,17 @@ const useIsomorphicLayoutEffect =
 export default function WorkFreeport() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
-  const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
 
   useIsomorphicLayoutEffect(() => {
-    const pin = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: 'center center',
-          end: '1200 top',
-          scrub: 0.6,
-          pin: true,
-        },
-      })
-      .to('.freeport-logo', {
-        opacity: '0',
-        translateY: '-30px',
-        ease: 'none',
-        duration: 1,
-      })
-      .fromTo(
-        '#freeport-marilyn-img',
-        { translateY: '-120px', opacity: 0 },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        }
-      )
-      .fromTo(
-        '#freeport-marilyn-price',
-        { opacity: 0 },
-        {
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        }
-      )
-      .fromTo(
-        '#freeport-marilyn-artist',
-        { translateY: '30px', opacity: 0 },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        },
-        '<0.2'
-      )
-      .fromTo(
-        '#freeport-marilyn-title',
-        { translateY: '30px', opacity: 0 },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        },
-        '<0.2'
-      )
-      .fromTo(
-        '#freeport-marilyn-description',
-        { translateY: '30px', opacity: 0 },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        },
-        '<0.2'
-      )
-      .fromTo(
-        '#freeport-marilyn',
-        { translateX: '0px', opacity: 1 },
-        {
-          translateX: '-120px',
-          opacity: 0,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        }
-      )
-      .fromTo(
-        '.freeport-purchase-section',
-        { translateX: '-120px', opacity: 0 },
-        {
-          translateX: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 1,
-        }
-      )
-      .fromTo(
-        '.step-dot',
-        { translateX: '30px', opacity: 0 },
-        {
-          translateX: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.2,
-          duration: 3,
-        },
-        '<'
-      )
-      .fromTo(
-        '.step-line',
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.5,
-        },
-        '<1'
-      )
-      .fromTo(
-        '.fp-purchase-line',
-        { translateY: '30px', opacity: 0 },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 0.5,
-        },
-        '<0.2'
-      )
-
+    const pin = runFreeportAnimations()
     return () => {
       pin.kill()
     }
   }, [])
 
   return (
-    <div ref={isAboveMd ? triggerRef : null}>
+    <div className={clsx({ 'freeport-trigger': isAboveMd })}>
       <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-2 order-2 flex items-center">
           <WorkDescription
@@ -218,8 +91,9 @@ export default function WorkFreeport() {
           </WorkDescription>
         </div>
         <div
-          className="md:order-1 order-1 overflow-hidden"
-          ref={isBelowMd ? triggerRef : null}
+          className={clsx('md:order-1 order-1 overflow-hidden', {
+            'freeport-trigger': isBelowMd,
+          })}
         >
           <div
             className="h-[500px] relative rounded-2xl"

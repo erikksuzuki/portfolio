@@ -32,9 +32,9 @@ const SlideShowIcons = () => {
     <div className="overflow-hidden w-full h-[500px] flex justify-center items-center">
       <div className="icon-grid grid grid-cols-4 gap-8 absolute top-[50%] mt-[-104px]">
         {iconSrcArray.map((iconSrc: string) => (
-          <div key={iconSrc} className="icon-img">
+          <i key={iconSrc} className="icon-img">
             <Image src={iconSrc} width={48} height={48} alt="BlockScopeIcon" />
-          </div>
+          </i>
         ))}
       </div>
     </div>

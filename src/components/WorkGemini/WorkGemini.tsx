@@ -2,7 +2,7 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { useLayoutEffect, useEffect, useRef } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 
 import WorkDescription from '../common/WorkDescription'
 
@@ -15,6 +15,8 @@ import SlideShowOnboarding from './SlideShowOnboarding'
 import CNBCIcon from '@/assets/link-icons/cnbc.ico'
 import YouTubeIcon from '@/assets/link-icons/youtube.png'
 import CoinDeskIcon from '@/assets/link-icons/coindesk.ico'
+import clsx from 'clsx'
+import { runGeminiAnimations } from './animations'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -22,79 +24,17 @@ const useIsomorphicLayoutEffect =
 export default function WorkGemini() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
-  const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
 
   useIsomorphicLayoutEffect(() => {
-    const pin = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: 'center center',
-          end: '1200 top',
-          scrub: 0.6,
-          pin: true,
-        },
-      })
-      .to('.gemini-logo', {
-        opacity: '0',
-        translateY: '-30px',
-        ease: 'none',
-        duration: 1,
-      })
-      .fromTo(
-        '.gemini-account-header',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 0.5,
-        }
-      )
-      .fromTo(
-        '.gemini-account-card',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          stagger: 0.1,
-          duration: 0.5,
-        }
-      )
-      .fromTo(
-        '.gemini-account-add',
-        {
-          translateY: '30px',
-          opacity: 0,
-        },
-        {
-          translateY: '0px',
-          opacity: 1,
-          ease: 'back',
-          duration: 0.5,
-        }
-      )
-      .to('.gemini-onboarding', {
-        translateY: '-76px',
-        ease: 'back',
-        duration: 2,
-      })
+    const pin = runGeminiAnimations()
     return () => {
       pin.kill()
     }
   }, [])
 
   return (
-    <div ref={isAboveMd ? triggerRef : null}>
+    <div className={clsx({ 'gemini-trigger': isAboveMd })}>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
@@ -159,8 +99,9 @@ export default function WorkGemini() {
           </WorkDescription>
         </div>
         <div
-          className="overflow-hidden md:order-2 order-1"
-          ref={isBelowMd ? triggerRef : null}
+          className={clsx('overflow-hidden md:order-2 order-1', {
+            'gemini-trigger': isBelowMd,
+          })}
         >
           <div
             className="h-[500px] relative rounded-2xl"

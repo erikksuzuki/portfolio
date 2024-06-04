@@ -1,12 +1,9 @@
 import WorkGemini from '@/components/WorkGemini/WorkGemini'
 import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
 import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
-import WorkFreelance from '@/components/WorkFreelance'
 import Footer from '@/components/Footer/Footer'
 import SocialLinks from '@/components/Footer/SocialLinks'
 import AsciiPortrait from '@/components/AsciiPortrait'
-
-// https://www.youtube.com/watch?v=PeFqGrEHnp0
 
 export default function Home() {
   return (
@@ -24,10 +21,11 @@ export default function Home() {
               <br />
               <br />
               In the past decade, I&apos;ve worked with some trailblazing
-              crypto-related companies such as Gemini and Freeport and my career
-              has featured Web3 projects prominently. I&apos;m a major geek,
-              sci-fi fan and film aficionado, and my other hobbies and interests
-              include metaphysics, religion, classic rock and literature.
+              blockchain-related companies such as Gemini and Freeport and my
+              career has featured Web 3 projects prominently. I&apos;m a major
+              geek, sci-fi fan and film aficionado, and my other hobbies and
+              interests include metaphysics, religion, classic rock and
+              literature.
             </p>
             <div className="mt-5 text-theme-sm">
               <h2>Technologies I work with most:</h2>
