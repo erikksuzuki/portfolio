@@ -163,7 +163,7 @@ export default function WorkFreeport() {
   return (
     <div ref={isAboveMd ? triggerRef : null}>
       <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
-        <div className="md:order-2 flex items-center">
+        <div className="md:order-2 order-2 flex items-center">
           <WorkDescription
             title="Freeport"
             links={[
@@ -217,7 +217,7 @@ export default function WorkFreeport() {
           </WorkDescription>
         </div>
         <div
-          className="md:order-1 overflow-hidden"
+          className="md:order-1 order-1 overflow-hidden"
           ref={isBelowMd ? triggerRef : null}
         >
           <div

@@ -135,8 +135,8 @@ export default function WorkBlockscope() {
 
   return (
     <div ref={isAboveMd ? triggerRef : null}>
-      <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
-        <div className="flex items-center">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
+        <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
             title="Blockscope"
             links={[
@@ -191,7 +191,10 @@ export default function WorkBlockscope() {
             </ul>
           </WorkDescription>
         </div>
-        <div className="overflow-hidden" ref={isBelowMd ? triggerRef : null}>
+        <div
+          className="overflow-hidden md:order-2 order-1"
+          ref={isBelowMd ? triggerRef : null}
+        >
           <div
             className="h-[500px] relative rounded-2xl"
             style={{
