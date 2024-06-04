@@ -68,10 +68,10 @@ const AsciiPortrait = () => {
       .timeline()
       .fromTo(
         '.ascii-line',
-        { translateY: '40px' },
+        { translateY: '60px' },
         {
           translateY: '-4px',
-          stagger: 0.3,
+          stagger: 0.1,
           duration: 0.4,
         }
       )
@@ -80,8 +80,8 @@ const AsciiPortrait = () => {
         { opacity: '0' },
         {
           opacity: '1',
-          stagger: 0.3,
-          duration: 0.2,
+          stagger: 0.1,
+          duration: 0.1,
         },
         '<'
       )
