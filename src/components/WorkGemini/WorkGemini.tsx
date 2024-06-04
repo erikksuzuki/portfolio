@@ -2,7 +2,7 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { useLayoutEffect, useEffect } from 'react'
+import { useLayoutEffect, useEffect, useRef } from 'react'
 
 import WorkDescription from '../common/WorkDescription'
 
@@ -15,7 +15,6 @@ import SlideShowOnboarding from './SlideShowOnboarding'
 import CNBCIcon from '@/assets/link-icons/cnbc.ico'
 import YouTubeIcon from '@/assets/link-icons/youtube.png'
 import CoinDeskIcon from '@/assets/link-icons/coindesk.ico'
-import clsx from 'clsx'
 import { runGeminiAnimations } from './animations'
 
 const useIsomorphicLayoutEffect =
@@ -24,17 +23,18 @@ const useIsomorphicLayoutEffect =
 export default function WorkGemini() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
+  const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
 
   useIsomorphicLayoutEffect(() => {
-    const pin = runGeminiAnimations()
+    const pin = runGeminiAnimations(triggerRef.current)
     return () => {
       pin.kill()
     }
   }, [])
 
   return (
-    <div className={clsx({ 'gemini-trigger': isAboveMd })}>
+    <div ref={isAboveMd ? triggerRef : null}>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
@@ -99,9 +99,8 @@ export default function WorkGemini() {
           </WorkDescription>
         </div>
         <div
-          className={clsx('overflow-hidden md:order-2 order-1', {
-            'gemini-trigger': isBelowMd,
-          })}
+          className="overflow-hidden md:order-2 order-1"
+          ref={isBelowMd ? triggerRef : null}
         >
           <div
             className="h-[500px] relative rounded-2xl"

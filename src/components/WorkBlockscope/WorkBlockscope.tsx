@@ -2,7 +2,8 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { useLayoutEffect, useEffect } from 'react'
+import { TextPlugin } from 'gsap/dist/TextPlugin'
+import { useLayoutEffect, useEffect, useRef } from 'react'
 import WorkDescription from '../common/WorkDescription'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 
@@ -17,7 +18,6 @@ import BlockscopeBackground from '@/assets/backgrounds/blockscope.jpg'
 import CrunchbaseIcon from '@/assets/link-icons/crunchbase.png'
 import BlockscopeIcon from '@/assets/link-icons/blockscope.ico'
 import YCombinatorIcon from '@/assets/link-icons/ycombinator.ico'
-import clsx from 'clsx'
 import { runBlockscopeAnimation } from './animations'
 
 const useIsomorphicLayoutEffect =
@@ -26,17 +26,18 @@ const useIsomorphicLayoutEffect =
 export default function WorkBlockscope() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
+  const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
 
   useIsomorphicLayoutEffect(() => {
-    const pin = runBlockscopeAnimation()
+    const pin = runBlockscopeAnimation(triggerRef.current)
     return () => {
       pin.kill()
     }
   }, [])
 
   return (
-    <div className={clsx({ 'blockscope-trigger': isAboveMd })}>
+    <div ref={isAboveMd ? triggerRef : null}>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
@@ -95,9 +96,8 @@ export default function WorkBlockscope() {
           </WorkDescription>
         </div>
         <div
-          className={clsx('overflow-hidden md:order-2 order-1', {
-            'blockscope-trigger': isBelowMd,
-          })}
+          className="overflow-hidden md:order-2 order-1"
+          ref={isBelowMd ? triggerRef : null}
         >
           <div
             className="h-[500px] relative rounded-2xl"

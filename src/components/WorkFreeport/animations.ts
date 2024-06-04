@@ -1,10 +1,12 @@
 import { gsap } from 'gsap'
 
-export function runFreeportAnimations() {
+export function runFreeportAnimations(
+  triggerRef: HTMLDivElement | undefined | null
+) {
   return gsap
     .timeline({
       scrollTrigger: {
-        trigger: '.freeport-trigger',
+        trigger: triggerRef,
         start: 'center center',
         end: '1200 top',
         scrub: 0.6,

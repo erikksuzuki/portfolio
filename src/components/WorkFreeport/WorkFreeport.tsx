@@ -2,7 +2,7 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { useLayoutEffect, useEffect } from 'react'
+import { useLayoutEffect, useEffect, useRef } from 'react'
 import WorkDescription from '../common/WorkDescription'
 
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -15,7 +15,6 @@ import SlideShowPurchase from './SlideShowPurchase'
 import FreeportIcon from '@/assets/link-icons/freeport.png'
 import WaybackMachineIcon from '@/assets/link-icons/waybackmachine.ico'
 import ArtNewsIcon from '@/assets/link-icons/artnews.png'
-import clsx from 'clsx'
 import { runFreeportAnimations } from './animations'
 
 const useIsomorphicLayoutEffect =
@@ -24,17 +23,19 @@ const useIsomorphicLayoutEffect =
 export default function WorkFreeport() {
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
+  const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
 
   useIsomorphicLayoutEffect(() => {
-    const pin = runFreeportAnimations()
+    const pin = runFreeportAnimations(triggerRef.current)
+
     return () => {
       pin.kill()
     }
   }, [])
 
   return (
-    <div className={clsx({ 'freeport-trigger': isAboveMd })}>
+    <div ref={isAboveMd ? triggerRef : null}>
       <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-2 order-2 flex items-center">
           <WorkDescription
@@ -91,9 +92,8 @@ export default function WorkFreeport() {
           </WorkDescription>
         </div>
         <div
-          className={clsx('md:order-1 order-1 overflow-hidden', {
-            'freeport-trigger': isBelowMd,
-          })}
+          className="md:order-1 order-1 overflow-hidden"
+          ref={isBelowMd ? triggerRef : null}
         >
           <div
             className="h-[500px] relative rounded-2xl"

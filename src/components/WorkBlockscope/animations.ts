@@ -1,10 +1,12 @@
 import { gsap } from 'gsap'
 
-export function runBlockscopeAnimation() {
+export function runBlockscopeAnimation(
+  triggerRef: HTMLDivElement | undefined | null
+) {
   return gsap
     .timeline({
       scrollTrigger: {
-        trigger: '.blockscope-trigger',
+        trigger: triggerRef,
         start: 'center center',
         end: '1200 top',
         scrub: 0.6,

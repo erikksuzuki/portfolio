@@ -1,10 +1,12 @@
 import { gsap } from 'gsap'
 
-export function runGeminiAnimations() {
+export function runGeminiAnimations(
+  triggerRef: HTMLDivElement | undefined | null
+) {
   return gsap
     .timeline({
       scrollTrigger: {
-        trigger: '.gemini-trigger',
+        trigger: triggerRef,
         start: 'center center',
         end: '1200 top',
         scrub: 0.6,
