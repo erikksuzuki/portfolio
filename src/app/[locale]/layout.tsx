@@ -28,6 +28,27 @@ export async function generateMetadata({
   return {
     title: t('metadata.title'),
     description: t('metadata.description'),
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+    openGraph: {
+      title: 'Eric Suzuki - Full Stack Web Developer',
+      url: 'https://emptyblueprints.art',
+      siteName: 'Eric Suzuki - Full Stack Web Developer',
+      images: [
+        {
+          url: 'https://emptyblueprints.art/opengraph-image.jpg',
+          width: 1200,
+          height: 630,
+        },
+      ],
+      type: 'website',
+    },
   }
 }
 
