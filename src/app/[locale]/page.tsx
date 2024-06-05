@@ -1,11 +1,12 @@
+import { useTranslations } from 'next-intl'
 import WorkGemini from '@/components/WorkGemini/WorkGemini'
 import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
 import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
 import Footer from '@/components/Footer/Footer'
-import SocialLinks from '@/components/Footer/SocialLinks'
-import AsciiPortrait from '@/components/AsciiPortrait'
-import { useTranslations } from 'next-intl'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
+import AsciiPortrait from '@/components/AsciiPortrait'
+import SocialLinks from '@/components/Footer/SocialLinks'
+import { socialLinkData } from '../socialLinkData'
 
 export default function Home() {
   const t = useTranslations('header')
@@ -41,7 +42,7 @@ export default function Home() {
                 <li className="mb-2">Mantine UI</li>
               </ul>
             </div>
-            <SocialLinks className="mt-4" />
+            <SocialLinks data={socialLinkData} className="mt-4" />
           </div>
           <div className="md:order-2 order-1 flex flex-col justify-center items-center">
             <AsciiPortrait />
