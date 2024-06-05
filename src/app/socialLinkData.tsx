@@ -19,22 +19,22 @@ export const socialLinkData: SocialLink[] = [
   },
   {
     name: 'Instagram',
-    href: 'https://github.com/erikksuzuki/portfolio',
+    href: 'https://www.instagram.com/erikksuzuki',
     icon: <IconInstagram className="w-6 h-6" />,
   },
   {
     name: 'LinkedIn',
-    href: 'https://github.com/erikksuzuki/portfolio',
+    href: 'https://www.linkedin.com/in/eric-suzuki-04380449/',
     icon: <IconLinkedin className="w-6 h-6" />,
   },
   {
     name: 'Tumblr',
-    href: 'https://github.com/erikksuzuki/portfolio',
+    href: 'https://emptyblueprints-blog.tumblr.com',
     icon: <IconTumblr className="w-6 h-6" />,
   },
   {
     name: 'Resume',
-    href: 'https://github.com/erikksuzuki/portfolio',
+    href: 'https://archived.alkemyst.app/eric_suzuki_cv_2024_with_portfolio.pdf',
     icon: <IconCv className="w-6 h-6" />,
   },
 ]
