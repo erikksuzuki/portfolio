@@ -14,7 +14,7 @@ export default function Home() {
     <div>
       <main className="bg-black">
         <section className="text-left gap-y-6 grid grid-cols-1 md:grid-cols-2 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
-          <div className="absolute top-24 right-4">
+          <div className="absolute top-4 md:top-24 right-4">
             <LanguagePicker />
           </div>
           <div className="md:order-1 order-2">
