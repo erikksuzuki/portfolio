@@ -52,10 +52,10 @@ const firaCode = Fira_Code({
   weight: ['300', '400', '500', '600', '700'],
 })
 
-const unicaOne = Unica_One({
+const iBarraRealNova = Ibarra_Real_Nova({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-unica-one',
+  variable: '--font-ibarra-real-nova',
   weight: ['400'],
 })
 
@@ -116,9 +116,11 @@ const emoji = Noto_Emoji({
 })
 
 const RootLayout = async ({
+  params: { locale },
   children,
 }: Readonly<{
   children: React.ReactNode
+  params: { locale: Locale }
 }>) => {
   const messages = await getMessages()
   return (
@@ -131,7 +133,7 @@ const RootLayout = async ({
           notoSansJapanese.variable,
           sawabiMincho.variable,
           poppins.variable,
-          unicaOne.variable,
+          iBarraRealNova.variable,
           spaceGrotesk.variable,
           exo.variable,
           emoji.variable,
@@ -141,7 +143,14 @@ const RootLayout = async ({
         )}
       >
         <NextIntlClientProvider messages={messages}>
-          <main className="font-exo">{children}</main>
+          <main
+            className={clsx(
+              { 'font-exo': locale === 'en' },
+              { 'font-noto-jp': locale === 'jp' }
+            )}
+          >
+            {children}
+          </main>
         </NextIntlClientProvider>
       </body>
     </html>
