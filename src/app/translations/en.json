@@ -6,10 +6,73 @@
       "description": "Product Engineer experienced with complex Software-as-a-Service platforms, specializing in front-end architecture and building pixel-perfect, customized UI component libraries"
     }
   },
-  "projects": {
+  "header": {
     "introduction": {
-      "heading": "Text",
-      "description": "Description"
+      "heading": "Hi, my name is",
+      "name": "Eric Suzuki",
+      "description": "I'm a Product Engineer experienced with complex Software-as-a-Service platforms, specializing in building, optimizing and testing front-end features, architecture and pixel-perfect component libraries from the ground up.",
+      "description2": "In the past decade, I've worked with some trailblazing blockchain-related companies such as Gemini and Freeport and my career has featured Web 3 projects prominently. I'm a major geek, sci-fi fan and film aficionado, and my other hobbies and interests include metaphysics, religion, classic rock and literature.",
+      "technologyline": "Technologies I work with most:",
+      "findmeline": "Find me on:"
+    }
+  },
+  "common": {
+    "common": {
+      "technologyline": "Technologies used:"
+    }
+  },
+  "blockscope": {
+    "blockscope": {
+      "heading": "Web 3 Analytics",
+      "name": "Blockscope",
+      "description": "Blockscope is a Web3 data platform that enables anyone interested in on-chain data to quickly spin up live or historical data pipelines.",
+      "description2": "During my time at the company, I built new features for their core products and improved several others.",
+      "achievements": {
+        "1": "Built Product landing pages",
+        "2": "Built Internal API documentation",
+        "3": "Built Gas profiler using react-flame-chart",
+        "4": "Created Custom SVG icons made in Adobe Illustrator",
+        "5": "Built Web3 Hacks Directory Dashboard and pages",
+        "6": "Redesigned and refactored Trace Call Tree, Web3 Entities Directory Pages, Decode visibility charts and data tables"
+      }
+    }
+  },
+  "freeport": {
+    "freeport": {
+      "heading": "Fine Art NFTs",
+      "name": "Freeport",
+      "description": "Freeport was a Fractionalized Art Ownership Model Powered by Blockchain. Freeport was featured in ARTnews and enjoyed notability until late 2023.",
+      "description2": "During my time at Freeport I worked closely with their co-founder and built several features, working primarily on their internal blog and KYC systems.",
+      "achievements": {
+        "1": "Built initial landing page",
+        "2": "Built the Tailwind CSS configuration file",
+        "3": "Built blog and pagination system using Contentful's API",
+        "4": "Refactors to Contentful data parsing files",
+        "5": "Translated designs from Figma into Next.js",
+        "6": "Integrated React Hook Forms into their KYC system",
+        "7": "Integrated Google Places API and parsed geolocation data",
+        "8": "Wrote Zod data schemas for form validation"
+      }
+    }
+  },
+  "gemini": {
+    "gemini": {
+      "heading": "Web 3 Asset Management",
+      "name": "Gemini BITRIA",
+      "description": "BITRIA was a digital turnkey asset management startup for cryptocurrencies, a platform we built that was eventually acquired by Gemini Trust Company, LLC is an American cryptocurrency exchange and custodian bank. The platform remained active until 2024 when it was assimilated into Gemini's larger ecosystem.",
+      "description2": "I joined the company early and helped to modernize and refactor much of the front-end architecture. I also built many new UI elements, improved existing ones and had ownership of several features.",
+      "achievements": {
+        "1": "Refactored class components into functional components",
+        "2": "Several refactors to state management and context API files",
+        "3": "Code splitting and asynchronous loading",
+        "4": "Created Custom SVG icons made in Adobe Illustrator",
+        "5": "Built loading skeletons for tables",
+        "6": "Built transaction details page",
+        "7": "Built responsive, animated onboarding page",
+        "8": "Built white labeling functionality",
+        "9": "Wrote unit tests and Storybook components",
+        "10": "Reviewed code on Github and participated in kanban-style project management"
+      }
     }
   }
 }
