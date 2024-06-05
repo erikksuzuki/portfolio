@@ -19,11 +19,13 @@ import CrunchbaseIcon from '@/assets/link-icons/crunchbase.png'
 import BlockscopeIcon from '@/assets/link-icons/blockscope.ico'
 import YCombinatorIcon from '@/assets/link-icons/ycombinator.ico'
 import { runBlockscopeAnimation } from './animations'
+import { useTranslations } from 'next-intl'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkBlockscope() {
+  const t = useTranslations('blockscope')
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -41,15 +43,14 @@ export default function WorkBlockscope() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
-            title="Blockscope"
-            label="Web 3 Analytics"
+            title={t('blockscope.name')}
+            label={t('blockscope.heading')}
             links={[
               {
                 label: 'Y Combinator',
                 href: 'https://www.ycombinator.com/companies/blockscope',
                 iconSrc: YCombinatorIcon.src,
               },
-
               {
                 label: 'Crunchbase',
                 href: 'https://www.crunchbase.com/organization/blockscope',
@@ -73,25 +74,15 @@ export default function WorkBlockscope() {
               'Adobe Illustrator',
             ]}
           >
-            <p className="mb-3">
-              Blockscope is a Web3 data platform that enables anyone interested
-              in on-chain data to quickly spin up live or historical data
-              pipelines.{' '}
-            </p>
-            <p className="mb-3">
-              During my time at the company, I built new features for their core
-              products and improved several others.
-            </p>
+            <p className="mb-3">{t('blockscope.description')}</p>
+            <p className="mb-3">{t('blockscope.description2')}</p>
             <ul className="list-disc ml-4">
-              <li>Built Product landing pages</li>
-              <li>Built Internal API documentation</li>
-              <li>Built Gas profiler using react-flame-chart</li>
-              <li>Created Custom SVG icons made in Adobe Illustrator</li>
-              <li>Built Web3 Hacks Directory Dashboard and pages</li>
-              <li>
-                Redesigned and refactored Trace Call Tree, Web3 Entities
-                Directory Pages, Decode visibility charts and data tables
-              </li>
+              <li>{t('blockscope.achievements.1')}</li>
+              <li>{t('blockscope.achievements.2')}</li>
+              <li>{t('blockscope.achievements.3')}</li>
+              <li>{t('blockscope.achievements.4')}</li>
+              <li>{t('blockscope.achievements.5')}</li>
+              <li>{t('blockscope.achievements.6')}</li>
             </ul>
           </WorkDescription>
         </div>

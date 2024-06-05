@@ -16,11 +16,13 @@ import FreeportIcon from '@/assets/link-icons/freeport.png'
 import WaybackMachineIcon from '@/assets/link-icons/waybackmachine.ico'
 import ArtNewsIcon from '@/assets/link-icons/artnews.png'
 import { runFreeportAnimations } from './animations'
+import { useTranslations } from 'next-intl'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkFreeport() {
+  const t = useTranslations('freeport')
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -39,8 +41,8 @@ export default function WorkFreeport() {
       <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-2 order-2 flex items-center">
           <WorkDescription
-            title="Freeport"
-            label="Fine Art NFTs"
+            title={t('freeport.name')}
+            label={t('freeport.heading')}
             links={[
               {
                 label: 'ARTnews',
@@ -67,27 +69,17 @@ export default function WorkFreeport() {
               'React Hook Forms',
             ]}
           >
-            <p className="mb-3">
-              Freeport was a Fractionalized Art Ownership Model Powered by
-              Blockchain. Freeport was featured in ARTnews and enjoyed
-              notability until late 2023.
-            </p>
-            <p className="mb-3">
-              During my time at Freeport I worked closely with their co-founder
-              and built several features, working primarily on their internal
-              blog and KYC systems.
-            </p>
+            <p className="mb-3">{t('freeport.description')}</p>
+            <p className="mb-3">{t('freeport.description2')}</p>
             <ul className="list-disc ml-4">
-              <li>Built initial landing page</li>
-              <li>Built the Tailwind CSS configuration file</li>
-              <li>
-                Built blog and pagination system using Contentful&apos;s API
-              </li>
-              <li>Refactors to Contentful data parsing files</li>
-              <li>Translated designs from Figma into Next.js</li>
-              <li>Integrated React Hook Forms into their KYC system</li>
-              <li>Integrated Google Places API and parsed geolocation data</li>
-              <li>Wrote Zod data schemas for form validation</li>
+              <li>{t('freeport.achievements.1')}</li>
+              <li>{t('freeport.achievements.2')}</li>
+              <li>{t('freeport.achievements.3')}</li>
+              <li>{t('freeport.achievements.4')}</li>
+              <li>{t('freeport.achievements.5')}</li>
+              <li>{t('freeport.achievements.6')}</li>
+              <li>{t('freeport.achievements.7')}</li>
+              <li>{t('freeport.achievements.8')}</li>
             </ul>
           </WorkDescription>
         </div>

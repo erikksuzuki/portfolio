@@ -16,11 +16,13 @@ import CNBCIcon from '@/assets/link-icons/cnbc.ico'
 import YouTubeIcon from '@/assets/link-icons/youtube.png'
 import CoinDeskIcon from '@/assets/link-icons/coindesk.ico'
 import { runGeminiAnimations } from './animations'
+import { useTranslations } from 'next-intl'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkGemini() {
+  const t = useTranslations('gemini')
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -38,8 +40,8 @@ export default function WorkGemini() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-1 order-2 flex items-center">
           <WorkDescription
-            title="Gemini BITRIA"
-            label="Web 3 Asset Management"
+            title={t('gemini.name')}
+            label={t('gemini.heading')}
             links={[
               {
                 label: 'CNBC',
@@ -66,35 +68,19 @@ export default function WorkGemini() {
               'Material UI',
             ]}
           >
-            <p className="mb-3">
-              BITRIA was a digital turnkey asset management startup for
-              cryptocurrencies, a platform we built that was eventually acquired
-              by Gemini Trust Company, LLC is an American cryptocurrency
-              exchange and custodian bank. The platform remained active until
-              2024 when it was assimilated into Gemini&apos;s larger ecosystem.
-            </p>
-            <p className="mb-3">
-              I joined the company early and helped to modernize and refactor
-              much of the front-end architecture. I also built many new UI
-              elements, improved existing ones and had ownership of several
-              features.
-            </p>
+            <p className="mb-3">{t('gemini.description')}</p>
+            <p className="mb-3">{t('gemini.description2')}</p>
             <ul className="list-disc ml-4">
-              <li>Refactored class components into functional components</li>
-              <li>
-                Several refactors to state management and context API files
-              </li>
-              <li>Code splitting and asynchronous loading</li>
-              <li>Created Custom SVG icons made in Adobe Illustrator</li>
-              <li>Built loading skeletons for tables</li>
-              <li>Built transaction details page</li>
-              <li>Built responsive, animated onboarding page</li>
-              <li>Built white labeling functionality</li>
-              <li>Wrote unit tests and Storybook components</li>
-              <li>
-                Reviewed code on Github and participated in kanban-style project
-                management
-              </li>
+              <li>{t('gemini.achievements.1')}</li>
+              <li>{t('gemini.achievements.2')}</li>
+              <li>{t('gemini.achievements.3')}</li>
+              <li>{t('gemini.achievements.4')}</li>
+              <li>{t('gemini.achievements.5')}</li>
+              <li>{t('gemini.achievements.6')}</li>
+              <li>{t('gemini.achievements.7')}</li>
+              <li>{t('gemini.achievements.8')}</li>
+              <li>{t('gemini.achievements.9')}</li>
+              <li>{t('gemini.achievements.10')}</li>
             </ul>
           </WorkDescription>
         </div>

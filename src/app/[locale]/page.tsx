@@ -4,31 +4,31 @@ import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
 import Footer from '@/components/Footer/Footer'
 import SocialLinks from '@/components/Footer/SocialLinks'
 import AsciiPortrait from '@/components/AsciiPortrait'
+import { useTranslations } from 'next-intl'
+import LanguagePicker from '@/components/common/LanguageSwitcher'
 
 export default function Home() {
+  const t = useTranslations('header')
   return (
     <div>
       <main className="bg-black">
-        <section className="text-left gap-y-6 grid grid-cols-1 md:grid-cols-2 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
+        <section className="text-left gap-y-6 grid grid-cols-1 md:grid-cols-2 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
+          <div className="absolute top-24 right-4">
+            <LanguagePicker />
+          </div>
           <div className="md:order-1 order-2">
-            <h1 className="text-theme-xs">Hi, my name is</h1>
-            <h1 className="text-theme-heading-sm font-exo mb-3">Eric Suzuki</h1>
-            <p className="text-theme-sm font-exo opacity-[0.85]">
-              I&apos;m a Product Engineer experienced with complex
-              Software-as-a-Service platforms, specializing in building,
-              optimizing and testing front-end features, architecture and
-              pixel-perfect component libraries from the ground up.
-              <br />
-              <br />
-              In the past decade, I&apos;ve worked with some trailblazing
-              blockchain-related companies such as Gemini and Freeport and my
-              career has featured Web 3 projects prominently. I&apos;m a major
-              geek, sci-fi fan and film aficionado, and my other hobbies and
-              interests include metaphysics, religion, classic rock and
-              literature.
+            <h1 className="text-theme-xs">{t('introduction.heading')}</h1>
+            <h1 className="text-theme-heading-sm mb-3">
+              {t('introduction.name')}
+            </h1>
+            <p className="text-theme-sm opacity-[0.85] mb-4">
+              {t('introduction.description')}
+            </p>
+            <p className="text-theme-sm opacity-[0.85]">
+              {t('introduction.description2')}
             </p>
             <div className="mt-5 text-theme-sm">
-              <h2>Technologies I work with most:</h2>
+              <h2>{t('introduction.technologyline')}</h2>
               <ul className="list-disc ml-4 grid grid-cols-3 mt-4 text-theme-xs text-[rgba(255,255,255,0.7)]">
                 <li className="mb-2">React</li>
                 <li className="mb-2">Next.js 14</li>
@@ -43,7 +43,7 @@ export default function Home() {
             </div>
             <SocialLinks className="mt-4" />
           </div>
-          <div className="md:order-2 order-1 flex justify-center items-center">
+          <div className="md:order-2 order-1 flex flex-col justify-center items-center">
             <AsciiPortrait />
           </div>
         </section>

@@ -2,6 +2,7 @@
 
 import { type ReactNode } from 'react'
 import LinkMenu, { ExperienceLink } from './LinkMenu'
+import { useTranslations } from 'next-intl'
 
 interface WorkDescriptionProps {
   title?: string
@@ -18,6 +19,7 @@ const WorkDescription = ({
   links,
   technologies = [],
 }: WorkDescriptionProps) => {
+  const t = useTranslations('common')
   return (
     <div className="justify-center flex flex-col">
       <label className="uppercase text-[#0f0] text-[10px] tracking-widest">
@@ -27,11 +29,11 @@ const WorkDescription = ({
         <h1 className="text-theme-heading-xs font-poppins">{title}</h1>
         <LinkMenu experienceLinks={links} />
       </div>
-      <div className="text-theme-sm font-exo text-[rgba(255,255,255,0.7)]">
+      <div className="text-theme-sm text-[rgba(255,255,255,0.7)]">
         {children}
       </div>
       <div className="mt-5 text-theme-sm">
-        <h2>Technologies used:</h2>
+        <h2>{t('common.technologyline')}</h2>
         <div className="mt-4 text-theme-xs text-[rgba(255,255,255,0.7)]">
           <ul className="list-disc ml-4 grid grid-cols-2 md:grid-cols-3 ">
             {technologies.map((technology: string) => (
