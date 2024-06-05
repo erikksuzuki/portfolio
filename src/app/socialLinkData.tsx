@@ -1,3 +1,4 @@
+import IconCalendly from '@/assets/icons/common/IconCalendly'
 import IconCv from '@/assets/icons/common/IconCv'
 import IconGithub from '@/assets/icons/common/IconGithub'
 import IconInstagram from '@/assets/icons/common/IconInstagram'
@@ -36,5 +37,10 @@ export const socialLinkData: SocialLink[] = [
     name: 'Resume',
     href: 'https://archived.alkemyst.app/eric_suzuki_cv_2024_with_portfolio.pdf',
     icon: <IconCv className="w-6 h-6" />,
+  },
+  {
+    name: 'Calendly',
+    href: 'https://calendly.com/erikksuzuki/one-hour-block',
+    icon: <IconCalendly className="w-6 h-6" />,
   },
 ]
