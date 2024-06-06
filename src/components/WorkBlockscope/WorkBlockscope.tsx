@@ -20,24 +20,53 @@ import BlockscopeIcon from '@/assets/link-icons/blockscope.ico'
 import YCombinatorIcon from '@/assets/link-icons/ycombinator.ico'
 import { runBlockscopeAnimation } from './animations'
 import { useMessages, useTranslations } from 'next-intl'
+import { ExperienceLink } from '../common/LinkMenu'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkBlockscope() {
+  const { isAboveMd, isBelowMd } = useBreakpoint('md')
   const t = useTranslations('blockscope')
   const messages = useMessages() as any
+
   const paragraphsArray = Object.values(
     messages.blockscope.blockscope.paragraphs ?? {}
   )
   const achievementsArray = Object.values(
     messages.blockscope.blockscope.achievements ?? {}
   )
-  const { isAboveMd, isBelowMd } = useBreakpoint('md')
+  const technologiesArray: string[] = [
+    'React',
+    'React Query',
+    'Bootstrap',
+    'Redux',
+    'Zustand',
+    'react-flame-graph',
+    'EchartsJS',
+    'react-code-blocks',
+    'Adobe Illustrator',
+  ]
+  const linkArray: ExperienceLink[] = [
+    {
+      label: 'Y Combinator',
+      href: 'https://www.ycombinator.com/companies/blockscope',
+      iconSrc: YCombinatorIcon.src,
+    },
+    {
+      label: 'Crunchbase',
+      href: 'https://www.crunchbase.com/organization/blockscope',
+      iconSrc: CrunchbaseIcon.src,
+    },
+    {
+      label: 'Website',
+      href: 'https://blockscope.co',
+      iconSrc: BlockscopeIcon.src,
+    },
+  ]
 
   const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
-
   useIsomorphicLayoutEffect(() => {
     const pin = runBlockscopeAnimation(triggerRef.current)
     return () => {
@@ -54,34 +83,8 @@ export default function WorkBlockscope() {
             label={t('blockscope.heading')}
             paragraphs={paragraphsArray}
             achievements={achievementsArray}
-            technologies={[
-              'React',
-              'React Query',
-              'Bootstrap',
-              'Redux',
-              'Zustand',
-              'react-flame-graph',
-              'EchartsJS',
-              'react-code-blocks',
-              'Adobe Illustrator',
-            ]}
-            links={[
-              {
-                label: 'Y Combinator',
-                href: 'https://www.ycombinator.com/companies/blockscope',
-                iconSrc: YCombinatorIcon.src,
-              },
-              {
-                label: 'Crunchbase',
-                href: 'https://www.crunchbase.com/organization/blockscope',
-                iconSrc: CrunchbaseIcon.src,
-              },
-              {
-                label: 'Website',
-                href: 'https://blockscope.co',
-                iconSrc: BlockscopeIcon.src,
-              },
-            ]}
+            technologies={technologiesArray}
+            links={linkArray}
           />
         </div>
         <div

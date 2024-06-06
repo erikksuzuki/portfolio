@@ -17,27 +17,52 @@ import WaybackMachineIcon from '@/assets/link-icons/waybackmachine.ico'
 import ArtNewsIcon from '@/assets/link-icons/artnews.png'
 import { runFreeportAnimations } from './animations'
 import { useMessages, useTranslations } from 'next-intl'
+import { ExperienceLink } from '../common/LinkMenu'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkFreeport() {
+  const { isAboveMd, isBelowMd } = useBreakpoint('md')
   const t = useTranslations('freeport')
   const messages = useMessages() as any
+
   const paragraphsArray = Object.values(
     messages.freeport.freeport.paragraphs ?? {}
   )
   const achievementsArray = Object.values(
     messages.freeport.freeport.achievements ?? {}
   )
-  const { isAboveMd, isBelowMd } = useBreakpoint('md')
+  const technologiesArray: string[] = [
+    'React',
+    'Next.js 14',
+    'Tailwind CSS',
+    'Contentful API',
+    'Zod',
+    'React Hook Forms',
+  ]
+  const linkArray: ExperienceLink[] = [
+    {
+      label: 'ARTnews',
+      href: 'https://www.artnews.com/art-news/news/freeport-nfts-andy-warhol-jane-holzer-1234667558/',
+      iconSrc: ArtNewsIcon.src,
+    },
+    {
+      label: 'Wayback Machine',
+      href: 'https://web.archive.org/web/20230411000251/https://freeport.app/',
+      iconSrc: WaybackMachineIcon.src,
+    },
+    {
+      label: 'Website',
+      href: 'https://freeport.app',
+      iconSrc: FreeportIcon.src,
+    },
+  ]
 
   const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
-
   useIsomorphicLayoutEffect(() => {
     const pin = runFreeportAnimations(triggerRef.current)
-
     return () => {
       pin.kill()
     }
@@ -52,31 +77,8 @@ export default function WorkFreeport() {
             label={t('freeport.heading')}
             paragraphs={paragraphsArray}
             achievements={achievementsArray}
-            technologies={[
-              'React',
-              'Next.js 14',
-              'Tailwind CSS',
-              'Contentful API',
-              'Zod',
-              'React Hook Forms',
-            ]}
-            links={[
-              {
-                label: 'ARTnews',
-                href: 'https://www.artnews.com/art-news/news/freeport-nfts-andy-warhol-jane-holzer-1234667558/',
-                iconSrc: ArtNewsIcon.src,
-              },
-              {
-                label: 'Wayback Machine',
-                href: 'https://web.archive.org/web/20230411000251/https://freeport.app/',
-                iconSrc: WaybackMachineIcon.src,
-              },
-              {
-                label: 'Website',
-                href: 'https://freeport.app',
-                iconSrc: FreeportIcon.src,
-              },
-            ]}
+            technologies={technologiesArray}
+            links={linkArray}
           />
         </div>
         <div
