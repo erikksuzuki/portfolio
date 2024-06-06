@@ -21,15 +21,12 @@ const data: any = {
 
 const LanguagePicker = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const router = useRouter()
   function handleClose() {
     if (menuOpen) setMenuOpen(false)
   }
   if (typeof window !== 'undefined')
     window.addEventListener('scroll', handleClose)
-
-  const locale = useLocale() as Locale
-  const router = useRouter()
-
   function handleLocaleChange(newLocale: Locale): void {
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`
     router.refresh()

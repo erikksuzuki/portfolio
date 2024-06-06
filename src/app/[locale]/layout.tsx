@@ -7,7 +7,6 @@ import {
   Sawarabi_Mincho,
   Ibarra_Real_Nova,
   Poppins,
-  Unica_One,
   Space_Grotesk,
   Exo,
   Noto_Emoji,
@@ -18,6 +17,7 @@ import {
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { type Locale } from 'src/locales'
+import Footer from '@/components/Footer/Footer'
 
 export async function generateMetadata({
   params: { locale },
@@ -172,6 +172,7 @@ const RootLayout = async ({
           >
             {children}
           </main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

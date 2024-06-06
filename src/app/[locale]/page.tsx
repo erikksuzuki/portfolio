@@ -72,7 +72,6 @@ export default function Home() {
           {/* <WorkFreelance /> */}
         </div>
       </main>
-      <Footer />
     </div>
   )
 }
