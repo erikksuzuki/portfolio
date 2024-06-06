@@ -8,6 +8,8 @@ interface WorkDescriptionProps {
   title?: string
   label?: string
   children?: ReactNode
+  paragraphs?: string[] | unknown[]
+  achievements?: string[] | unknown[]
   links?: ExperienceLink[]
   technologies?: string[]
 }
@@ -15,7 +17,8 @@ interface WorkDescriptionProps {
 const WorkDescription = ({
   label = 'Featured Work',
   title = 'Company',
-  children,
+  paragraphs,
+  achievements,
   links,
   technologies = [],
 }: WorkDescriptionProps) => {
@@ -30,7 +33,18 @@ const WorkDescription = ({
         <LinkMenu experienceLinks={links} />
       </div>
       <div className="text-theme-sm text-[rgba(255,255,255,0.7)]">
-        {children}
+        {paragraphs &&
+          paragraphs.map((paragraph: any, index: number) => (
+            <p key={index} className="mb-3">
+              {paragraph}
+            </p>
+          ))}
+        <ul className="list-disc ml-4">
+          {achievements &&
+            achievements.map((achievement: any) => (
+              <li key={achievement}>{achievement}</li>
+            ))}
+        </ul>
       </div>
       <div className="mt-5 text-theme-sm">
         <h2>{t('common.technologyline')}</h2>

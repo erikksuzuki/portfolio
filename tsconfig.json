@@ -27,6 +27,7 @@
       "@/lib/*": ["src/lib/*"],
       "@/styles/*": ["src/app/styles/*"],
       "@/app/*": ["src/app/*"],
+      "@/translations/*": ["src/app/translations/*"],
       "@/supabase/*": ["src/lib/supabase/*"]
     }
   },

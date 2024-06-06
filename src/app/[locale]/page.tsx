@@ -23,10 +23,10 @@ export default function Home() {
               {t('introduction.name')}
             </h1>
             <p className="text-theme-sm opacity-[0.85] mb-4">
-              {t('introduction.description')}
+              {t('introduction.paragraphs.1')}
             </p>
             <p className="text-theme-sm opacity-[0.85]">
-              {t('introduction.description2')}
+              {t('introduction.paragraphs.2')}
             </p>
             <div className="mt-5 text-theme-sm">
               <h2>{t('introduction.technologyline')}</h2>

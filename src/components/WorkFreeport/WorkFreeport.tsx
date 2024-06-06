@@ -16,13 +16,20 @@ import FreeportIcon from '@/assets/link-icons/freeport.png'
 import WaybackMachineIcon from '@/assets/link-icons/waybackmachine.ico'
 import ArtNewsIcon from '@/assets/link-icons/artnews.png'
 import { runFreeportAnimations } from './animations'
-import { useTranslations } from 'next-intl'
+import { useMessages, useTranslations } from 'next-intl'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkFreeport() {
   const t = useTranslations('freeport')
+  const messages = useMessages() as any
+  const paragraphsArray = Object.values(
+    messages.freeport.freeport.paragraphs ?? {}
+  )
+  const achievementsArray = Object.values(
+    messages.freeport.freeport.achievements ?? {}
+  )
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -43,6 +50,16 @@ export default function WorkFreeport() {
           <WorkDescription
             title={t('freeport.name')}
             label={t('freeport.heading')}
+            paragraphs={paragraphsArray}
+            achievements={achievementsArray}
+            technologies={[
+              'React',
+              'Next.js 14',
+              'Tailwind CSS',
+              'Contentful API',
+              'Zod',
+              'React Hook Forms',
+            ]}
             links={[
               {
                 label: 'ARTnews',
@@ -60,28 +77,7 @@ export default function WorkFreeport() {
                 iconSrc: FreeportIcon.src,
               },
             ]}
-            technologies={[
-              'React',
-              'Next.js 14',
-              'Tailwind CSS',
-              'Contentful API',
-              'Zod',
-              'React Hook Forms',
-            ]}
-          >
-            <p className="mb-3">{t('freeport.description')}</p>
-            <p className="mb-3">{t('freeport.description2')}</p>
-            <ul className="list-disc ml-4">
-              <li>{t('freeport.achievements.1')}</li>
-              <li>{t('freeport.achievements.2')}</li>
-              <li>{t('freeport.achievements.3')}</li>
-              <li>{t('freeport.achievements.4')}</li>
-              <li>{t('freeport.achievements.5')}</li>
-              <li>{t('freeport.achievements.6')}</li>
-              <li>{t('freeport.achievements.7')}</li>
-              <li>{t('freeport.achievements.8')}</li>
-            </ul>
-          </WorkDescription>
+          />
         </div>
         <div
           className="md:order-1 order-1 overflow-hidden"

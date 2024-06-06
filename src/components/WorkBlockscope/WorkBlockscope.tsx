@@ -19,13 +19,20 @@ import CrunchbaseIcon from '@/assets/link-icons/crunchbase.png'
 import BlockscopeIcon from '@/assets/link-icons/blockscope.ico'
 import YCombinatorIcon from '@/assets/link-icons/ycombinator.ico'
 import { runBlockscopeAnimation } from './animations'
-import { useTranslations } from 'next-intl'
+import { useMessages, useTranslations } from 'next-intl'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkBlockscope() {
   const t = useTranslations('blockscope')
+  const messages = useMessages() as any
+  const paragraphsArray = Object.values(
+    messages.blockscope.blockscope.paragraphs ?? {}
+  )
+  const achievementsArray = Object.values(
+    messages.blockscope.blockscope.achievements ?? {}
+  )
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -45,6 +52,19 @@ export default function WorkBlockscope() {
           <WorkDescription
             title={t('blockscope.name')}
             label={t('blockscope.heading')}
+            paragraphs={paragraphsArray}
+            achievements={achievementsArray}
+            technologies={[
+              'React',
+              'React Query',
+              'Bootstrap',
+              'Redux',
+              'Zustand',
+              'react-flame-graph',
+              'EchartsJS',
+              'react-code-blocks',
+              'Adobe Illustrator',
+            ]}
             links={[
               {
                 label: 'Y Combinator',
@@ -62,29 +82,7 @@ export default function WorkBlockscope() {
                 iconSrc: BlockscopeIcon.src,
               },
             ]}
-            technologies={[
-              'React',
-              'React Query',
-              'Bootstrap',
-              'Redux',
-              'Zustand',
-              'react-flame-graph',
-              'EchartsJS',
-              'react-code-blocks',
-              'Adobe Illustrator',
-            ]}
-          >
-            <p className="mb-3">{t('blockscope.description')}</p>
-            <p className="mb-3">{t('blockscope.description2')}</p>
-            <ul className="list-disc ml-4">
-              <li>{t('blockscope.achievements.1')}</li>
-              <li>{t('blockscope.achievements.2')}</li>
-              <li>{t('blockscope.achievements.3')}</li>
-              <li>{t('blockscope.achievements.4')}</li>
-              <li>{t('blockscope.achievements.5')}</li>
-              <li>{t('blockscope.achievements.6')}</li>
-            </ul>
-          </WorkDescription>
+          />
         </div>
         <div
           className="overflow-hidden md:order-2 order-1"

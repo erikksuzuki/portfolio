@@ -16,13 +16,18 @@ import CNBCIcon from '@/assets/link-icons/cnbc.ico'
 import YouTubeIcon from '@/assets/link-icons/youtube.png'
 import CoinDeskIcon from '@/assets/link-icons/coindesk.ico'
 import { runGeminiAnimations } from './animations'
-import { useTranslations } from 'next-intl'
+import { useMessages, useTranslations } from 'next-intl'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function WorkGemini() {
   const t = useTranslations('gemini')
+  const messages = useMessages() as any
+  const paragraphsArray = Object.values(messages.gemini.gemini.paragraphs ?? {})
+  const achievementsArray = Object.values(
+    messages.gemini.gemini.achievements ?? {}
+  )
   const { isAboveMd, isBelowMd } = useBreakpoint('md')
 
   const triggerRef = useRef(null)
@@ -42,6 +47,16 @@ export default function WorkGemini() {
           <WorkDescription
             title={t('gemini.name')}
             label={t('gemini.heading')}
+            paragraphs={paragraphsArray}
+            achievements={achievementsArray}
+            technologies={[
+              'React',
+              'React Context',
+              'Storybook',
+              'Jest',
+              'Chart.js',
+              'Material UI',
+            ]}
             links={[
               {
                 label: 'CNBC',
@@ -59,30 +74,7 @@ export default function WorkGemini() {
                 iconSrc: YouTubeIcon.src,
               },
             ]}
-            technologies={[
-              'React',
-              'React Context',
-              'Storybook',
-              'Jest',
-              'Chart.js',
-              'Material UI',
-            ]}
-          >
-            <p className="mb-3">{t('gemini.description')}</p>
-            <p className="mb-3">{t('gemini.description2')}</p>
-            <ul className="list-disc ml-4">
-              <li>{t('gemini.achievements.1')}</li>
-              <li>{t('gemini.achievements.2')}</li>
-              <li>{t('gemini.achievements.3')}</li>
-              <li>{t('gemini.achievements.4')}</li>
-              <li>{t('gemini.achievements.5')}</li>
-              <li>{t('gemini.achievements.6')}</li>
-              <li>{t('gemini.achievements.7')}</li>
-              <li>{t('gemini.achievements.8')}</li>
-              <li>{t('gemini.achievements.9')}</li>
-              <li>{t('gemini.achievements.10')}</li>
-            </ul>
-          </WorkDescription>
+          />
         </div>
         <div
           className="overflow-hidden md:order-2 order-1"
