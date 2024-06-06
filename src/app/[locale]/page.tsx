@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl'
+import { useMessages, useTranslations } from 'next-intl'
 import WorkGemini from '@/components/WorkGemini/WorkGemini'
 import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
 import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
@@ -7,9 +7,27 @@ import LanguagePicker from '@/components/common/LanguageSwitcher'
 import AsciiPortrait from '@/components/AsciiPortrait'
 import SocialLinks from '@/components/Footer/SocialLinks'
 import { socialLinkData } from '../socialLinkData'
+import WorkDescription from '@/components/common/WorkDescription'
 
 export default function Home() {
   const t = useTranslations('header')
+  const messages = useMessages() as any
+
+  const paragraphsArray = Object.values(
+    messages.header.introduction.paragraphs ?? {}
+  )
+  const technologiesArray: string[] = [
+    'React',
+    'Next.js 14',
+    'Tailwind CSS',
+    'Supabase',
+    'Vercel',
+    'Contentful',
+    'Gsap',
+    'Framer Motion',
+    'Mantine UI',
+  ]
+
   return (
     <div>
       <main className="bg-black">
@@ -18,30 +36,14 @@ export default function Home() {
             <LanguagePicker />
           </div>
           <div className="md:order-1 order-2">
-            <h1 className="text-theme-xs">{t('introduction.heading')}</h1>
-            <h1 className="text-theme-heading-sm mb-3">
-              {t('introduction.name')}
-            </h1>
-            <p className="text-theme-sm opacity-[0.85] mb-4">
-              {t('introduction.paragraphs.1')}
-            </p>
-            <p className="text-theme-sm opacity-[0.85]">
-              {t('introduction.paragraphs.2')}
-            </p>
-            <div className="mt-5 text-theme-sm">
-              <h2>{t('introduction.technologyline')}</h2>
-              <ul className="list-disc ml-4 grid grid-cols-3 mt-4 text-theme-xs text-[rgba(255,255,255,0.7)]">
-                <li className="mb-2">React</li>
-                <li className="mb-2">Next.js 14</li>
-                <li className="mb-2">Tailwind CSS</li>
-                <li className="mb-2">Supabase</li>
-                <li className="mb-2">Vercel</li>
-                <li className="mb-2">Contentful</li>
-                <li className="mb-2">Gsap</li>
-                <li className="mb-2">Framer Motion</li>
-                <li className="mb-2">Mantine UI</li>
-              </ul>
-            </div>
+            <WorkDescription
+              label={t('introduction.heading')}
+              title={t('introduction.name')}
+              headerTitle
+              paragraphs={paragraphsArray}
+              technologies={technologiesArray}
+              technologiesLabel={t('introduction.technologyline')}
+            />
             <SocialLinks data={socialLinkData} className="mt-4" />
           </div>
           <div className="md:order-2 order-1 flex flex-col justify-center items-center">
@@ -63,7 +65,7 @@ export default function Home() {
       */}
       </main>
       <main className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
-        <div className="">
+        <div>
           <WorkBlockscope />
           <WorkFreeport />
           <WorkGemini />
