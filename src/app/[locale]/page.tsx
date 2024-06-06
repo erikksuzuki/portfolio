@@ -2,7 +2,6 @@ import { useMessages, useTranslations } from 'next-intl'
 import WorkGemini from '@/components/WorkGemini/WorkGemini'
 import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
 import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
-import Footer from '@/components/Footer/Footer'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
 import AsciiPortrait from '@/components/AsciiPortrait'
 import SocialLinks from '@/components/Footer/SocialLinks'
@@ -26,6 +25,9 @@ export default function Home() {
     'Gsap',
     'Framer Motion',
     'Mantine UI',
+    'Radix UI',
+    'Zustand',
+    'Tauri',
   ]
 
   return (
