@@ -6,7 +6,6 @@ import flag_jp from '@/assets/languages/JP.png'
 import flag_en from '@/assets/languages/EN.webp'
 
 import { type Locale } from 'src/locales'
-import { useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import { useState } from 'react'
