@@ -17,7 +17,7 @@ import {
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { type Locale } from 'src/locales'
-import Footer from '@/components/Footer/Footer'
+import Footer from '@/app/[locale]/Footer'
 
 export async function generateMetadata({
   params: { locale },

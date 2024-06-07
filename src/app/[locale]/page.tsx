@@ -4,7 +4,7 @@ import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
 import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
 import AsciiPortrait from '@/components/AsciiPortrait'
-import SocialLinks from '@/components/Footer/SocialLinks'
+import SocialLinks from '@/components/common/SocialLinks'
 import { socialLinkData } from '../socialLinkData'
 import WorkDescription from '@/components/common/WorkDescription'
 
@@ -46,7 +46,11 @@ export default function Home() {
               technologies={technologiesArray}
               technologiesLabel={t('introduction.technologyline')}
             />
-            <SocialLinks data={socialLinkData} className="mt-4" />
+            <SocialLinks
+              data={socialLinkData}
+              className="mt-4"
+              label="Find me on:"
+            />
           </div>
           <div className="md:order-2 order-1 flex flex-col justify-center items-center">
             <AsciiPortrait />

@@ -2,15 +2,12 @@ import Link from 'next/link'
 import clsx from 'clsx'
 import { SocialLink } from '@/app/socialLinkData'
 
-const SocialLinks = ({
-  data,
-  className,
-  label = 'Find me on:',
-}: {
+interface SocialLinksProps {
   data: SocialLink[]
   className?: string
   label?: string
-}) => {
+}
+const SocialLinks = ({ data, className, label }: SocialLinksProps) => {
   return (
     <section className={clsx(className, 'flex flex-col gap-4')}>
       <p className="text-theme-sm">{label}</p>
