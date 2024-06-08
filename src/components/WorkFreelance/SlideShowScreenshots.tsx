@@ -7,40 +7,40 @@ import Image from 'next/image'
 const SlideShowScreenshots = () => {
   return (
     <div className="absolute overflow-hidden w-full h-[500px] flex justify-center items-center gap-x-2">
-      <div className="absolute min-w-[420px] h-[420px] opacity-0 armsandtheman">
+      <div className="absolute min-w-[359px] h-[359px] opacity-0 armsandtheman">
         <Image
-          className="w-[420px] h-[420px]"
+          className="w-[359px] h-[359px]"
           alt="Arms And The Man"
           src={ArmsAndTheManScreenshot.src}
-          width={420}
-          height={420}
+          width={359}
+          height={359}
         />
       </div>
-      <div className="absolute min-w-[420px] h-[420px] opacity-0 sixteennine">
+      <div className="absolute min-w-[359px] h-[359px] opacity-0 sixteennine">
         <Image
-          className="w-[420px] h-[420px]"
+          className="w-[359px] h-[359px]"
           alt="sixteennine"
           src={sixteennineproductions.src}
-          width={420}
-          height={420}
+          width={359}
+          height={359}
         />
       </div>
-      <div className="absolute min-w-[420px] h-[420px] opacity-0 gamex">
+      <div className="absolute min-w-[359px] h-[359px] opacity-0 gamex">
         <Image
-          className="w-[420px] h-[420px]"
+          className="w-[359px] h-[359px]"
           alt="GameX Comex Convention"
           src={GameXScreenshot.src}
-          width={420}
-          height={420}
+          width={359}
+          height={359}
         />
       </div>
-      <div className="absolute min-w-[420px] h-[420px] opacity-0 ebizo">
+      <div className="absolute min-w-[359px] h-[359px] opacity-0 ebizo">
         <Image
-          className="w-[420px] h-[420px]"
+          className="w-[359px] h-[359px]"
           alt="Ichikawa Ebizo XI's Japan Theater"
           src={IchikawaEbizoScreenshot.src}
-          width={420}
-          height={420}
+          width={359}
+          height={359}
         />
       </div>
     </div>
