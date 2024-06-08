@@ -7,6 +7,7 @@ import AsciiPortrait from '@/components/AsciiPortrait'
 import SocialLinks from '@/components/common/SocialLinks'
 import { socialLinkData } from '../socialLinkData'
 import WorkDescription from '@/components/common/WorkDescription'
+import WorkFreelance from '@/components/WorkFreelance/WorkFreelance'
 
 export default function Home() {
   const t = useTranslations('header')
@@ -75,7 +76,7 @@ export default function Home() {
           <WorkBlockscope />
           <WorkFreeport />
           <WorkGemini />
-          {/* <WorkFreelance /> */}
+          <WorkFreelance />
         </div>
       </main>
     </div>
