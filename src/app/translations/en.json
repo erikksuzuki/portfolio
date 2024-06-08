@@ -82,5 +82,22 @@
         "10": "Reviewed code on Github and participated in kanban-style project management"
       }
     }
+  },
+  "freelance": {
+    "freelance": {
+      "heading": "Wordpress and Web Design",
+      "name": "Independent Contractor",
+      "paragraphs": {
+        "1": "From 2013 to 2016 I worked variously with small businesses, web development agencies and events companies as both a freelance web developer and project manager.",
+        "2": "During that time I worked primarily with Wordpress and related plugins, and plain HTML/CSS. "
+      },
+      "achievements": {
+        "1": "As a project manager, upheld and deadlines of deliverables and projects for more than 30 agency clients",
+        "2": "Mentored a small team of web designers in the design and publishing of responsive Wordpress webpages",
+        "3": "Participated in meetings with various agency clients to discuss and clarify website requirements",
+        "4": "Invoiced, billed and corresponded with various personal clients",
+        "5": "Built promotional materials for various themed blockbuster exhibits and live entertainment productions"
+      }
+    }
   }
 }

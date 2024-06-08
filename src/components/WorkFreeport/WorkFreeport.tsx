@@ -73,8 +73,8 @@ export default function WorkFreeport() {
       <section className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div className="md:order-2 order-2 flex items-center">
           <WorkDescription
-            title={t('freeport.name')}
             label={t('freeport.heading')}
+            title={t('freeport.name')}
             paragraphs={paragraphsArray}
             achievements={achievementsArray}
             technologies={technologiesArray}
