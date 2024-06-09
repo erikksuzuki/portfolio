@@ -1,18 +1,19 @@
 import { useMessages, useTranslations } from 'next-intl'
-import WorkGemini from '@/components/WorkGemini/WorkGemini'
-import WorkFreeport from '@/components/WorkFreeport/WorkFreeport'
-import WorkBlockscope from '@/components/WorkBlockscope/WorkBlockscope'
-import LanguagePicker from '@/components/common/LanguageSwitcher'
-import AsciiPortrait from '@/components/AsciiPortrait'
+
+import WorkDescription from '@/components/common/WorkDescription'
 import SocialLinks from '@/components/common/SocialLinks'
 import { socialLinkData } from '../socialLinkData'
-import WorkDescription from '@/components/common/WorkDescription'
-import WorkFreelance from '@/components/WorkFreelance/WorkFreelance'
+import LanguagePicker from '@/components/common/LanguageSwitcher'
+
+import AsciiPortrait from '@/components/Header/AsciiPortrait'
+import BlockscopeSection from './Blockscope'
+import FreeportSection from './Freeport'
+import GeminiSection from './Gemini'
+import FreelanceSection from './Freelance'
 
 export default function Home() {
   const t = useTranslations('header')
   const messages = useMessages() as any
-
   const paragraphsArray = Object.values(
     messages.header.introduction.paragraphs ?? {}
   )
@@ -58,25 +59,24 @@ export default function Home() {
           </div>
         </section>
         {/* 
-      <section className="text-left mb-8">
-        <h1 className="text-theme-heading-xs font-poppins mb-3">
-          Recent Blog Articles
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-md border border-white">some content</div>
-          <div className="p-4 rounded-md border border-white">some content</div>
-          <div className="p-4 rounded-md border border-white">some content</div>
-        </div>
-      </section>
-
+        <section className="text-left mb-8">
+          <h1 className="text-theme-heading-xs font-poppins mb-3">
+            Recent Blog Articles
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 rounded-md border border-white">some content</div>
+            <div className="p-4 rounded-md border border-white">some content</div>
+            <div className="p-4 rounded-md border border-white">some content</div>
+          </div>
+        </section>
       */}
       </main>
       <main className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
         <div>
-          <WorkBlockscope />
-          <WorkFreeport />
-          <WorkGemini />
-          <WorkFreelance />
+          <BlockscopeSection />
+          <FreeportSection columnsReversed />
+          <GeminiSection />
+          <FreelanceSection columnsReversed />
         </div>
       </main>
     </div>

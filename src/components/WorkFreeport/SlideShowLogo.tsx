@@ -1,7 +1,7 @@
 import FreeportLogoText from '@/assets/icons/freeport-icons/IconFreeportText'
 import IconFreeportCircle from '@/assets/icons/freeport-icons/IconFreeportCircle'
 
-const SlideShowLogo = () => {
+const SlideShowFreeportLogo = () => {
   return (
     <div className="absolute text-white freeport-logo overflow-hidden w-full h-[500px] flex justify-center items-center gap-x-2">
       <IconFreeportCircle className="w-8 h-8" />
@@ -10,4 +10,4 @@ const SlideShowLogo = () => {
   )
 }
 
-export default SlideShowLogo
+export default SlideShowFreeportLogo

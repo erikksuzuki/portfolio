@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import GeminiBitriaLogo from '@/assets/gemini/gemini-logo.png'
 
-const SlideShowLogo = () => {
+const SlideShowGeminiLogo = () => {
   return (
     <div className="text-white overflow-hidden w-full h-[500px] flex justify-center items-center gap-x-2">
       <div className="gemini-logo">
@@ -16,4 +16,4 @@ const SlideShowLogo = () => {
   )
 }
 
-export default SlideShowLogo
+export default SlideShowGeminiLogo
