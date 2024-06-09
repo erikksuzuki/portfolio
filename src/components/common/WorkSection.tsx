@@ -96,7 +96,7 @@ export default function WorkSection({
             }}
           >
             {illustrationSlides.map((slide: ReactElement<any>, index: number) =>
-              cloneElement(slide, { key: index })
+              cloneElement(slide, { key: title + index })
             )}
           </div>
         </div>
