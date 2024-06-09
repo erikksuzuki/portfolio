@@ -17,7 +17,8 @@ import {
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { type Locale } from 'src/locales'
-import Footer from '@/app/[locale]/Footer'
+import SocialLinks from '@/components/common/SocialLinks'
+import { socialLinkData } from '../socialLinkData'
 
 export async function generateMetadata({
   params: { locale },
@@ -172,7 +173,15 @@ const RootLayout = async ({
           >
             {children}
           </main>
-          <Footer />
+          <footer className="bg-black">
+            <main className="py-8 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
+              <SocialLinks
+                data={socialLinkData}
+                className="mt-4"
+                label="Contact me at:"
+              />
+            </main>
+          </footer>
         </NextIntlClientProvider>
       </body>
     </html>
