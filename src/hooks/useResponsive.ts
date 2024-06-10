@@ -1,16 +1,16 @@
 /**
- * @desc The 'useBreakpoint()' hook is used to get the current
+ * @desc The 'useResponsive()' hook is used to get the current
  *       screen breakpoint based on the TailwindCSS config.
  *
  * @usage
- *    import { useBreakpoint } from "@/hooks/useBreakpoint";
+ *    import { useResponsive } from "@/hooks/useResponsive";
  *
- *    const { isAboveSm, isBelowSm, sm } = useBreakpoint("sm");
+ *    const { isAboveSm, isBelowSm, sm } = useResponsive("sm");
  *    console.log({ isAboveSm, isBelowSm, sm });
  *
- *    const { isAboveMd } = useBreakpoint("md");
- *    const { isAboveLg } = useBreakpoint("lg");
- *    const { isAbove2Xl } = useBreakpoint("2xl");
+ *    const { isAboveMd } = useResponsive("md");
+ *    const { isAboveLg } = useResponsive("lg");
+ *    const { isAbove2Xl } = useResponsive("2xl");
  *    console.log({ isAboveMd, isAboveLg, isAbove2Xl });
  *
  * @see https://stackoverflow.com/a/76630444/6543935
@@ -18,7 +18,7 @@
  */
 import { useMediaQuery } from 'react-responsive'
 import resolveConfig from 'tailwindcss/resolveConfig'
-import { Config, ScreensConfig } from 'tailwindcss/types/config'
+import { Config } from 'tailwindcss/types/config'
 
 const tailwindConfig = require('../../tailwind.config')
 
@@ -32,7 +32,7 @@ const breakpoints = fullConfig?.theme?.screens || {
   xl: '1280px',
 }
 
-export function useBreakpoint<K extends string>(breakpointKey: K) {
+export function useResponsive<K extends string>(breakpointKey: K) {
   const breakpointValue = breakpoints[breakpointKey as keyof typeof breakpoints]
   const bool = useMediaQuery({
     query: `(max-width: ${breakpointValue})`,

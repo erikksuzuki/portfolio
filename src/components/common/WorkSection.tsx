@@ -10,7 +10,7 @@ import {
   ReactElement,
 } from 'react'
 import WorkDescription from '../common/WorkDescription'
-import { useBreakpoint } from '@/hooks/useBreakpoint'
+import { useResponsive } from '@/hooks/useResponsive'
 
 import { NamespaceKeys, useMessages, useTranslations } from 'next-intl'
 import { ExperienceLink } from './LinkMenu'
@@ -38,7 +38,7 @@ export default function WorkSection({
   illustrationBgSrc,
   illustrationSlides,
 }: WorkSectionProps) {
-  const { isAboveMd, isBelowMd } = useBreakpoint('md')
+  const { isAboveMd, isBelowMd } = useResponsive('md')
   const messages = useMessages() as any
 
   const label = messages[translationKey][translationKey].heading
