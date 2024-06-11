@@ -40,13 +40,13 @@ const BlockscopeSection = ({
       technologiesArray={[
         'React',
         'React Query',
-        'Bootstrap',
+        'React Bootstrap',
+        'React Tables',
         'Redux',
         'Zustand',
         'react-flame-graph',
         'EchartsJS',
         'react-code-blocks',
-        'Adobe Illustrator',
       ]}
       illustrationBgSrc={BlockscopeBackground.src}
       animationFunction={runBlockscopeAnimation}
