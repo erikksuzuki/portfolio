@@ -12,12 +12,11 @@ const SlideShowOnboarding = () => {
         <div className="gemini-account-header mb-3">
           <GeminiAccountHeader />
         </div>
-        <div className="gemini-account-card mb-3">
-          <GeminiAccountCard />
-        </div>
-        <div className="gemini-account-card mb-3">
-          <GeminiAccountCard />
-        </div>
+        {Array.from(Array(2).keys()).map((card) => (
+          <div key={card} className="gemini-account-card mb-3">
+            <GeminiAccountCard />
+          </div>
+        ))}
         <div className="gemini-account-add flex flex-col justify-center py-6 items-center text-theme-sm m-6 border-[3px] rounded-lg border-dotted border-white text-white opacity-[0.7]">
           <div className="text-theme-heading-xl" style={{ lineHeight: '34px' }}>
             +
