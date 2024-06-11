@@ -7,7 +7,10 @@ import Image from 'next/image'
 const SlideShowScreenshots = () => {
   return (
     <div className="absolute overflow-hidden w-full h-[500px] flex justify-center items-center gap-x-2">
-      <div className="absolute min-w-[359px] h-[359px] opacity-0 armsandtheman">
+      <div
+        style={{ translate: '50px 0px' }}
+        className="absolute min-w-[359px] h-[359px] opacity-0 armsandtheman"
+      >
         <Image
           className="w-[359px] h-[359px]"
           alt="Arms And The Man"
@@ -16,7 +19,10 @@ const SlideShowScreenshots = () => {
           height={359}
         />
       </div>
-      <div className="absolute min-w-[359px] h-[359px] opacity-0 sixteennine">
+      <div
+        style={{ translate: '50px 0px' }}
+        className="absolute min-w-[359px] h-[359px] opacity-0 sixteennine"
+      >
         <Image
           className="w-[359px] h-[359px]"
           alt="sixteennine"
@@ -25,7 +31,10 @@ const SlideShowScreenshots = () => {
           height={359}
         />
       </div>
-      <div className="absolute min-w-[359px] h-[359px] opacity-0 gamex">
+      <div
+        style={{ translate: '50px 0px' }}
+        className="absolute min-w-[359px] h-[359px] opacity-0 gamex"
+      >
         <Image
           className="w-[359px] h-[359px]"
           alt="GameX Comex Convention"
@@ -34,7 +43,10 @@ const SlideShowScreenshots = () => {
           height={359}
         />
       </div>
-      <div className="absolute min-w-[359px] h-[359px] opacity-0 ebizo">
+      <div
+        style={{ translate: '50px 0px' }}
+        className="absolute min-w-[359px] h-[359px] opacity-0 ebizo"
+      >
         <Image
           className="w-[359px] h-[359px]"
           alt="Ichikawa Ebizo XI's Japan Theater"

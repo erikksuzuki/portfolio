@@ -21,25 +21,47 @@ export function runFreelanceAnimations(
     })
     .to('.armsandtheman', {
       opacity: '1',
+      translateX: '0px',
       ease: 'none',
+      duration: 1,
+    })
+    .to('.armsandtheman', {
+      opacity: '0',
+      translateX: '-50px',
+      ease: 'none',
+      delay: 3,
       duration: 1,
     })
     .to('.sixteennine', {
       opacity: '1',
+      translateX: '0px',
       ease: 'none',
-      delay: 2,
+      duration: 1,
+    })
+    .to('.sixteennine', {
+      opacity: '0',
+      translateX: '-50px',
+      ease: 'none',
+      delay: 3,
       duration: 1,
     })
     .to('.gamex', {
       opacity: '1',
+      translateX: '0px',
       ease: 'none',
-      delay: 2,
+      duration: 1,
+    })
+    .to('.gamex', {
+      opacity: '0',
+      translateX: '-50px',
+      ease: 'none',
+      delay: 3,
       duration: 1,
     })
     .to('.ebizo', {
       opacity: '1',
+      translateX: '0px',
       ease: 'none',
-      delay: 2,
       duration: 1,
     })
 }
