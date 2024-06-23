@@ -53,3 +53,9 @@ body {
   min-width: 3.25em !important;
   user-select: text !important;
 }
+
+.bg-acryllic-black {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(0.6rem) !important;
+  -webkit-backdrop-filter: blur(0.6rem) !important;
+}
