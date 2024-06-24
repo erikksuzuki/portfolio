@@ -6,8 +6,10 @@ import { useEffect } from 'react'
 
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import clsx from 'clsx'
+import Link from 'next/link'
 
-const TrackListing = ({ track }: any) => {
+const SpotifyTrackListing = ({ track, lastItem }: any) => {
   useEffect(() => {
     TimeAgo.setDefaultLocale(en.locale)
     TimeAgo.addLocale(en)
@@ -20,31 +22,41 @@ const TrackListing = ({ track }: any) => {
     .map((artist: any) => artist.name)
     .join(', ')
   return (
-    <li className="mb-3 flex items-center justify-between w-full">
-      <div className="flex items-center gap-x-4">
-        <div className="min-w-[36px] min-h-[36px] overflow-hidden rounded-sm border border-[rgba(255,255,255,0.2)]">
-          <Image
-            alt={track.track.album.name}
-            src={track.track.album.images[0].url}
-            height={36}
-            width={36}
-          />
+    <Link
+      href={track.track.external_urls.spotify}
+      target="_blank"
+      className="w-full"
+    >
+      <li
+        className={clsx('flex items-center justify-between w-full', {
+          'border-b border-[rgba(255,255,255,0.1)] mb-3 pb-3': !lastItem,
+        })}
+      >
+        <div className="flex items-center gap-x-4">
+          <div className="min-w-[36px] min-h-[36px] overflow-hidden rounded-sm border border-[rgba(255,255,255,0.2)]">
+            <Image
+              alt={track.track.album.name}
+              src={track.track.album.images[0].url}
+              height={36}
+              width={36}
+            />
+          </div>
+          <div>
+            <p className="text-theme-sm">{track.track.name}</p>
+            <p className="text-theme-xs opacity-[0.8]">{attributions}</p>
+          </div>
         </div>
-        <div>
-          <p className="text-theme-sm">{track.track.name}</p>
-          <p className="text-theme-xs opacity-[0.8]">{attributions}</p>
+        <div className="text-right min-w-[100px]">
+          <p className="text-theme-xs opacity-[0.7] mb-[2px]">
+            {formatAMPM(track.played_at)}
+          </p>
+          <p className="text-theme-xs opacity-[0.5]">
+            {timeAgo.format(playedAt)}
+          </p>
         </div>
-      </div>
-      <div className="text-right">
-        <p className="text-theme-sm opacity-[0.8]">
-          {formatAMPM(track.played_at)}
-        </p>
-        <p className="text-theme-xs opacity-[0.6]">
-          {timeAgo.format(playedAt)}
-        </p>
-      </div>
-    </li>
+      </li>
+    </Link>
   )
 }
 
-export default TrackListing
+export default SpotifyTrackListing
