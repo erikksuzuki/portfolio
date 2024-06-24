@@ -29,7 +29,7 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
     >
       <li
         className={clsx('flex items-center justify-between w-full', {
-          'border-b border-[rgba(255,255,255,0.1)] mb-3 pb-3': !lastItem,
+          'border-b border-[rgba(255,255,255,0.1)] mb-2 pb-2': !lastItem,
         })}
       >
         <div className="flex items-center gap-x-4">
