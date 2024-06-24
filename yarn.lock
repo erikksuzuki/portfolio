@@ -332,6 +332,11 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
+"@types/spotify-api@^0.0.25":
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/@types/spotify-api/-/spotify-api-0.0.25.tgz#9dabb3b0a1f0527ed61936ebf8a80c1d138c27c3"
+  integrity sha512-okhoy0U9fPWtwqCfbDyW8VxamhqvXE0gXIVeMOh5HcvEFQvWW2X0VsvdiX/OyiGQpZbZiOJXIGrbnIPfK0AIpA==
+
 "@types/stylis@4.2.5":
   version "4.2.5"
   resolved "https://registry.yarnpkg.com/@types/stylis/-/stylis-4.2.5.tgz#1daa6456f40959d06157698a653a9ab0a70281df"
