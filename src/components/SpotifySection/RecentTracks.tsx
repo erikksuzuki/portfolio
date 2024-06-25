@@ -3,6 +3,8 @@ import SpotifyPlayingNow from './PlayingNow'
 import SpotifyTrackListing from './TrackListing'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import SpotifyLoadingSpinner from './LoadingSpinner'
+import clsx from 'clsx'
 const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
   TimeAgo.setDefaultLocale(en.locale)
   TimeAgo.addLocale(en)
@@ -19,9 +21,14 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
         </div>
         <IconSpotify className="w-[24px] h-[24px] text-[rgba(0,255,0,0.4)]" />
       </header>
-      <ul className="w-full">
-        {playingNow && <SpotifyPlayingNow data={playingNow} />}
-        {recentTracks &&
+      <ul
+        className={clsx('w-full h-[376px] flex flex-col items-center', {
+          'justify-center': !playingNow || !recentTracks,
+        })}
+      >
+        {playingNow && recentTracks && <SpotifyPlayingNow data={playingNow} />}
+        {playingNow &&
+          recentTracks &&
           recentTracks
             .slice(0, playingNow ? 6 : 7)
             .map((track: any, index: number) => (
@@ -31,6 +38,12 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
                 lastItem={playingNow ? index === 5 : index === 6}
               />
             ))}
+        {(!playingNow || !recentTracks) && (
+          <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
+            <SpotifyLoadingSpinner />
+            <span className="text-theme-xs mt-4 mb-12">Loading...</span>
+          </div>
+        )}
       </ul>
     </article>
   )
