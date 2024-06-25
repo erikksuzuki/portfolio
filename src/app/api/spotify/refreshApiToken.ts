@@ -1,5 +1,4 @@
 import { createClient } from '@/utils/supabase/server'
-import { NextResponse } from 'next/server'
 
 export async function refreshApiToken(refreshToken: string) {
   // format the post body
@@ -60,13 +59,4 @@ export async function refreshApiToken(refreshToken: string) {
     )
     .eq('id', '1')
     .select()
-}
-
-export async function GET() {
-  const { data: existingTokens } = await createClient()
-    .from('spotify')
-    .select('*')
-    .single()
-  await refreshApiToken(existingTokens.refresh_token)
-  return NextResponse.json({ data: 'Access token refresh invoked' })
 }

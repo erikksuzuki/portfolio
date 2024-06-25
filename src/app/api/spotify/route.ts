@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { refreshApiToken } from './refresh/route'
+import { refreshApiToken } from './refreshApiToken'
 
 export async function GET(request: NextRequest) {
   const searchParams = new URL(request.url).searchParams
