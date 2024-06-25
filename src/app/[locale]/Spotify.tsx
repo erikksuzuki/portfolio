@@ -46,9 +46,7 @@ const SpotifySection = () => {
         />
         <aside className="w-full hidden md:flex items-center justify-center bg-acryllic-black rounded-lg border border-[rgba(255,255,255,0.1)]">
           <div className="md:px-8 px-4 py-8 w-full max-w-[460px]">
-            {topArtists.length > 0 && (
-              <h2 className="text-theme-sm mb-4">Most Played Artists:</h2>
-            )}
+            <h2 className="text-theme-sm mb-4">Most Played Artists:</h2>
             <TopArtistsList data={topArtists} />
           </div>
         </aside>

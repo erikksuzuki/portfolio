@@ -1,8 +1,21 @@
 import Link from 'next/link'
 
 const TopArtistsList = ({ data }: any) => {
+  function randomNumber() {
+    return Math.floor(Math.random() * 150) + 30
+  }
   return (
     <ul className="grid grid-cols-2 gap-x-4 md:gap-x-8 text-theme-sm">
+      {!data.length &&
+        Array.from(Array(28).keys()).map((index: number) => (
+          <p
+            key={index + 'artistskeleton'}
+            className="rounded-md bg-[rgba(255,255,255,0.05)] mb-1"
+            style={{ width: `${randomNumber()}px` }}
+          >
+            &nbsp;
+          </p>
+        ))}
       {data.slice(0, 28).map((artist: any, index: number) => {
         return (
           <Link
