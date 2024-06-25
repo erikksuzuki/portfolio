@@ -50,7 +50,7 @@ const SpotifyPlayingNow = ({ data }: any) => {
         </li>
       </Link>
     )
-  } else return <span>Loading...</span>
+  } else return <span></span>
 }
 
 export default SpotifyPlayingNow
