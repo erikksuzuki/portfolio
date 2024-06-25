@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     .single()
   const now = new Date().getTime()
   const expiredTime = new Date(existingTokens.expires_at).getTime()
-  const tokenHasExpired = now > expiredTime
+  const tokenHasExpired: boolean = now > expiredTime
 
   async function fetchData(accessToken: string) {
     return await fetch(

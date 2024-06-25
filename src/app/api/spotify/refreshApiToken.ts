@@ -59,4 +59,6 @@ export async function refreshApiToken(refreshToken: string) {
     )
     .eq('id', '1')
     .select()
+
+  return response
 }
