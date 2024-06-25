@@ -6,6 +6,8 @@ import { socialLinkData } from '../socialLinkData'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
 
 import AsciiPortrait from '@/components/Header/AsciiPortrait'
+
+import SpotifySection from '@/app/[locale]/Spotify'
 import BlockscopeSection from './Blockscope'
 import FreeportSection from './Freeport'
 import GeminiSection from './Gemini'
@@ -71,14 +73,13 @@ export default function Home() {
         </section>
       */}
       </main>
-      <main className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
-        <div>
-          <BlockscopeSection />
-          <FreeportSection columnsReversed />
-          <GeminiSection />
-          <FreelanceSection columnsReversed />
-        </div>
-      </main>
+      <SpotifySection />
+      <div className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
+        <BlockscopeSection />
+        <FreeportSection columnsReversed />
+        <GeminiSection />
+        <FreelanceSection columnsReversed />
+      </div>
     </div>
   )
 }
