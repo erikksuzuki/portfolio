@@ -22,7 +22,6 @@ const ArtWorkDisplay = ({
   id,
   children,
 }: ArtWorkDisplayProps) => {
-  console.log(id)
   function formatPrice() {
     const priceDollars = priceUSD.toString().split('.')[0]
     const priceCents = priceUSD.toString().split('.')[1]

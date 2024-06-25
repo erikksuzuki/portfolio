@@ -53,3 +53,145 @@ body {
   min-width: 3.25em !important;
   user-select: text !important;
 }
+
+.bg-acryllic-black {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(0.6rem) !important;
+  -webkit-backdrop-filter: blur(0.6rem) !important;
+}
+
+.spotify-audio-bar {
+  background: rgb(255, 255, 255);
+  bottom: 1px;
+  height: 3px;
+  position: absolute;
+  width: 3px;
+  animation: sound 0ms -800ms linear infinite alternate;
+}
+
+@keyframes sound {
+  0% {
+    opacity: 0.35;
+    height: 3px;
+  }
+  100% {
+    opacity: 1;
+    height: 14px;
+  }
+}
+
+.spotify-audio-bar:nth-child(1) {
+  left: 1px;
+  animation-duration: 474ms;
+}
+.spotify-audio-bar:nth-child(2) {
+  left: 5px;
+  animation-duration: 433ms;
+}
+.spotify-audio-bar:nth-child(3) {
+  left: 9px;
+  animation-duration: 407ms;
+}
+.spotify-audio-bar:nth-child(4) {
+  left: 13px;
+  animation-duration: 458ms;
+}
+.spotify-audio-bar:nth-child(5) {
+  left: 17px;
+  animation-duration: 400ms;
+}
+.spotify-audio-bar:nth-child(6) {
+  left: 21px;
+  animation-duration: 427ms;
+}
+.spotify-audio-bar:nth-child(7) {
+  left: 25px;
+  animation-duration: 441ms;
+}
+.spotify-audio-bar:nth-child(8) {
+  left: 29px;
+  animation-duration: 419ms;
+}
+.spotify-audio-bar:nth-child(9) {
+  left: 33px;
+  animation-duration: 487ms;
+}
+.spotify-audio-bar:nth-child(10) {
+  left: 37px;
+  animation-duration: 442ms;
+}
+
+@keyframes quiet {
+  25% {
+    transform: scaleY(0.6);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  75% {
+    transform: scaleY(0.8);
+  }
+}
+
+@keyframes normal {
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  75% {
+    transform: scaleY(0.6);
+  }
+}
+@keyframes loud {
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  75% {
+    transform: scaleY(1.2);
+  }
+}
+
+.spotify-loading-spinner {
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  --boxSize: 8px;
+  --gutter: 4px;
+  width: calc((var(--boxSize) + var(--gutter)) * 5);
+}
+
+.spotify-loading {
+  transform: scaleY(0.4);
+  height: 100%;
+  width: var(--boxSize);
+  background: #00ff00;
+  animation-duration: 1.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  border-radius: 8px;
+}
+
+.spotify-loading1 {
+  animation-name: quiet;
+}
+
+.spotify-loading2 {
+  animation-name: normal;
+}
+
+.spotify-loading3 {
+  animation-name: quiet;
+}
+
+.spotify-loading4 {
+  animation-name: loud;
+}
+
+.spotify-loading5 {
+  animation-name: quiet;
+}

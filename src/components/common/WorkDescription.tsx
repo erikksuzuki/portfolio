@@ -31,7 +31,7 @@ const WorkDescription = ({
   const defaultTechnologyLabel = t('common.technologyline')
   return (
     <div className="justify-center flex flex-col">
-      <label className="uppercase text-[#0f0] text-[10px] tracking-widest">
+      <label className="uppercase text-[#0f0] font-semibold text-[10px] tracking-widest">
         {label}
       </label>
       <div className="w-full flex justify-between items-center mb-3">
