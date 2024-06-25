@@ -120,3 +120,78 @@ body {
   left: 37px;
   animation-duration: 442ms;
 }
+
+@keyframes quiet {
+  25% {
+    transform: scaleY(0.6);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  75% {
+    transform: scaleY(0.8);
+  }
+}
+
+@keyframes normal {
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  75% {
+    transform: scaleY(0.6);
+  }
+}
+@keyframes loud {
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  75% {
+    transform: scaleY(1.2);
+  }
+}
+
+.spotify-loading-spinner {
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  --boxSize: 8px;
+  --gutter: 4px;
+  width: calc((var(--boxSize) + var(--gutter)) * 5);
+}
+
+.spotify-loading {
+  transform: scaleY(0.4);
+  height: 100%;
+  width: var(--boxSize);
+  background: #00ff00;
+  animation-duration: 1.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  border-radius: 8px;
+}
+
+.spotify-loading1 {
+  animation-name: quiet;
+}
+
+.spotify-loading2 {
+  animation-name: normal;
+}
+
+.spotify-loading3 {
+  animation-name: quiet;
+}
+
+.spotify-loading4 {
+  animation-name: loud;
+}
+
+.spotify-loading5 {
+  animation-name: quiet;
+}
