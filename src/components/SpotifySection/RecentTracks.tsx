@@ -38,7 +38,7 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
                 lastItem={playingNow ? index === 5 : index === 6}
               />
             ))}
-        {(!playingNow || !recentTracks) && (
+        {!playingNow && !recentTracks && (
           <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
             <SpotifyLoadingSpinner />
             <span className="text-theme-xs mt-4 mb-12">Loading...</span>
