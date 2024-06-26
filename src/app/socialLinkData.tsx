@@ -15,7 +15,7 @@ export interface SocialLink {
 export const socialLinkData: SocialLink[] = [
   {
     name: 'GitHub',
-    href: 'https://github.com/erikksuzuki/portfolio',
+    href: 'https://github.com/erikksuzuki/portfolio/pull/1',
     icon: <IconGithub className="w-6 h-6 hover:text-[#DDDDDD]" />,
   },
   {
