@@ -27,6 +27,11 @@ const SpotifySection = () => {
 
   useEffect(() => {
     getAndSetSpotifyData()
+    // refresh spotify data every 5 minutes
+    const interval = setInterval(() => {
+      getAndSetSpotifyData()
+    }, 300000)
+    return clearInterval(interval)
   }, [])
 
   return (
