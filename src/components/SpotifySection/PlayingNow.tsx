@@ -1,10 +1,13 @@
 'use client'
 
+import { useResponsive } from '@/hooks/useResponsive'
 import { formatMilliseconds } from '@/utils/formatMilliseconds'
+import { truncateParagraph } from '@/utils/formatString'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const SpotifyPlayingNow = ({ data }: any) => {
+  const { isAboveMd } = useResponsive('md')
   const attributions = data?.item.artists
     .map((artist: any) => artist.name)
     .join(', ')
@@ -26,7 +29,9 @@ const SpotifyPlayingNow = ({ data }: any) => {
               />
             </div>
             <div>
-              <p className="text-theme-sm">{data.item.name}</p>
+              <p className="text-theme-sm">
+                {truncateParagraph(data.item.name, isAboveMd ? 39 : 20, false)}
+              </p>
               <p className="text-theme-xs opacity-[0.8]">{attributions}</p>
             </div>
           </div>

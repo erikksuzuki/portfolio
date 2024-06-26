@@ -8,8 +8,11 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { truncateParagraph } from '@/utils/formatString'
+import { useResponsive } from '@/hooks/useResponsive'
 
 const SpotifyTrackListing = ({ track, lastItem }: any) => {
+  const { isAboveMd } = useResponsive('md')
   useEffect(() => {
     TimeAgo.setDefaultLocale(en.locale)
     TimeAgo.addLocale(en)
@@ -42,7 +45,9 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
             />
           </div>
           <div>
-            <p className="text-theme-sm">{track.track.name}</p>
+            <p className="text-theme-sm">
+              {truncateParagraph(track.track.name, isAboveMd ? 39 : 26, false)}
+            </p>
             <p className="text-theme-xs opacity-[0.8]">{attributions}</p>
           </div>
         </div>
