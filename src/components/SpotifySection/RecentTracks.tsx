@@ -27,8 +27,7 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
         })}
       >
         {playingNow && recentTracks && <SpotifyPlayingNow data={playingNow} />}
-        {playingNow &&
-          recentTracks &&
+        {recentTracks &&
           recentTracks
             .slice(0, playingNow ? 6 : 7)
             .map((track: any, index: number) => (
@@ -38,12 +37,13 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
                 lastItem={playingNow ? index === 5 : index === 6}
               />
             ))}
-        {!playingNow && !recentTracks && (
-          <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
-            <SpotifyLoadingSpinner />
-            <span className="text-theme-xs mt-4 mb-12">Loading...</span>
-          </div>
-        )}
+        {!playingNow ||
+          (!recentTracks && (
+            <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
+              <SpotifyLoadingSpinner />
+              <span className="text-theme-xs mt-4 mb-12">Loading...</span>
+            </div>
+          ))}
       </ul>
     </article>
   )
