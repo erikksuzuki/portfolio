@@ -107,6 +107,7 @@ export async function GET(request: NextRequest) {
     {
       success,
       error,
+      appid,
       details,
       stats,
       achievements,
