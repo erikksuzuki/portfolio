@@ -23,12 +23,17 @@ export async function GET(request: NextRequest) {
     const backgrounds = [gameDetails[appid].data.background]
     gameDetails[appid].data.background_raw &&
       backgrounds.push(gameDetails[appid].data.background_raw)
+    const capsule_images = [gameDetails[appid].data.capsule_image]
+    gameDetails[appid].data.capsule_imagev5 &&
+      capsule_images.push(gameDetails[appid].data.capsule_imagev5)
     details = {
       name: gameDetails[appid].data.name,
+      short_description: gameDetails[appid].data.short_description,
       release_date: new Date(gameDetails[appid].data.release_date.date),
       website: gameDetails[appid].data.website,
       genres,
       backgrounds,
+      capsule_images,
       screenshots: gameDetails[appid].data.screenshots.map(
         (screenshot: any) => screenshot.path_full
       ),
@@ -36,8 +41,13 @@ export async function GET(request: NextRequest) {
   }
 
   // parse player stats for game
-  const stats: any = {}
-  if (gameDetails && gameStats && gameAchievements && gameSchema) {
+  let stats: any = {}
+  if (
+    gameDetails &&
+    gameStats &&
+    gameAchievements &&
+    gameSchema.game.availableGameStats.stats
+  ) {
     gameStats.playerstats.stats.forEach((stat: any) => {
       const statSchema = gameSchema.game.availableGameStats.stats
       const statName = statSchema.filter(
@@ -66,6 +76,10 @@ export async function GET(request: NextRequest) {
       const achievementName = achievementSchema.filter(
         (achievementSchema: any) =>
           achievementSchema.name === achievement.apiname
+      )[0].name
+      const achievementDisplayName = achievementSchema.filter(
+        (achievementSchema: any) =>
+          achievementSchema.name === achievement.apiname
       )[0].displayName
       const description = achievementSchema.filter(
         (achievementSchema: any) =>
@@ -82,6 +96,7 @@ export async function GET(request: NextRequest) {
       )[0].icongray
       return {
         name: achievementName,
+        display_name: achievementDisplayName,
         description,
         unlocktime,
         icon,
@@ -112,8 +127,6 @@ export async function GET(request: NextRequest) {
       stats,
       achievements,
     },
-    {
-      status: !success ? (appid ? 404 : 400) : 200,
-    }
+    { status: !success ? (appid ? 404 : 400) : 200 }
   )
 }
