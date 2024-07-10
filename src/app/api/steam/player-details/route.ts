@@ -26,6 +26,13 @@ export async function GET() {
             resolvedGame[Object.keys(resolvedGame)[0]].data.capsule_image,
           short_description:
             resolvedGame[Object.keys(resolvedGame)[0]].data.short_description,
+
+          developers:
+            resolvedGame[Object.keys(resolvedGame)[0]].data.developers,
+
+          publishers:
+            resolvedGame[Object.keys(resolvedGame)[0]].data.publishers,
+
           release_date:
             resolvedGame[Object.keys(resolvedGame)[0]].data.release_date.date,
           genres: genres,
@@ -45,6 +52,15 @@ export async function GET() {
       short_description: recentlyPlayedGameDetails.filter(
         (recentGame: any) => recentGame.appid === game.appid
       )[0].short_description,
+
+      developers: recentlyPlayedGameDetails.filter(
+        (recentGame: any) => recentGame.appid === game.appid
+      )[0].developers,
+
+      publishers: recentlyPlayedGameDetails.filter(
+        (recentGame: any) => recentGame.appid === game.appid
+      )[0].publishers,
+
       rtime_last_played: new Date(
         Number(
           ownedGames.response.games.filter(
@@ -82,7 +98,6 @@ export async function GET() {
     lastlogoff: new Date(Number(summary.response.players[0].lastlogoff * 1000)),
     games_owned: ownedGames.response.game_count,
     recently_played: recentlyPlayedGames,
-    summary: summary,
   }
 
   return NextResponse.json({ data }, { status: 200 })

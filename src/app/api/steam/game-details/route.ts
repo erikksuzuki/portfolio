@@ -31,6 +31,11 @@ export async function GET(request: NextRequest) {
       short_description: gameDetails[appid].data.short_description,
       release_date: new Date(gameDetails[appid].data.release_date.date),
       website: gameDetails[appid].data.website,
+
+      developers: gameDetails[appid].data.developers,
+
+      publishers: gameDetails[appid].data.publishers,
+
       genres,
       backgrounds,
       capsule_images,
