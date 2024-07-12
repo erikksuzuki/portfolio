@@ -129,7 +129,7 @@ export async function GET(request: NextRequest) {
     {
       success,
       error,
-      appid,
+      appid: Number(appid),
       details,
       stats,
       achievements,
