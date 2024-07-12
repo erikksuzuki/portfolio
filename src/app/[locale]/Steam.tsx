@@ -9,9 +9,12 @@ import * as Tooltip from '@radix-ui/react-tooltip'
 import clsx from 'clsx'
 import Link from 'next/link'
 import IconExternalPage from '@/assets/icons/common/IconExternalPage'
+import SteamLoadingBackground from '@/assets/backgrounds/steam.jpg'
+import { useResponsive } from '@/hooks/useResponsive'
 // import jp from 'javascript-time-ago/locale/jp'
 
 const SteamSection = () => {
+  const { isAboveMd } = useResponsive('md')
   const humanizeDuration = require('humanize-duration')
   const [playerData, setPlayerData] = useState<any>()
   const [gameData, setGameData] = useState<any>()
@@ -43,7 +46,9 @@ const SteamSection = () => {
     <section
       style={{
         backgroundImage: `url(${
-          gameData ? gameData.details.backgrounds[overrideBg ? 0 : 1] : ''
+          !gameData || !isAboveMd
+            ? SteamLoadingBackground.src
+            : gameData.details.backgrounds[overrideBg ? 0 : 1]
         })`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
