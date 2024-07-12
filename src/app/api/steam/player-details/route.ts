@@ -8,7 +8,15 @@ import { getGameDetails } from '../game-details/getGameDetails'
 export async function GET() {
   const summary: any = await getPlayerSummary()
   const ownedGames: any = await getPlayerOwnedGames()
-  const recentlyPlayed: any = await getPlayerRecentlyPlayed()
+
+  // const recentlyPlayed: any = await getPlayerRecentlyPlayed()
+  const recentlyPlayed = ownedGames.response.games
+    .sort((a: any, b: any) => {
+      if (a.rtime_last_played < b.rtime_last_played) return 1
+      if (a.rtime_last_played > b.rtime_last_played) return -1
+    })
+    .slice(0, 10)
+
   async function getAllGameData() {
     const data = Promise.all(
       recentlyPlayed.map((game: any) => getGameDetails(game.appid))
@@ -68,8 +76,8 @@ export async function GET() {
           )[0].rtime_last_played
         ) * 1000
       ),
-      playtime_2weeks: game.playtime_2weeks ?? undefined,
-      playtime_forever: game.playtime_forever,
+      // playtime_2weeks: game.playtime_2weeks ?? undefined,
+      playtime_forever: game.playtime_forever ?? undefined,
       release_date: recentlyPlayedGameDetails.filter(
         (recentGame: any) => recentGame.appid === game.appid
       )[0].release_date,
