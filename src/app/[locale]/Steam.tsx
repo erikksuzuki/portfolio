@@ -63,7 +63,9 @@ const SteamSection = () => {
         <aside className="w-full hidden md:flex items-center justify-center bg-acryllic-blacker rounded-lg border border-[rgba(255,255,255,0.1)]">
           <div className="md:px-8 px-4 py-8 w-full max-w-[460px]">
             <div className="flex flex-row justify-between items-end mb-3">
-              <h2 className="text-theme-sm">{gameData?.details.name}</h2>
+              <h2 className="text-theme-sm capitalize">
+                {gameData?.details.name.toLowerCase()}
+              </h2>
               <p className="text-theme-xs">Released {releaseDateFormatted}</p>
             </div>
             <p className="text-theme-xs mb-3">
