@@ -60,6 +60,12 @@ body {
   -webkit-backdrop-filter: blur(0.6rem) !important;
 }
 
+.bg-acryllic-blacker {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(0.6rem) !important;
+  -webkit-backdrop-filter: blur(0.6rem) !important;
+}
+
 .spotify-audio-bar {
   background: rgb(255, 255, 255);
   bottom: 1px;
