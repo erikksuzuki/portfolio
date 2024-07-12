@@ -7,6 +7,8 @@ import { formatDateOrdinal } from '@/utils/formatDateTime'
 import Image from 'next/image'
 import * as Tooltip from '@radix-ui/react-tooltip'
 import clsx from 'clsx'
+import Link from 'next/link'
+import IconExternalPage from '@/assets/icons/common/IconExternalPage'
 // import jp from 'javascript-time-ago/locale/jp'
 
 const SteamSection = () => {
@@ -120,6 +122,7 @@ const SteamSection = () => {
                                   )}
                                 </p>
                               </div>
+                              <Tooltip.Arrow className="TooltipArrow" />
                             </Tooltip.Content>
                           </Tooltip.Portal>
                         </Tooltip.Root>
@@ -128,11 +131,18 @@ const SteamSection = () => {
                   })}
             </ul>
             {gameData?.achievements?.unlockedAchievements && (
-              <p className="text-theme-xs">
+              <p className="text-theme-xs mb-2">
                 {`${gameData?.achievements?.unlockedAchievementCount} / ${gameData?.achievements?.maxAchievementCount}`}{' '}
                 achievements unlocked
               </p>
             )}
+            <Link
+              className="text-theme-xs flex items-center justify-start gap-x-2 text-[rgba(255,255,255,0.8)] hover:text-[rgba(0,195,255)]"
+              href={`https://store.steampowered.com/app/${gameData?.appid}/`}
+              target="_blank"
+            >
+              Visit Steam store page <IconExternalPage className="w-3 h-3" />
+            </Link>
           </div>
         </aside>
       </section>
