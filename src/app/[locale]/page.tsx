@@ -75,13 +75,13 @@ export default function Home() {
       */}
       </main>
       <SpotifySection />
-      <SteamSection />
       <div className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
         <BlockscopeSection />
         <FreeportSection columnsReversed />
         <GeminiSection />
         <FreelanceSection columnsReversed />
       </div>
+      <SteamSection />
     </div>
   )
 }
