@@ -13,7 +13,10 @@ const nextConfig = {
     }
     return config
   },
-  images: { domains: ['i.scdn.co'], formats: ['image/avif', 'image/webp'] },
+  images: {
+    domains: ['i.scdn.co', 'media.steampowered.com'],
+    formats: ['image/avif', 'image/webp'],
+  },
   redirects: async () => {
     return [
       {
