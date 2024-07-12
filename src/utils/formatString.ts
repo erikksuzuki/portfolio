@@ -3,7 +3,7 @@ export function truncateParagraph(
   n: number,
   useWordBoundary: boolean
 ) {
-  if (str.length <= n) return str
+  if (!str || str.length <= n) return str
   const subString = str.slice(0, n - 1) // the original check
   return (
     (useWordBoundary
