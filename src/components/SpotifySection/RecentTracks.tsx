@@ -23,7 +23,7 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
       </header>
       <ul
         className={clsx('w-full h-[376px] flex flex-col items-center', {
-          'justify-center': !playingNow || !recentTracks,
+          'justify-center': recentTracks.length === 0,
         })}
       >
         {playingNow && recentTracks && <SpotifyPlayingNow data={playingNow} />}
@@ -37,7 +37,7 @@ const SpotifyRecentTracks = ({ playingNow, recentTracks }: any) => {
                 lastItem={playingNow ? index === 5 : index === 6}
               />
             ))}
-        {!recentTracks && (
+        {recentTracks.length === 0 && (
           <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
             <SpotifyLoadingSpinner />
             <span className="text-theme-xs mt-4 mb-12">Loading...</span>
