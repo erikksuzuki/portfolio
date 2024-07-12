@@ -1,41 +1,42 @@
-import IconSpotify from '@/assets/icons/common/SpotifyLogo'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import clsx from 'clsx'
 import SteamGameListing from './GameListing'
 import SpotifyLoadingSpinner from '../SpotifySection/LoadingSpinner'
+import IconSteam from '@/assets/icons/common/SteamLogo'
 
-const SteamRecentGames = ({ playingNow, recentlyPlayed }: any) => {
+const SteamRecentGames = ({ setGameData, recentlyPlayed }: any) => {
   TimeAgo.setDefaultLocale(en.locale)
   TimeAgo.addLocale(en)
   return (
     <article className="rounded-lg border border-[rgba(255,255,255,0.1)] px-4 py-7 bg-acryllic-black">
       <header className="flex items-center justify-between">
         <div>
-          <label className="uppercase text-[#0f0] text-[10px] tracking-widest font-semibold">
-            What Games I&apos;m Playing
+          <label className="uppercase text-[rgba(0,195,255)] text-[10px] tracking-widest font-semibold">
+            What I&apos;ve Been Playing
           </label>
           <h1 className="text-theme-heading-xs font-poppins mb-7">
-            Recently Played
+            Recent Games
           </h1>
         </div>
-        <IconSpotify className="w-[24px] h-[24px] text-[rgba(0,255,0,0.4)]" />
+        <IconSteam className="w-[24px] h-[24px] text-[rgba(0,195,255,0.7)]" />
       </header>
       <ul
         className={clsx('w-full h-[376px] flex flex-col items-center', {
-          'justify-center': !playingNow || !recentlyPlayed,
+          'justify-center': !recentlyPlayed,
         })}
       >
         {recentlyPlayed &&
-          recentlyPlayed
-            .slice(0, 5)
-            .map((game: any, index: number) => (
+          recentlyPlayed.slice(0, 5).map((game: any, index: number) => {
+            return (
               <SteamGameListing
                 key={game.name + index}
-                track={game}
+                game={game}
                 lastItem={index === 4}
+                setGameData={setGameData}
               />
-            ))}
+            )
+          })}
         {!recentlyPlayed && (
           <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
             <SpotifyLoadingSpinner />
