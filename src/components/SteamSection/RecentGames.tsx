@@ -8,6 +8,7 @@ import IconSteam from '@/assets/icons/common/SteamLogo'
 const SteamRecentGames = ({ setGameData, recentlyPlayed }: any) => {
   TimeAgo.setDefaultLocale(en.locale)
   TimeAgo.addLocale(en)
+  const maxGamesShown = 7
   return (
     <article className="rounded-lg border border-[rgba(255,255,255,0.1)] px-4 py-7 bg-acryllic-blacker">
       <header className="flex items-center justify-between">
@@ -27,16 +28,18 @@ const SteamRecentGames = ({ setGameData, recentlyPlayed }: any) => {
         })}
       >
         {recentlyPlayed &&
-          recentlyPlayed.slice(0, 5).map((game: any, index: number) => {
-            return (
-              <SteamGameListing
-                key={game.name + index}
-                game={game}
-                lastItem={index === 4}
-                setGameData={setGameData}
-              />
-            )
-          })}
+          recentlyPlayed
+            .slice(0, maxGamesShown)
+            .map((game: any, index: number) => {
+              return (
+                <SteamGameListing
+                  key={game.name + index}
+                  game={game}
+                  lastItem={index === maxGamesShown - 1}
+                  setGameData={setGameData}
+                />
+              )
+            })}
         {!recentlyPlayed && (
           <div className="text-white flex flex-col justify-center items-center opacity-[0.4]">
             <SpotifyLoadingSpinner />
