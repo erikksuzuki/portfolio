@@ -5,6 +5,8 @@ import { getSteamGameInfo, getSteamPlayerInfo } from '@/app/authService'
 import SteamRecentGames from '@/components/SteamSection/RecentGames'
 import { formatDateOrdinal } from '@/utils/formatDateTime'
 import Image from 'next/image'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import clsx from 'clsx'
 // import jp from 'javascript-time-ago/locale/jp'
 
 const SteamSection = () => {
@@ -74,17 +76,49 @@ const SteamSection = () => {
                 .slice(0, 24)
                 .map((achievement: any) => {
                   return (
-                    <li
-                      className="border border-[rgba(255,155,0,0.6)] w-[24px] h-[24px] inline-block mr-2"
-                      key={achievement.name}
-                    >
-                      <Image
-                        width={24}
-                        height={24}
-                        alt={achievement.display_name}
-                        src={achievement.icon}
-                      />
-                    </li>
+                    <Tooltip.Provider key={achievement.name} delayDuration={0}>
+                      <Tooltip.Root>
+                        <Tooltip.Trigger asChild>
+                          <li className="border border-[rgba(255,155,0,0.6)] w-[24px] h-[24px] inline-block mr-2">
+                            <Image
+                              width={24}
+                              height={24}
+                              alt={achievement.display_name}
+                              src={achievement.icon}
+                            />
+                          </li>
+                        </Tooltip.Trigger>
+                        <Tooltip.Portal>
+                          <Tooltip.Content
+                            className="TooltipContent"
+                            sideOffset={5}
+                          >
+                            <div className="max-w-[280px]">
+                              <h2 className="text-theme-sm text-[rgb(255,195,0)]">
+                                {achievement.display_name}
+                              </h2>
+                              <p
+                                className={clsx('text-theme-xs mb-3', {
+                                  'italic text-[rgba(255,255,255,0.6)]':
+                                    !achievement.description,
+                                })}
+                              >
+                                {achievement.description ??
+                                  'Hidden achievement'}
+                              </p>
+                              <p className="text-theme-xs">
+                                Unlocked:{' '}
+                                {formatDateOrdinal(
+                                  achievement.unlocktime,
+                                  true,
+                                  true
+                                )}
+                              </p>
+                            </div>
+                          </Tooltip.Content>
+                        </Tooltip.Portal>
+                      </Tooltip.Root>
+                    </Tooltip.Provider>
                   )
                 })}
             </ul>
