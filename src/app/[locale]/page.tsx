@@ -12,6 +12,7 @@ import BlockscopeSection from './Blockscope'
 import FreeportSection from './Freeport'
 import GeminiSection from './Gemini'
 import FreelanceSection from './Freelance'
+import SteamSection from './Steam'
 
 export default function Home() {
   const t = useTranslations('header')
@@ -74,6 +75,7 @@ export default function Home() {
       */}
       </main>
       <SpotifySection />
+      <SteamSection />
       <div className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
         <BlockscopeSection />
         <FreeportSection columnsReversed />
