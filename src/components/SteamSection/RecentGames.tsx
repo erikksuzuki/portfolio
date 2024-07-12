@@ -9,7 +9,7 @@ const SteamRecentGames = ({ setGameData, recentlyPlayed }: any) => {
   TimeAgo.setDefaultLocale(en.locale)
   TimeAgo.addLocale(en)
   return (
-    <article className="rounded-lg border border-[rgba(255,255,255,0.1)] px-4 py-7 bg-acryllic-black">
+    <article className="rounded-lg border border-[rgba(255,255,255,0.1)] px-4 py-7 bg-acryllic-blacker">
       <header className="flex items-center justify-between">
         <div>
           <label className="uppercase text-[rgba(0,195,255)] text-[10px] tracking-widest font-semibold">
