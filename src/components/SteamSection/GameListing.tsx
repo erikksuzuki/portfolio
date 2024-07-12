@@ -7,13 +7,12 @@ import { useEffect } from 'react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { truncateParagraph } from '@/utils/formatString'
 import { useResponsive } from '@/hooks/useResponsive'
 import * as Tooltip from '@radix-ui/react-tooltip'
-import IconExternalPage from '@/assets/icons/common/IconExternalPage'
+import IconChevonRight from '@/assets/icons/common/IconChevronRight'
 
-const SpotifyTrackListing = ({ track, lastItem }: any) => {
+const SteamGameListing = ({ setGameData, game, lastItem }: any) => {
   const { isAboveMd } = useResponsive('md')
   useEffect(() => {
     TimeAgo.setDefaultLocale(en.locale)
@@ -21,11 +20,16 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
   }, [])
 
   const timeAgo = new TimeAgo('en-US')
-  const playedAt = new Date(track.played_at).getTime()
+  const playedAt = game?.rtime_last_played
+    ? new Date(game.rtime_last_played).getTime()
+    : new Date()
 
-  const attributions = track.track.artists
-    .map((artist: any) => artist.name)
+  const developers = game?.developers
+    .map((developer: any) => developer)
+    .slice(0, 2)
     .join(', ')
+
+  const attributions = `${developers}`
 
   const listItem = (
     <li
@@ -36,22 +40,26 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
       <div className="flex items-center gap-x-4">
         <div className="min-w-[36px] min-h-[36px] overflow-hidden rounded-sm border border-[rgba(255,255,255,0.2)]">
           <Image
-            alt={track.track.album.name}
-            src={track.track.album.images[0].url}
+            alt={game?.images.img_icon_url}
+            src={game?.images?.img_icon_url}
             height={36}
             width={36}
           />
         </div>
         <div>
-          <p className="text-theme-sm">
-            {truncateParagraph(track.track.name, isAboveMd ? 39 : 26, false)}
+          <p className="text-theme-sm capitalize">
+            {truncateParagraph(
+              game?.name.toLowerCase(),
+              isAboveMd ? 39 : 27,
+              false
+            )}
           </p>
           <p className="text-theme-xs opacity-[0.8]">{attributions}</p>
         </div>
       </div>
       <div className="text-right min-w-[100px]">
         <p className="text-theme-xs opacity-[0.7] mb-[2px]">
-          {formatAMPM(track.played_at)}
+          {formatAMPM(game?.rtime_last_played)}
         </p>
         <p className="text-theme-xs opacity-[0.5]">
           {timeAgo.format(playedAt)}
@@ -59,11 +67,18 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
       </div>
     </li>
   )
+
   return (
-    <Link
-      href={track.track.external_urls.spotify}
-      target="_blank"
-      className="w-full"
+    <div
+      className="w-full cursor-pointer"
+      onClick={() =>
+        isAboveMd
+          ? setGameData(game.appid)
+          : window.open(
+              `https://store.steampowered.com/app/${game?.appid}/`,
+              '_newtab'
+            )
+      }
     >
       {isAboveMd ? (
         <Tooltip.Provider delayDuration={0}>
@@ -76,8 +91,8 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
                 side="right"
               >
                 <div className="flex flex-row justify-center items-center gap-x-2">
-                  <h2 className="text-theme-sm">View in Spotify</h2>
-                  <IconExternalPage className="w-4 h-4" />
+                  <h2 className="text-theme-sm">View game details</h2>
+                  <IconChevonRight className="w-4 h-4" />
                 </div>
                 <Tooltip.Arrow className="TooltipArrow" />
               </Tooltip.Content>
@@ -87,8 +102,8 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
       ) : (
         listItem
       )}
-    </Link>
+    </div>
   )
 }
 
-export default SpotifyTrackListing
+export default SteamGameListing

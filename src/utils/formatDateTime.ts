@@ -1,3 +1,5 @@
+// takes a datetime string as input and returns the time of the day
+
 export function formatAMPM(date: string) {
   const thisDate = new Date(date)
   var hours = thisDate.getHours()
@@ -9,6 +11,8 @@ export function formatAMPM(date: string) {
   var strTime = hours + ':' + minutes + ' ' + ampm
   return strTime
 }
+
+// takes date and returns formated string with optional ordinal suffixes and year
 
 export function formatDateOrdinal(
   date: string,
