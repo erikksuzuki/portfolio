@@ -53,16 +53,18 @@ export async function GET(request: NextRequest) {
     gameAchievements &&
     gameSchema.game.availableGameStats.stats
   ) {
-    gameStats.playerstats.stats.forEach((stat: any) => {
-      const statSchema = gameSchema.game.availableGameStats.stats
-      const statName = statSchema.filter(
-        (statSchema: any) => statSchema.name === stat.name
-      )[0].displayName
-      stats[stat.name] = {
-        description: statName,
-        value: stat.value,
-      }
-    })
+    gameStats.playerstats.stats
+      ? gameStats.playerstats.stats.forEach((stat: any) => {
+          const statSchema = gameSchema.game.availableGameStats.stats
+          const statName = statSchema.filter(
+            (statSchema: any) => statSchema.name === stat.name
+          )[0].displayName
+          stats[stat.name] = {
+            description: statName,
+            value: stat.value,
+          }
+        })
+      : (stats = stats)
   }
 
   // parse player achievements for game
