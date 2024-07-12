@@ -42,7 +42,6 @@ export async function getSpotifyPlayingNow() {
 }
 
 export async function getSteamGameInfo(steamAppID: number) {
-  // Deep Rock Galactic: 548430
   try {
     const response = await fetch(
       `/api/steam/game-details?appid=${steamAppID}`,
