@@ -36,8 +36,8 @@ const SteamSection = () => {
     playerData && getAndSetGameData(playerData?.data?.recently_played[0].appid)
   }, [playerData])
 
-  const bgOverrides = [690040, 976900, 976730]
-  const overrideBg = bgOverrides.includes(gameData?.appid) ? true : false
+  // const bgOverrides = [690040, 976900, 976730]
+  // const overrideBg = bgOverrides.includes(gameData?.appid) ? true : false
   const releaseDateFormatted = gameData
     ? formatDateOrdinal(gameData.details.release_date, true, true)
     : ''
@@ -48,7 +48,7 @@ const SteamSection = () => {
         backgroundImage: `url(${
           !gameData || !isAboveMd
             ? SteamLoadingBackground.src
-            : gameData.details.backgrounds[overrideBg ? 0 : 1]
+            : gameData.details.backgrounds[0]
         })`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
