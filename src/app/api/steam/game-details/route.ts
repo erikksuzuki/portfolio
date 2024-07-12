@@ -47,29 +47,35 @@ export async function GET(request: NextRequest) {
 
   // parse player stats for game
   let stats: any = {}
+  // if (
+  //   gameDetails &&
+  //   gameStats &&
+  //   gameAchievements &&
+  //   gameSchema.game.availableGameStats.stats
+  // ) {
+  //   gameStats?.playerstats?.stats
+  //     ? gameStats.playerstats.stats.forEach((stat: any) => {
+  //         const statSchema = gameSchema.game.availableGameStats.stats
+  //         const statName = statSchema.filter(
+  //           (statSchema: any) => statSchema.name === stat.name
+  //         )[0].displayName
+  //         stats[stat.name] = {
+  //           description: statName,
+  //           value: stat.value,
+  //         }
+  //       })
+  //     : (stats = stats)
+  // }
+
+  // parse player achievements for game
+  let achievements: any = {}
   if (
     gameDetails &&
     gameStats &&
     gameAchievements &&
-    gameSchema.game.availableGameStats.stats
+    gameSchema &&
+    gameAchievements.playerstats?.achievements
   ) {
-    gameStats.playerstats.stats
-      ? gameStats.playerstats.stats.forEach((stat: any) => {
-          const statSchema = gameSchema.game.availableGameStats.stats
-          const statName = statSchema.filter(
-            (statSchema: any) => statSchema.name === stat.name
-          )[0].displayName
-          stats[stat.name] = {
-            description: statName,
-            value: stat.value,
-          }
-        })
-      : (stats = stats)
-  }
-
-  // parse player achievements for game
-  let achievements: any = {}
-  if (gameDetails && gameStats && gameAchievements && gameSchema) {
     const maxAchievementCount = gameAchievements.playerstats.achievements.length
     const unlockedAchievementCount =
       gameAchievements.playerstats.achievements.filter(
