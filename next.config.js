@@ -14,7 +14,12 @@ const nextConfig = {
     return config
   },
   images: {
-    domains: ['i.scdn.co', 'media.steampowered.com', 'steamcdn-a.akamaihd.net'],
+    domains: [
+      'i.scdn.co',
+      'media.steampowered.com',
+      'steamcdn-a.akamaihd.net',
+      'avatars.steamstatic.com',
+    ],
     formats: ['image/avif', 'image/webp'],
   },
   redirects: async () => {
