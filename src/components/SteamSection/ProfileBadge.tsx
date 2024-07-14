@@ -2,13 +2,16 @@
 
 import { formatDateOrdinal } from '@/utils/formatDateTime'
 import IconExternalPage from '@/assets/icons/common/IconExternalPage'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import IconUser from '@/assets/icons/common/IconUser'
 import IconClipboardDocument from '@/assets/icons/common/IconClipboardDocument'
+import clsx from 'clsx'
 
 const SteamProfileBadge = ({ playerData }: any) => {
+  const [invitationCopied, setInvitationCopied] = useState<boolean>(false)
+
   useEffect(() => {
     TimeAgo.setDefaultLocale(en.locale)
     TimeAgo.addLocale(en)
@@ -18,6 +21,14 @@ const SteamProfileBadge = ({ playerData }: any) => {
   const lastLogOff = playerData?.data?.lastlogoff
     ? new Date(playerData?.data?.lastlogoff).getTime()
     : new Date()
+
+  const handleInvitationCopy = () => {
+    setInvitationCopied(true)
+    setTimeout(() => {
+      setInvitationCopied(false)
+    }, 700)
+    navigator.clipboard.writeText(playerData?.data?.friend_code)
+  }
 
   return (
     <div>
@@ -55,24 +66,28 @@ const SteamProfileBadge = ({ playerData }: any) => {
             </div>
             <div
               className="flex items-center group cursor-pointer"
-              onClick={() => {
-                navigator.clipboard.writeText(playerData?.data?.friend_code)
-              }}
+              onClick={() => handleInvitationCopy()}
             >
               <div className="flex items-center gap-x-4">
                 <div>
                   <p className="text-theme-xs opacity-[0.85] mb-[2px]">
                     Invitation Code
                   </p>
-                  <p className="text-theme-xs opacity-[0.75]">
-                    {playerData?.data?.friend_code}
+                  <p
+                    className={clsx('text-theme-xs opacity-[0.75]', {
+                      'text-[rgba(0,255,0)]': invitationCopied,
+                    })}
+                  >
+                    {invitationCopied
+                      ? 'Copied!'
+                      : playerData?.data?.friend_code}
                   </p>
                 </div>
               </div>
               <div className="h-[33px] w-[33px] relative top-[-1] ml-3 border border-[rgba(255,255,255,0.2)] group-hover:bg-[rgba(255,255,255,0.1)] flex items-center justify-center rounded-md">
                 <IconClipboardDocument
                   strokeWidth={1.4}
-                  className="w-5 h-5 opacity-[0.7]"
+                  className="w-5 h-5 opacity-[0.7] group-hover:opacity-[1]"
                 />
               </div>
             </div>
