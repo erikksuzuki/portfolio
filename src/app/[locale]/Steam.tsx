@@ -46,6 +46,7 @@ const SteamSection = () => {
         <section className="text-left gap-y-6 grid grid-cols-1 md:grid-cols-2 py-24 px-0 md:px-4 w-full mx-auto max-w-[1024px] relative">
           <SteamRecentGames
             recentlyPlayed={playerData?.data?.recently_played}
+            playerData={playerData}
             setGameData={getAndSetGameData}
           />
           <aside className="w-full hidden md:flex items-center justify-center bg-acryllic-blacker rounded-lg border border-[rgba(255,255,255,0.1)] relative">
