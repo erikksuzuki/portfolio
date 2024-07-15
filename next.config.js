@@ -19,6 +19,7 @@ const nextConfig = {
       'media.steampowered.com',
       'steamcdn-a.akamaihd.net',
       'avatars.steamstatic.com',
+      'shared.akamai.steamstatic.com',
     ],
     formats: ['image/avif', 'image/webp'],
   },

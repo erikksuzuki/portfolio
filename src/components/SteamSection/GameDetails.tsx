@@ -14,8 +14,15 @@ const SteamGameDetails = ({ gameData, playerData }: any) => {
     : ''
   return (
     <div className="md:px-8 px-4 py-8 w-full max-w-[460px]">
+      <Image
+        alt={gameData?.details.name}
+        src={gameData?.details.capsule_images[0]}
+        width={159}
+        height={60}
+        className="rounded-md mb-4"
+      />
       <div className="flex flex-row justify-between items-end mb-3">
-        <h2 className="text-theme-sm capitalize">
+        <h2 className="text-theme-sm capitalize font-bold">
           {gameData?.details.name.toLowerCase()}
         </h2>
         <p className="text-theme-xs">Released {releaseDateFormatted}</p>
