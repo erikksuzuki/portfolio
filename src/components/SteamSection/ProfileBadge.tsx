@@ -34,7 +34,15 @@ const SteamProfileBadge = ({ playerData }: any) => {
     <div>
       <div className="w-full mb-6 pb-3 border-b border-[rgba(255,255,255,0.2)]">
         <div className="flex justify-between items-end w-full mb-3 pb-1 border-b border-[rgba(255,255,255,0.2)]">
-          <div className="flex items-center gap-x-2 hover:text-[rgba(0,200,255)]">
+          <div
+            className="flex items-center gap-x-2 hover:text-[rgba(0,200,255)]"
+            onClick={() => {
+              window.open(
+                `https://steamcommunity.com/profiles/76561199052406103/`,
+                '_newtab'
+              )
+            }}
+          >
             <IconUser className="w-[18px] h-[18px] relative top-[-1px]" />
             <p className="text-theme- capitalize flex items-center cursor-pointer">
               {playerData?.data?.name}{' '}
