@@ -11,13 +11,23 @@ const SteamSection = () => {
   const { isAboveMd } = useResponsive('md')
   const [playerData, setPlayerData] = useState<any>()
   const [gameData, setGameData] = useState<any>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   async function getAndSetPlayerData() {
     getSteamPlayerInfo().then((data) => setPlayerData(data))
   }
 
   async function getAndSetGameData(appid: number) {
-    getSteamGameInfo(appid).then((data) => setGameData(data))
+    setLoading(true)
+    getSteamGameInfo(appid)
+      .then((data) => {
+        setLoading(false)
+        setGameData(data)
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error)
+      })
   }
 
   useEffect(() => {
@@ -50,7 +60,9 @@ const SteamSection = () => {
             setGameData={getAndSetGameData}
           />
           <aside className="w-full hidden md:flex items-center justify-center bg-acryllic-blacker rounded-lg border border-[rgba(255,255,255,0.1)] relative">
-            <SteamGameDetails gameData={gameData} playerData={playerData} />
+            {!loading && (
+              <SteamGameDetails gameData={gameData} playerData={playerData} />
+            )}
           </aside>
         </section>
       </div>
