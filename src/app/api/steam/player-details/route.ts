@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import { NextRequest, NextResponse } from 'next/server'
 
 import { getPlayerOwnedGames } from './getOwnedGames'
@@ -5,9 +7,10 @@ import { getPlayerRecentlyPlayed } from './getRecentlyPlayed'
 import { getPlayerSummary } from './getPlayerSummary'
 import { getGameDetails } from '../game-details/getGameDetails'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const summary: any = await getPlayerSummary()
   const ownedGames: any = await getPlayerOwnedGames()
+  const recentGames: any = await getPlayerRecentlyPlayed()
 
   // const recentlyPlayed: any = await getPlayerRecentlyPlayed()
   const recentlyPlayed = ownedGames.response.games
@@ -94,6 +97,17 @@ export async function GET() {
     }
   })
 
+  const recentlyPlayedGamesCensored = recentlyPlayedGames.filter(
+    (game: any) => {
+      if (!game.content_descriptorids) return true
+      if (
+        game.content_descriptorids.includes(1) &&
+        game.content_descriptorids.includes(5)
+      )
+        return false
+    }
+  )
+
   const data = {
     name: summary.response.players[0].personaname,
     profileurl: summary.response.players[0].profileurl,
@@ -103,7 +117,7 @@ export async function GET() {
     personastate: summary.response.players[0].personastate,
     lastlogoff: new Date(Number(summary.response.players[0].lastlogoff * 1000)),
     games_owned: ownedGames.response.game_count,
-    recently_played: recentlyPlayedGames,
+    recently_played: recentlyPlayedGamesCensored,
   }
 
   return NextResponse.json({ data }, { status: 200 })
