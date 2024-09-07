@@ -6,7 +6,6 @@ import { socialLinkData } from '../socialLinkData'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
 
 import AsciiPortrait from '@/components/Header/AsciiPortrait'
-import Spline from '@splinetool/react-spline/next'
 
 import SpotifySection from '@/app/[locale]/Spotify'
 import BlockscopeSection from './Blockscope'
@@ -58,8 +57,8 @@ export default function Home() {
               label="Find me on:"
             />
           </div>
-          <div className="md:order-2 order-1 flex flex-col justify-center items-center min-h-[367px]">
-            <Spline scene="https://prod.spline.design/PpJr2w5JnScvkuD5/scene.splinecode" />
+          <div className="md:order-2 order-1 flex flex-col justify-center items-center">
+            <AsciiPortrait />
           </div>
         </section>
         {/* 
