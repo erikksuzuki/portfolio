@@ -168,7 +168,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    Morning
+                    AM
                   </td>
                   <td
                     className="border-2 border-black p-2"
@@ -488,7 +488,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    Afternoon
+                    PM
                   </td>
                   <td
                     className="border-2 border-black p-2"
