@@ -71,6 +71,14 @@ const BabysSchedulePage = () => {
       return false
     }
   }
+
+  const TimeSegment = ({ block, day }: any) => {
+    if (schedule[block - 1][day] === '0' ? '' : 'class') {
+      return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
+    } else {
+      return <div></div>
+    }
+  }
   return (
     <div>
       <section className="border text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
@@ -175,7 +183,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[1 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={1} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -184,7 +192,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[1 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={1} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -193,7 +201,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[1 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={1} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -202,7 +210,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[1 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={1} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -211,7 +219,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[1 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={1} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -220,7 +228,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[1 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={1} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -248,7 +256,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[2 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={2} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -257,7 +265,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[2 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={2} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -266,7 +274,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[2 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={2} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -275,7 +283,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[2 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={2} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -284,7 +292,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[2 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={2} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -293,7 +301,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[2 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={2} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -321,7 +329,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[3 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={3} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -330,7 +338,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[3 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={3} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -339,7 +347,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[3 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={3} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -348,7 +356,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[3 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={3} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -357,7 +365,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[3 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={3} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -366,7 +374,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[3 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={3} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -394,7 +402,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[4 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={4} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -403,7 +411,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[4 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={4} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -412,7 +420,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[4 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={4} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -421,7 +429,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[4 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={4} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -430,7 +438,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[4 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={4} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -439,7 +447,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[4 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={4} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -495,7 +503,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[5 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={5} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -504,7 +512,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[5 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={5} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -513,7 +521,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[5 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={5} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -522,7 +530,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[5 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={5} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -531,7 +539,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[5 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={5} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -540,7 +548,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[5 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={5} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -568,7 +576,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[6 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={6} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -577,7 +585,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[6 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={6} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -586,7 +594,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[6 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={6} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -595,7 +603,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[6 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={6} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -604,7 +612,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[6 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={6} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -613,7 +621,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[6 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={6} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -641,7 +649,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[7 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={7} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -650,7 +658,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[7 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={7} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -659,7 +667,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[7 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={7} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -668,7 +676,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[7 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={7} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -677,7 +685,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[7 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={7} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -686,7 +694,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[7 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={7} day={5} />
                   </td>
                 </tr>
                 <tr
@@ -714,7 +722,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[8 - 1][0] === '0' ? '' : 'class'}
+                    <TimeSegment block={8} day={0} />
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -723,7 +731,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[8 - 1][1] === '0' ? '' : 'class'}
+                    <TimeSegment block={8} day={1} />
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -732,7 +740,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[8 - 1][2] === '0' ? '' : 'class'}
+                    <TimeSegment block={8} day={2} />
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -741,7 +749,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[8 - 1][3] === '0' ? '' : 'class'}
+                    <TimeSegment block={8} day={3} />
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -750,7 +758,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[8 - 1][4] === '0' ? '' : 'class'}
+                    <TimeSegment block={8} day={4} />
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -759,7 +767,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    {schedule[8 - 1][5] === '0' ? '' : 'class'}
+                    <TimeSegment block={8} day={5} />
                   </td>
                 </tr>
               </tbody>
