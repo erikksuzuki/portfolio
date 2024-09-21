@@ -8,7 +8,7 @@ const BabysSchedulePage = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimeNowHere(new Date(/* 'Sep 19 0:37' */))
-    }, 5000)
+    }, 1000)
     return () => clearInterval(intervalId)
   }, [])
   const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
@@ -89,15 +89,15 @@ const BabysSchedulePage = () => {
 
   return (
     <div>
-      <section className="border text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
-        <div className="w-full border border-[#0f0]">
-          <div>I love you</div>
+      <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
+        <div className="w-full">
+          <div>My baby&apos;s schedule</div>
           <div>
-            The time now: {timeNowReadable.dayofweek}, {timeNowReadable.hour}:
+            {timeNowReadable.dayofweek}, {timeNowReadable.hour}:
             {timeNowReadable.minute} {timeNowReadable.ampm}
           </div>
           <div>
-            <table className="border border-white w-full" width="100%">
+            <table className="w-full" width="100%">
               <thead className="bg-[rgba(255,255,255,0.1)]">
                 <tr>
                   <th align="center" className="border-2 border-black p-2" />
