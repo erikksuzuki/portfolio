@@ -2,13 +2,13 @@ import clsx from 'clsx'
 
 const BabysSchedulePage = () => {
   const daysOfTheWeek = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
-    'Sunday',
   ]
   const times: any = {
     1: { start: '7:20', end: '8:00' },
@@ -21,16 +21,23 @@ const BabysSchedulePage = () => {
     7: { start: '14:45', end: '15:25' },
     8: { start: '15:30', end: '16:10' },
   }
-  const timeNowDetails = {
-    month: 'Sep',
-    day: '19',
-    time: '14:37',
-  }
+  const schedule = [
+    ['0', '1', '1', '1', '1', '0'],
+    ['0', '1', '1', '0', '1', '0'],
+    ['1', '0', '0', '1', '0', '0'],
+    ['1', '0', '1', '1', '0', '0'],
+    ['0', '0', '1', '0', '0', '0'],
+    ['1', '0', '1', '0', '0', '0'],
+    ['1', '0', '0', '1', '1', '1'],
+    ['1', '1', '0', '1', '1', '1'],
+  ]
 
-  const timeNow = new Date()
+  const timeNowHere = new Date('Sep 19 0:37')
+  const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
+
   const timeNowReadable = {
     dayofweek: daysOfTheWeek[timeNow.getDay()],
-    month: timeNow.getMonth(),
+    month: timeNow.getMonth() + 1,
     day: timeNow.getDate(),
     time: `${timeNow.getHours()}:${
       timeNow.getMinutes().toString().length === 1
@@ -168,7 +175,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[1 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -177,7 +184,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[1 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -186,7 +193,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[1 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -195,7 +202,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[1 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -204,7 +211,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[1 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -213,7 +220,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[1 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -241,7 +248,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[2 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -250,7 +257,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[2 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -259,7 +266,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[2 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -268,7 +275,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[2 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -277,7 +284,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[2 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -286,7 +293,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[2 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -314,7 +321,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[3 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -323,7 +330,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[3 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -332,7 +339,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[3 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -341,7 +348,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[3 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -350,7 +357,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[3 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -359,7 +366,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[3 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -387,7 +394,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[4 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -396,7 +403,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[4 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -405,7 +412,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[4 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -414,7 +421,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[4 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -423,7 +430,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[4 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -432,7 +439,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[4 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -488,7 +495,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[5 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -497,7 +504,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[5 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -506,7 +513,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[5 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -515,7 +522,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[5 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -524,7 +531,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[5 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -533,7 +540,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[5 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -561,7 +568,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[6 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -570,7 +577,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[6 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -579,7 +586,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[6 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -588,7 +595,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[6 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -597,7 +604,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[6 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -606,7 +613,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[6 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -634,7 +641,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[7 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -643,7 +650,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[7 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -652,7 +659,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[7 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -661,7 +668,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[7 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -670,7 +677,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[7 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -679,7 +686,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[7 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
                 <tr
@@ -707,7 +714,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    montime
+                    {schedule[8 - 1][0] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
@@ -716,7 +723,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    tuetime
+                    {schedule[8 - 1][1] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
@@ -725,7 +732,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    wedtime
+                    {schedule[8 - 1][2] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
@@ -734,7 +741,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    thutime
+                    {schedule[8 - 1][3] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
@@ -743,7 +750,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    fritime
+                    {schedule[8 - 1][4] === '0' ? '' : 'class'}
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
@@ -752,7 +759,7 @@ const BabysSchedulePage = () => {
                     valign="middle"
                     align="center"
                   >
-                    sattime
+                    {schedule[8 - 1][5] === '0' ? '' : 'class'}
                   </td>
                 </tr>
               </tbody>
