@@ -1,6 +1,17 @@
+'use client'
+
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 
 const BabysSchedulePage = () => {
+  const [timeNowHere, setTimeNowHere] = useState<Date>(new Date())
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeNowHere(new Date(/* 'Sep 19 0:37' */))
+    }, 5000)
+    return () => clearInterval(intervalId)
+  }, [])
+  const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
   const daysOfTheWeek = [
     'Sunday',
     'Monday',
@@ -22,18 +33,22 @@ const BabysSchedulePage = () => {
     8: { start: '15:30', end: '16:10' },
   }
   const schedule = [
-    ['0', '1', '1', '1', '1', '0'],
-    ['0', '1', '1', '0', '1', '0'],
-    ['1', '0', '0', '1', '0', '0'],
-    ['1', '0', '1', '1', '0', '0'],
-    ['0', '0', '1', '0', '0', '0'],
-    ['1', '0', '1', '0', '0', '0'],
-    ['1', '0', '0', '1', '1', '1'],
-    ['1', '1', '0', '1', '1', '1'],
+    ['.', '1', '1', '1', '1', '.'],
+    ['.', '1', '1', '.', '1', '.'],
+    ['1', '.', '.', '1', '.', '.'],
+    ['1', '.', '1', '1', '.', '.'],
+    ['.', '.', '1', '.', '.', '.'],
+    ['1', '.', '1', '.', '.', '.'],
+    ['1', '.', '.', '1', '1', '1'],
+    ['1', '1', '.', '1', '1', '1'],
   ]
-
-  const timeNowHere = new Date('Sep 19 0:37')
-  const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
+  const TimeSegment = ({ block, day }: any) => {
+    if (schedule[block - 1][day] === '.' ? '' : 'class') {
+      return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
+    } else {
+      return <div></div>
+    }
+  }
 
   const timeNowReadable = {
     dayofweek: daysOfTheWeek[timeNow.getDay()],
@@ -72,13 +87,6 @@ const BabysSchedulePage = () => {
     }
   }
 
-  const TimeSegment = ({ block, day }: any) => {
-    if (schedule[block - 1][day] === '0' ? '' : 'class') {
-      return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
-    } else {
-      return <div></div>
-    }
-  }
   return (
     <div>
       <section className="border text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
