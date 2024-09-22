@@ -13,13 +13,34 @@ const TimeDisplay = ({ time }: any) => {
   return <div>{timeString}</div>
 }
 
+const DayProgressColumnDisplay = ({
+  progressPercent,
+  isSchoolHours,
+}: {
+  progressPercent: number
+  isSchoolHours: boolean
+}) => {
+  return (
+    <div className="w-full left-0 h-[478px] absolute top-[42px]">
+      <div
+        style={{
+          height: `${progressPercent * 478}px`,
+        }}
+        className={clsx('absolute w-full left-0 top-0', {
+          'border-b-2 border-[#fff]': isSchoolHours,
+        })}
+      />
+    </div>
+  )
+}
+
 const BabysSchedulePage = () => {
-  let initialTime = new Date('Sep 17 19:46').getTime()
+  let initialTime = new Date('Sep 17 16:46').getTime()
   const [timeNowHere, setTimeNowHere] = useState<Date>(new Date(initialTime))
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 5000))
-    }, 5)
+      setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 375000))
+    }, 50)
     return () => clearInterval(intervalId)
   }, [initialTime])
   const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
@@ -154,6 +175,43 @@ const BabysSchedulePage = () => {
     }
   }
 
+  function getDayProgressPercent() {
+    let isSchoolHours = false
+    if (
+      new Date(
+        `${timeNowReadable.month} ${
+          timeNowReadable.day
+        } ${timeNow.getHours()}:${timeNowReadable.minute}`
+      ).getTime() <
+        new Date(
+          `${timeNowReadable.month} ${timeNowReadable.day} 7:20`
+        ).getTime() ||
+      new Date(
+        `${timeNowReadable.month} ${
+          timeNowReadable.day
+        } ${timeNow.getHours()}:${timeNowReadable.minute}`
+      ).getTime() >
+        new Date(
+          `${timeNowReadable.month} ${timeNowReadable.day} 16:10`
+        ).getTime()
+    ) {
+      isSchoolHours = false
+    } else {
+      isSchoolHours = true
+    }
+
+    let minutesIn = 0
+    let totalAvailableMinutes = 530
+    if (isSchoolHours) {
+      minutesIn =
+        (timeNow.getHours() - 7) * 60 + Number(timeNowReadable.minute) - 20
+    }
+    return {
+      isSchoolHours: isSchoolHours,
+      dayProgress: Number(minutesIn / totalAvailableMinutes),
+    }
+  }
+
   return (
     <div>
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
@@ -171,6 +229,11 @@ const BabysSchedulePage = () => {
           </div>
           <div>{calculateTimeBetween()}</div>
           <div>
+            {getDayProgressPercent().isSchoolHours
+              ? getDayProgressPercent().dayProgress
+              : 'Day Not Started'}
+          </div>
+          <div>
             <table className="w-full" width="100%">
               <thead className="bg-[rgba(255,255,255,0.1)]">
                 <tr>
@@ -183,10 +246,21 @@ const BabysSchedulePage = () => {
                   </th>
                   <th
                     align="center"
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
-                    })}
+                    className={clsx(
+                      'data-mon border-2 border-black p-2 relative',
+                      {
+                        'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      }
+                    )}
                   >
+                    {timeNowReadable.dayofweek === 'Monday' ? (
+                      <DayProgressColumnDisplay
+                        progressPercent={getDayProgressPercent().dayProgress}
+                        isSchoolHours={getDayProgressPercent().isSchoolHours}
+                      />
+                    ) : (
+                      <div />
+                    )}
                     Monday
                   </th>
                   <th
@@ -199,7 +273,10 @@ const BabysSchedulePage = () => {
                     )}
                   >
                     {timeNowReadable.dayofweek === 'Tuesday' ? (
-                      <div className="w-full left-0 border-2 min-h-[478px] border-[#0f0] max-h-[4px] absolute top-[42px]" />
+                      <DayProgressColumnDisplay
+                        progressPercent={getDayProgressPercent().dayProgress}
+                        isSchoolHours={getDayProgressPercent().isSchoolHours}
+                      />
                     ) : (
                       <div />
                     )}
@@ -207,34 +284,78 @@ const BabysSchedulePage = () => {
                   </th>
                   <th
                     align="center"
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
-                    })}
+                    className={clsx(
+                      'data-wed border-2 border-black p-2 relative',
+                      {
+                        'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      }
+                    )}
                   >
+                    {timeNowReadable.dayofweek === 'Wednesday' ? (
+                      <DayProgressColumnDisplay
+                        progressPercent={getDayProgressPercent().dayProgress}
+                        isSchoolHours={getDayProgressPercent().isSchoolHours}
+                      />
+                    ) : (
+                      <div />
+                    )}
                     Wednesday
                   </th>
                   <th
                     align="center"
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
-                    })}
+                    className={clsx(
+                      'data-thu border-2 border-black p-2 relative',
+                      {
+                        'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      }
+                    )}
                   >
+                    {timeNowReadable.dayofweek === 'Thursday' ? (
+                      <DayProgressColumnDisplay
+                        progressPercent={getDayProgressPercent().dayProgress}
+                        isSchoolHours={getDayProgressPercent().isSchoolHours}
+                      />
+                    ) : (
+                      <div />
+                    )}
                     Thursday
                   </th>
                   <th
                     align="center"
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
-                    })}
+                    className={clsx(
+                      'data-fri border-2 border-black p-2 relative',
+                      {
+                        'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      }
+                    )}
                   >
+                    {timeNowReadable.dayofweek === 'Friday' ? (
+                      <DayProgressColumnDisplay
+                        progressPercent={getDayProgressPercent().dayProgress}
+                        isSchoolHours={getDayProgressPercent().isSchoolHours}
+                      />
+                    ) : (
+                      <div />
+                    )}
                     Friday
                   </th>
                   <th
                     align="center"
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
-                    })}
+                    className={clsx(
+                      'data-sat border-2 border-black p-2 relative',
+                      {
+                        'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      }
+                    )}
                   >
+                    {timeNowReadable.dayofweek === 'Saturday' ? (
+                      <DayProgressColumnDisplay
+                        progressPercent={getDayProgressPercent().dayProgress}
+                        isSchoolHours={getDayProgressPercent().isSchoolHours}
+                      />
+                    ) : (
+                      <div />
+                    )}
                     Saturday
                   </th>
                 </tr>
@@ -540,12 +661,7 @@ const BabysSchedulePage = () => {
                     <TimeSegment block={4} day={5} />
                   </td>
                 </tr>
-                <tr
-                  id="LunchBreakRow"
-                  className={clsx({
-                    'bg-black': checkClassSlot(0),
-                  })}
-                >
+                <tr id="LunchBreakRow">
                   <td
                     className="border-2 border-black p-2 h-[140px]"
                     valign="middle"
