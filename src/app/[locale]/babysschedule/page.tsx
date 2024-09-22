@@ -4,13 +4,34 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 const TimeDisplay = ({ time }: any) => {
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
   const [timeString, setTimeString] = useState('Loading...')
+  const [dateString, setDateString] = useState('')
   useEffect(() => {
-    setTimeString(
-      `${time.dayofweek}, ${time.hour}:${time.minute}:${time.second} ${time.ampm}`
+    setDateString(
+      `${time.dayofweek}, ${monthNames[time.month - 1]} ${time.day}`
     )
+    setTimeString(`${time.hour}:${time.minute} ${time.ampm}`)
   }, [time])
-  return <div>{timeString}</div>
+  return (
+    <div className="text-center w-full">
+      <div>{timeString}</div>
+      <div>{dateString}</div>
+    </div>
+  )
 }
 
 const DayProgressColumnDisplay = ({
@@ -35,12 +56,19 @@ const DayProgressColumnDisplay = ({
 }
 
 const BabysSchedulePage = () => {
-  let initialTime = new Date('Sep 17 16:46').getTime()
+  let initialTime = new Date(/* 'Sep 17 16:46' */).getTime()
   const [timeNowHere, setTimeNowHere] = useState<Date>(new Date(initialTime))
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 375000))
+  //   }, 50)
+  //   return () => clearInterval(intervalId)
+  // }, [initialTime])
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 375000))
-    }, 50)
+      setTimeNowHere(new Date())
+    }, 1000)
     return () => clearInterval(intervalId)
   }, [initialTime])
   const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
@@ -216,23 +244,25 @@ const BabysSchedulePage = () => {
     <div>
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
         <div className="w-full">
-          <div>My baby&apos;s schedule</div>
           <TimeDisplay time={timeNowReadable} />
           <div
             className={clsx(
-              'text-theme-heading-sm',
+              'text-theme-heading-sm w-full text-center',
               { 'text-[#0f0]': !inClassNow },
               { 'text-[red]': inClassNow }
             )}
           >
-            {inClassNow ? 'Class in Session' : 'Not in Class'}
+            {inClassNow
+              ? 'Class in Session'
+              : getDayProgressPercent().isSchoolHours &&
+                timeNowReadable.dayofweek !== 'Sunday'
+              ? 'No Class'
+              : 'Non-School Hours'}
           </div>
-          <div>{calculateTimeBetween()}</div>
-          <div>
-            {getDayProgressPercent().isSchoolHours
-              ? getDayProgressPercent().dayProgress
-              : 'Day Not Started'}
+          <div className="w-full text-center mb-4">
+            {calculateTimeBetween()}
           </div>
+
           <div>
             <table className="w-full" width="100%">
               <thead className="bg-[rgba(255,255,255,0.1)]">
@@ -249,7 +279,8 @@ const BabysSchedulePage = () => {
                     className={clsx(
                       'data-mon border-2 border-black p-2 relative',
                       {
-                        'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                        'bg-[rgba(0,0,0,0.4)]':
+                          timeNowReadable.dayofweek === 'Monday',
                       }
                     )}
                   >
@@ -268,7 +299,8 @@ const BabysSchedulePage = () => {
                     className={clsx(
                       'data-tue border-2 border-black p-2 relative',
                       {
-                        'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                        'bg-[rgba(0,0,0,0.4)]':
+                          timeNowReadable.dayofweek === 'Tuesday',
                       }
                     )}
                   >
@@ -287,7 +319,8 @@ const BabysSchedulePage = () => {
                     className={clsx(
                       'data-wed border-2 border-black p-2 relative',
                       {
-                        'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                        'bg-[rgba(0,0,0,0.4)]':
+                          timeNowReadable.dayofweek === 'Wednesday',
                       }
                     )}
                   >
@@ -306,7 +339,8 @@ const BabysSchedulePage = () => {
                     className={clsx(
                       'data-thu border-2 border-black p-2 relative',
                       {
-                        'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                        'bg-[rgba(0,0,0,0.4)]':
+                          timeNowReadable.dayofweek === 'Thursday',
                       }
                     )}
                   >
@@ -325,7 +359,8 @@ const BabysSchedulePage = () => {
                     className={clsx(
                       'data-fri border-2 border-black p-2 relative',
                       {
-                        'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                        'bg-[rgba(0,0,0,0.4)]':
+                          timeNowReadable.dayofweek === 'Friday',
                       }
                     )}
                   >
@@ -344,7 +379,8 @@ const BabysSchedulePage = () => {
                     className={clsx(
                       'data-sat border-2 border-black p-2 relative',
                       {
-                        'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                        'bg-[rgba(0,0,0,0.4)]':
+                          timeNowReadable.dayofweek === 'Saturday',
                       }
                     )}
                   >
@@ -389,7 +425,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -398,7 +435,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -407,7 +445,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -416,7 +455,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -425,7 +465,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -434,7 +475,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -462,7 +504,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -471,7 +514,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -480,7 +524,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -489,7 +534,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -498,7 +544,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -507,7 +554,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -535,7 +583,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -544,7 +593,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -553,7 +603,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -562,7 +613,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -571,7 +623,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -580,7 +633,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -608,7 +662,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -617,7 +672,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -626,7 +682,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -635,7 +692,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -644,7 +702,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -653,7 +712,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -706,7 +766,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -715,7 +776,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -724,7 +786,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -733,7 +796,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -742,7 +806,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -751,7 +816,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -779,7 +845,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -788,7 +855,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -797,7 +865,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -806,7 +875,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -815,7 +885,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -824,7 +895,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -852,7 +924,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -861,7 +934,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -870,7 +944,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -879,7 +954,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -888,7 +964,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -897,7 +974,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
@@ -925,7 +1003,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[red]': timeNowReadable.dayofweek === 'Monday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Monday',
                     })}
                     valign="middle"
                     align="center"
@@ -934,7 +1013,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Tuesday',
                     })}
                     valign="middle"
                     align="center"
@@ -943,7 +1023,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[blue]': timeNowReadable.dayofweek === 'Wednesday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Wednesday',
                     })}
                     valign="middle"
                     align="center"
@@ -952,7 +1033,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[teal]': timeNowReadable.dayofweek === 'Thursday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Thursday',
                     })}
                     valign="middle"
                     align="center"
@@ -961,7 +1043,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[#f0c]': timeNowReadable.dayofweek === 'Friday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Friday',
                     })}
                     valign="middle"
                     align="center"
@@ -970,7 +1053,8 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[#000]': timeNowReadable.dayofweek === 'Saturday',
+                      'bg-[rgba(0,0,0,0.4)]':
+                        timeNowReadable.dayofweek === 'Saturday',
                     })}
                     valign="middle"
                     align="center"
