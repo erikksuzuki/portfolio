@@ -3,14 +3,25 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
+const TimeDisplay = ({ time }: any) => {
+  const [timeString, setTimeString] = useState('Loading...')
+  useEffect(() => {
+    setTimeString(
+      `${time.dayofweek}, ${time.hour}:${time.minute}:${time.second} ${time.ampm}`
+    )
+  }, [time])
+  return <div>{timeString}</div>
+}
+
 const BabysSchedulePage = () => {
-  const [timeNowHere, setTimeNowHere] = useState<Date>(new Date())
+  let initialTime = new Date('Sep 17 19:46').getTime()
+  const [timeNowHere, setTimeNowHere] = useState<Date>(new Date(initialTime))
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeNowHere(new Date(/* 'Sep 19 0:37' */))
-    }, 1000)
+      setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 5000))
+    }, 5)
     return () => clearInterval(intervalId)
-  }, [])
+  }, [initialTime])
   const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
   const daysOfTheWeek = [
     'Sunday',
@@ -22,34 +33,35 @@ const BabysSchedulePage = () => {
     'Saturday',
   ]
   const times: any = {
+    // Morning begins
     1: { start: '7:20', end: '8:00' },
     2: { start: '8:15', end: '8:55' },
     3: { start: '9:05', end: '9:45' },
     4: { start: '9:50', end: '10:30' },
-    lunch: { start: '10:30', end: '13:05' },
+    // Lunch begins
+    0: { start: '10:30', end: '13:05' },
+    // Afternoon begins
     5: { start: '13:05', end: '13:45' },
     6: { start: '14:00', end: '14:40' },
     7: { start: '14:45', end: '15:25' },
     8: { start: '15:30', end: '16:10' },
   }
-  const schedule = [
-    ['.', '1', '1', '1', '1', '.'],
-    ['.', '1', '1', '.', '1', '.'],
-    ['1', '.', '.', '1', '.', '.'],
-    ['1', '.', '1', '1', '.', '.'],
-    ['.', '.', '1', '.', '.', '.'],
-    ['1', '.', '1', '.', '.', '.'],
-    ['1', '.', '.', '1', '1', '1'],
-    ['1', '1', '.', '1', '1', '1'],
-  ]
-  const TimeSegment = ({ block, day }: any) => {
-    if (schedule[block - 1][day] === '.' ? '' : 'class') {
+  const schedule: any = {
+    Monday: ['.', '.', '1', '1', '.', '1', '1', '1'],
+    Tuesday: ['1', '1', '.', '.', '.', '.', '.', '1'],
+    Wednesday: ['1', '1', '.', '1', '1', '1', '.', '.'],
+    Thursday: ['1', '.', '1', '1', '.', '.', '1', '1'],
+    Friday: ['1', '1', '.', '.', '.', '.', '1', '1'],
+    Saturday: ['.', '.', '.', '.', '.', '.', '1', '1'],
+    Sunday: ['.', '.', '.', '.', '.', '.', '.', '.'],
+  }
+  const TimeSegment = ({ block, day }: { block: number; day: number }) => {
+    if (schedule[daysOfTheWeek[day + 1]][block - 1] === '.' ? '' : 'class') {
       return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
     } else {
       return <div></div>
     }
   }
-
   const timeNowReadable = {
     dayofweek: daysOfTheWeek[timeNow.getDay()],
     month: timeNow.getMonth() + 1,
@@ -67,10 +79,13 @@ const BabysSchedulePage = () => {
       timeNow.getMinutes().toString().length === 1
         ? `0${timeNow.getMinutes()}`
         : timeNow.getMinutes(),
+    second:
+      timeNow.getSeconds().toString().length === 1
+        ? `0${timeNow.getSeconds()}`
+        : timeNow.getSeconds(),
     ampm: timeNow.getHours() > 12 ? 'PM' : 'AM',
   }
-
-  function checkClassSlot(slotNumber: number | string) {
+  function checkClassSlot(slotNumber: number) {
     if (
       timeNow.getTime() >=
         new Date(
@@ -81,9 +96,61 @@ const BabysSchedulePage = () => {
           `${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].end}`
         ).getTime()
     ) {
-      return true
+      if (schedule[timeNowReadable.dayofweek][slotNumber - 1] === '.') {
+        return false
+      } else {
+        return true
+      }
     } else {
       return false
+    }
+  }
+  const inClassNow =
+    !checkClassSlot(1) &&
+    !checkClassSlot(2) &&
+    !checkClassSlot(3) &&
+    !checkClassSlot(4) &&
+    !checkClassSlot(5) &&
+    !checkClassSlot(6) &&
+    !checkClassSlot(7) &&
+    !checkClassSlot(8)
+      ? false
+      : true
+  function calculateTimeBetween() {
+    if (inClassNow) {
+      let currentBlock = 1
+      schedule[timeNowReadable.dayofweek].forEach(
+        (timeSlot: string, index: number) => {
+          const nextSlotStart: Date = new Date(
+            `${timeNowReadable.month} ${timeNowReadable.day} ${
+              times[index + 1].start
+            }`
+          )
+          if (timeSlot === '.') return
+          if (timeNow.getTime() < nextSlotStart.getTime()) return
+          currentBlock = index + 1
+        }
+      )
+      return `Current class ends at ${times[currentBlock].end}`
+    } else {
+      let currentBlock = 1
+      let blockFound = false
+      schedule[timeNowReadable.dayofweek].forEach(
+        (timeSlot: string, index: number) => {
+          const thisBlockStart: Date = new Date(
+            `${timeNowReadable.month} ${timeNowReadable.day} ${
+              times[index + 1].start
+            }`
+          )
+          // if block is empty, skip
+          if (timeSlot === '.') return
+          if (thisBlockStart.getTime() < timeNow.getTime()) return
+          if (blockFound) return
+          blockFound = true
+          currentBlock = index + 1
+        }
+      )
+      return `Next class starts at ${times[currentBlock].start}`
     }
   }
 
@@ -92,10 +159,17 @@ const BabysSchedulePage = () => {
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
         <div className="w-full">
           <div>My baby&apos;s schedule</div>
-          <div>
-            {timeNowReadable.dayofweek}, {timeNowReadable.hour}:
-            {timeNowReadable.minute} {timeNowReadable.ampm}
+          <TimeDisplay time={timeNowReadable} />
+          <div
+            className={clsx(
+              'text-theme-heading-sm',
+              { 'text-[#0f0]': !inClassNow },
+              { 'text-[red]': inClassNow }
+            )}
+          >
+            {inClassNow ? 'Class in Session' : 'Not in Class'}
           </div>
+          <div>{calculateTimeBetween()}</div>
           <div>
             <table className="w-full" width="100%">
               <thead className="bg-[rgba(255,255,255,0.1)]">
@@ -117,10 +191,18 @@ const BabysSchedulePage = () => {
                   </th>
                   <th
                     align="center"
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
-                    })}
+                    className={clsx(
+                      'data-tue border-2 border-black p-2 relative',
+                      {
+                        'bg-[green]': timeNowReadable.dayofweek === 'Tuesday',
+                      }
+                    )}
                   >
+                    {timeNowReadable.dayofweek === 'Tuesday' ? (
+                      <div className="w-full left-0 border-2 min-h-[478px] border-[#0f0] max-h-[4px] absolute top-[42px]" />
+                    ) : (
+                      <div />
+                    )}
                     Tuesday
                   </th>
                   <th
@@ -460,10 +542,12 @@ const BabysSchedulePage = () => {
                 </tr>
                 <tr
                   id="LunchBreakRow"
-                  className={clsx({ 'bg-black': checkClassSlot('lunch') })}
+                  className={clsx({
+                    'bg-black': checkClassSlot(0),
+                  })}
                 >
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 h-[140px]"
                     valign="middle"
                     align="center"
                   >
@@ -471,11 +555,11 @@ const BabysSchedulePage = () => {
                   </td>
                   <td
                     colSpan={8}
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 h-[140px]"
                     valign="middle"
                     align="center"
                   >
-                    {times['lunch'].start} - {times['lunch'].end}
+                    {times[0].start} - {times[0].end}
                   </td>
                 </tr>
                 <tr
