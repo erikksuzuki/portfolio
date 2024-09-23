@@ -2,7 +2,6 @@
 
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { monthNames } from '@/components/ClassScheduler/static/monthNames'
 import { daysOfTheWeek } from '@/components/ClassScheduler/static/daysOfTheWeek'
 import { times } from '@/components/ClassScheduler/static/times'
 import { schedule } from '@/components/ClassScheduler/static/schedule'
@@ -10,149 +9,14 @@ import { getLocalDateString } from '@/utils/getLocalDateString'
 import { formatAMPM } from '@/utils/formatDateTime'
 import { formatMilliseconds } from '@/utils/formatMilliseconds'
 
-import { type ClassTableCellProps } from '@/components/ClassScheduler/types/ClassTableCellProps'
+import ClockDisplay from '@/components/ClassScheduler/ClockDisplay'
+import TimeUntilDisplay from '@/components/ClassScheduler/TimeUntilDisplay'
+import DateDisplay from '@/components/ClassScheduler/DateDisplay'
+import DayNameCell from '@/components/ClassScheduler/DayNameCell'
+import ClassSegmentCells from '@/components/ClassScheduler/ClassSegmentCells'
+import ClassTableCell from '@/components/ClassScheduler/ClassTableCell'
+
 import { type TimeObject } from '@/components/ClassScheduler/types/TimeObject'
-
-const ClockDisplay = ({ time }: { time: TimeObject }) => {
-  const [timeString, setTimeString] = useState<TimeObject>()
-  useEffect(() => {
-    setTimeString(time)
-  }, [time])
-  return (
-    <div className="text-right text-theme-heading-sm inline-block w-[108px]">
-      <div className="relative pr-6">
-        <figure className="absolute top-[2px] right-[0px] text-theme-xs">
-          {timeString?.ampm}
-        </figure>
-        {timeString?.hour.toString().length === 2
-          ? timeString.hour
-          : '0' + timeString?.hour}
-        :{timeString?.minute}{' '}
-        <figure className="absolute bottom-[4px] right-[0px] text-theme-sm">
-          {timeString?.second}
-        </figure>
-      </div>
-    </div>
-  )
-}
-
-const TimeUntilDisplay = ({
-  timeUntilString,
-  inClassNow,
-}: {
-  timeUntilString: string
-  inClassNow: boolean
-}) => {
-  const [string, setString] = useState<string | undefined>()
-  useEffect(() => {
-    setString(timeUntilString)
-  }, [timeUntilString])
-  return (
-    <div className="text-left text-theme-heading-xs inline-block w-[180px]">
-      <div className="relative pr-6">{string}</div>
-      <figure className="text-theme-md">
-        {inClassNow ? 'until next break' : 'until next class'}
-      </figure>
-    </div>
-  )
-}
-
-const DateDisplay = ({ time }: { time: TimeObject }) => {
-  const [dateString, setDateString] = useState<string>('')
-  useEffect(() => {
-    setDateString(
-      `${time.dayofweek}, ${monthNames[time.month - 1]} ${time.day}`
-    )
-  }, [time])
-  return <div>{dateString}</div>
-}
-
-interface DayNameCellProps {
-  time: TimeObject
-  day: string
-  fn: any
-}
-
-const DayNameCell = ({ time, day, fn }: DayNameCellProps) => {
-  return (
-    <th
-      align="center"
-      className={clsx('data-mon border-2 border-black p-2 relative', {
-        'bg-[rgba(0,0,0,0.4)]': time.dayofweek === day,
-      })}
-    >
-      {time.dayofweek === day ? (
-        <DayProgressColumnDisplay
-          progressPercent={fn().dayProgress}
-          isSchoolHours={fn().isSchoolHours}
-        />
-      ) : (
-        <div />
-      )}
-      {day.slice(0, 3)}
-    </th>
-  )
-}
-
-const DayProgressColumnDisplay = ({
-  progressPercent,
-  isSchoolHours,
-}: {
-  progressPercent: number
-  isSchoolHours: boolean
-}) => {
-  return (
-    <div className="w-full left-0 h-[478px] absolute top-[42px]">
-      <div
-        style={{
-          height: `${progressPercent * 478}px`,
-        }}
-        className={clsx('absolute w-full left-0 top-0', {
-          'border-b-2 border-[#fff]': isSchoolHours,
-        })}
-      />
-    </div>
-  )
-}
-
-const ClassSegmentCells = ({ block }: { block: number }) => {
-  return (
-    <>
-      <td className="border-2 border-black p-2" valign="middle" align="center">
-        {block}
-      </td>
-      <td
-        className="border-2 border-black p-2 w-[120px]"
-        valign="middle"
-        align="center"
-      >
-        {times[block].start} - {times[block].end}
-      </td>
-    </>
-  )
-}
-
-const TimeSegment = ({ block, day }: { block: number; day: number }) => {
-  if (schedule[daysOfTheWeek[day + 1]][block - 1] === '.' ? '' : 'class') {
-    return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
-  } else {
-    return <div></div>
-  }
-}
-
-const ClassTableCell = ({ time, block, day }: ClassTableCellProps) => {
-  return (
-    <td
-      className={clsx('data-mon border-2 border-black p-2', {
-        'bg-[rgba(0,0,0,0.4)]': time.dayofweek === daysOfTheWeek[day],
-      })}
-      valign="middle"
-      align="center"
-    >
-      <TimeSegment block={block} day={day - 1} />
-    </td>
-  )
-}
 
 const BabysSchedulePage = () => {
   const initialTime = getLocalDateString('Asia/Phnom_Penh')
