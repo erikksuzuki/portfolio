@@ -7,6 +7,8 @@ import { daysOfTheWeek } from '@/components/ClassScheduler/static/daysOfTheWeek'
 import { times } from '@/components/ClassScheduler/static/times'
 import { schedule } from '@/components/ClassScheduler/static/schedule'
 import { getLocalDateString } from '@/utils/getLocalDateString'
+import { formatAMPM } from '@/utils/formatDateTime'
+import { formatMilliseconds } from '@/utils/formatMilliseconds'
 
 import { type ClassTableCellProps } from '@/components/ClassScheduler/types/ClassTableCellProps'
 import { type TimeObject } from '@/components/ClassScheduler/types/TimeObject'
@@ -30,6 +32,27 @@ const ClockDisplay = ({ time }: { time: TimeObject }) => {
           {timeString?.second}
         </figure>
       </div>
+    </div>
+  )
+}
+
+const TimeUntilDisplay = ({
+  timeUntilString,
+  inClassNow,
+}: {
+  timeUntilString: string
+  inClassNow: boolean
+}) => {
+  const [string, setString] = useState<string | undefined>()
+  useEffect(() => {
+    setString(timeUntilString)
+  }, [timeUntilString])
+  return (
+    <div className="text-left text-theme-heading-xs inline-block w-[180px]">
+      <div className="relative pr-6">{string}</div>
+      <figure className="text-theme-md">
+        {inClassNow ? 'until next break' : 'until next class'}
+      </figure>
     </div>
   )
 }
@@ -137,7 +160,7 @@ const BabysSchedulePage = () => {
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
-  //     setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 375000))
+  //     setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 93750))
   //   }, 200)
   //   return () => clearInterval(intervalId)
   // }, [initialTime])
@@ -205,7 +228,7 @@ const BabysSchedulePage = () => {
     !checkClassSlot(8)
       ? false
       : true
-  function calculateTimeBetween() {
+  function calculateTimeBetween(): { label: string; timeUntil: string } {
     if (inClassNow) {
       let currentBlock = 1
       schedule[timeObject.dayofweek].forEach(
@@ -220,7 +243,17 @@ const BabysSchedulePage = () => {
           currentBlock = index + 1
         }
       )
-      return `Current class ends at ${times[currentBlock].end}`
+      const targetTime = `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[currentBlock].end}`
+      const timeUntilMiliseconds = Number(
+        new Date(targetTime).getTime() - timeNow.getTime()
+      )
+      return {
+        label: `Current class ends at ${formatAMPM(targetTime)}`,
+        timeUntil:
+          timeUntilMiliseconds < 0
+            ? 'N/A'
+            : formatMilliseconds(timeUntilMiliseconds, true),
+      }
     } else {
       let currentBlock = 1
       let blockFound = false
@@ -239,7 +272,17 @@ const BabysSchedulePage = () => {
           currentBlock = index + 1
         }
       )
-      return `Next class starts at ${times[currentBlock].start}`
+      const targetTime = `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[currentBlock].start}`
+      const timeUntilMiliseconds = Number(
+        new Date(targetTime).getTime() - timeNow.getTime()
+      )
+      return {
+        label: `Next class starts at ${formatAMPM(targetTime)}`,
+        timeUntil:
+          timeUntilMiliseconds < 0
+            ? 'N/A'
+            : formatMilliseconds(timeUntilMiliseconds, true),
+      }
     }
   }
 
@@ -279,10 +322,18 @@ const BabysSchedulePage = () => {
     <div>
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
         <div className="w-full">
-          <div className="text-right">
-            <ClockDisplay time={timeObject} />
-            <DateDisplay time={timeObject} />
-          </div>
+          <header className="flex flex-row justify-between">
+            <div>
+              <TimeUntilDisplay
+                timeUntilString={calculateTimeBetween().timeUntil}
+                inClassNow={inClassNow}
+              />
+            </div>
+            <div className="text-right">
+              <ClockDisplay time={timeObject} />
+              <DateDisplay time={timeObject} />
+            </div>
+          </header>
           <div
             className={clsx(
               'text-theme-heading-sm w-full text-center',
@@ -298,7 +349,7 @@ const BabysSchedulePage = () => {
               : 'Non-School Hours'}
           </div>
           <div className="w-full text-center mb-4">
-            {calculateTimeBetween()}
+            {calculateTimeBetween().label}
           </div>
 
           <div>
