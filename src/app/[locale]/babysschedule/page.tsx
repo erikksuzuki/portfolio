@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
+
 const monthNames = [
   'January',
   'February',
@@ -17,20 +18,119 @@ const monthNames = [
   'December',
 ]
 
+const daysOfTheWeek = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+]
+const times: any = {
+  // Morning begins
+  1: { start: '7:20', end: '8:00' },
+  2: { start: '8:15', end: '8:55' },
+  3: { start: '9:05', end: '9:45' },
+  4: { start: '9:50', end: '10:30' },
+  // Lunch begins
+  0: { start: '10:30', end: '13:05' },
+  // Afternoon begins
+  5: { start: '13:05', end: '13:45' },
+  6: { start: '14:00', end: '14:40' },
+  7: { start: '14:45', end: '15:25' },
+  8: { start: '15:30', end: '16:10' },
+}
+const schedule: any = {
+  Monday: ['.', '.', '1', '1', '.', '1', '1', '1'],
+  Tuesday: ['1', '1', '.', '.', '.', '.', '.', '1'],
+  Wednesday: ['1', '1', '.', '1', '1', '1', '.', '.'],
+  Thursday: ['1', '.', '1', '1', '.', '.', '1', '1'],
+  Friday: ['1', '1', '.', '.', '.', '.', '1', '1'],
+  Saturday: ['.', '.', '.', '.', '.', '.', '1', '1'],
+  Sunday: ['.', '.', '.', '.', '.', '.', '.', '.'],
+}
+
+function getLocalDateTime(timeZone: any) {
+  const localtime = new Date().toLocaleString('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+    timeZone: timeZone,
+  })
+  const thisYear = new Date().getFullYear().toString()
+  const localMonth = monthNames[
+    Number(localtime.split(',')[0].split('/')[0]) - 1
+  ].slice(0, 3)
+  const localDay = localtime.split(',')[0].split('/')[1]
+  const localTime = localtime.split(',')[1].slice(-5)
+  const seconds =
+    new Date().getSeconds().toString().length === 1
+      ? `0${new Date().getSeconds()}`
+      : new Date().getSeconds()
+  return `${thisYear} ${localMonth} ${localDay} ${localTime}:${seconds}`
+}
+
 const TimeDisplay = ({ time }: any) => {
-  const [timeString, setTimeString] = useState('Loading...')
+  const [timeString, setTimeString] = useState<any>()
+  useEffect(() => {
+    setTimeString(time)
+  }, [time])
+  return (
+    <div className="text-left text-theme-heading-sm inline-block w-[108px]">
+      <div className="relative">
+        <figure className="absolute top-[2px] right-0 text-theme-xs">
+          {timeString?.ampm}
+        </figure>
+        {timeString?.hour.toString().length === 2
+          ? timeString.hour
+          : '0' + timeString?.hour}
+        :{timeString?.minute}{' '}
+        <figure className="absolute bottom-[4px] right-0 text-theme-sm">
+          {timeString?.second}
+        </figure>
+      </div>
+    </div>
+  )
+}
+
+const DateDisplay = ({ time }: any) => {
   const [dateString, setDateString] = useState('')
   useEffect(() => {
     setDateString(
       `${time.dayofweek}, ${monthNames[time.month - 1]} ${time.day}`
     )
-    setTimeString(`${time.hour}:${time.minute} ${time.ampm}`)
   }, [time])
+  return <div>{dateString}</div>
+}
+
+const TimeSegment = ({ block, day }: { block: number; day: number }) => {
+  if (schedule[daysOfTheWeek[day + 1]][block - 1] === '.' ? '' : 'class') {
+    return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
+  } else {
+    return <div></div>
+  }
+}
+
+interface ClassTableCellProps {
+  time: any
+  block: number
+  day: number
+}
+
+const ClassTableCell = ({ time, block, day }: ClassTableCellProps) => {
   return (
-    <div className="text-center w-full">
-      <div>{timeString}</div>
-      <div>{dateString}</div>
-    </div>
+    <td
+      className={clsx('data-mon border-2 border-black p-2', {
+        'bg-[rgba(0,0,0,0.4)]': time.dayofweek === daysOfTheWeek[day],
+      })}
+      valign="middle"
+      align="center"
+    >
+      <TimeSegment block={block} day={day - 1} />
+    </td>
   )
 }
 
@@ -56,26 +156,9 @@ const DayProgressColumnDisplay = ({
 }
 
 const BabysSchedulePage = () => {
-  function getLocalDateTime(timeZone: any) {
-    const localtime = new Date().toLocaleString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      hour12: false,
-      minute: '2-digit',
-      timeZone: timeZone,
-    })
-    const thisYear = new Date().getFullYear().toString()
-    const localMonth = monthNames[
-      Number(localtime.split(',')[0].split('/')[0]) - 1
-    ].slice(0, 3)
-    const localDay = localtime.split(',')[0].split('/')[1]
-    const localTime = localtime.split(',')[1].slice(-5)
-    return `${thisYear} ${localMonth} ${localDay} ${localTime}`
-  }
   const initialTime = getLocalDateTime('Asia/Phnom_Penh')
+  const [timeNow, setTimeNowHere] = useState<Date>(new Date(initialTime))
 
-  const [timeNowHere, setTimeNowHere] = useState<Date>(new Date(initialTime))
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
   //     setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 375000))
@@ -90,47 +173,7 @@ const BabysSchedulePage = () => {
     return () => clearInterval(intervalId)
   }, [initialTime])
 
-  const timeNow = timeNowHere
-  const daysOfTheWeek = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ]
-  const times: any = {
-    // Morning begins
-    1: { start: '7:20', end: '8:00' },
-    2: { start: '8:15', end: '8:55' },
-    3: { start: '9:05', end: '9:45' },
-    4: { start: '9:50', end: '10:30' },
-    // Lunch begins
-    0: { start: '10:30', end: '13:05' },
-    // Afternoon begins
-    5: { start: '13:05', end: '13:45' },
-    6: { start: '14:00', end: '14:40' },
-    7: { start: '14:45', end: '15:25' },
-    8: { start: '15:30', end: '16:10' },
-  }
-  const schedule: any = {
-    Monday: ['.', '.', '1', '1', '.', '1', '1', '1'],
-    Tuesday: ['1', '1', '.', '.', '.', '.', '.', '1'],
-    Wednesday: ['1', '1', '.', '1', '1', '1', '.', '.'],
-    Thursday: ['1', '.', '1', '1', '.', '.', '1', '1'],
-    Friday: ['1', '1', '.', '.', '.', '.', '1', '1'],
-    Saturday: ['.', '.', '.', '.', '.', '.', '1', '1'],
-    Sunday: ['.', '.', '.', '.', '.', '.', '.', '.'],
-  }
-  const TimeSegment = ({ block, day }: { block: number; day: number }) => {
-    if (schedule[daysOfTheWeek[day + 1]][block - 1] === '.' ? '' : 'class') {
-      return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
-    } else {
-      return <div></div>
-    }
-  }
-  const timeNowReadable = {
+  const timeObject = {
     dayofweek: daysOfTheWeek[timeNow.getDay()],
     year: timeNow.getFullYear(),
     month: timeNow.getMonth() + 1,
@@ -149,25 +192,24 @@ const BabysSchedulePage = () => {
         ? `0${timeNow.getMinutes()}`
         : timeNow.getMinutes(),
     second:
-      timeNow.getSeconds().toString().length === 1
-        ? `0${timeNow.getSeconds()}`
-        : timeNow.getSeconds(),
+      new Date().getSeconds().toString().length === 1
+        ? `0${new Date().getSeconds()}`
+        : new Date().getSeconds(),
     ampm: timeNow.getHours() > 12 ? 'PM' : 'AM',
   }
 
   function checkClassSlot(slotNumber: number) {
-    console.log(timeNowReadable)
     if (
       timeNow.getTime() >=
         new Date(
-          `${timeNowReadable.year} ${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].start}`
+          `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[slotNumber].start}`
         ).getTime() &&
       timeNow.getTime() <=
         new Date(
-          `${timeNowReadable.year} ${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].end}`
+          `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[slotNumber].end}`
         ).getTime()
     ) {
-      if (schedule[timeNowReadable.dayofweek][slotNumber - 1] === '.') {
+      if (schedule[timeObject.dayofweek][slotNumber - 1] === '.') {
         return false
       } else {
         return true
@@ -190,12 +232,12 @@ const BabysSchedulePage = () => {
   function calculateTimeBetween() {
     if (inClassNow) {
       let currentBlock = 1
-      schedule[timeNowReadable.dayofweek].forEach(
+      schedule[timeObject.dayofweek].forEach(
         (timeSlot: string, index: number) => {
           const nextSlotStart: Date = new Date(
-            `${timeNowReadable.year} ${timeNowReadable.month} ${
-              timeNowReadable.day
-            } ${times[index + 1].start}`
+            `${timeObject.year} ${timeObject.month} ${timeObject.day} ${
+              times[index + 1].start
+            }`
           )
           if (timeSlot === '.') return
           if (timeNow.getTime() < nextSlotStart.getTime()) return
@@ -206,12 +248,12 @@ const BabysSchedulePage = () => {
     } else {
       let currentBlock = 1
       let blockFound = false
-      schedule[timeNowReadable.dayofweek].forEach(
+      schedule[timeObject.dayofweek].forEach(
         (timeSlot: string, index: number) => {
           const thisBlockStart: Date = new Date(
-            `${timeNowReadable.year} ${timeNowReadable.month} ${
-              timeNowReadable.day
-            } ${times[index + 1].start}`
+            `${timeObject.year} ${timeObject.month} ${timeObject.day} ${
+              times[index + 1].start
+            }`
           )
           // if block is empty, skip
           if (timeSlot === '.') return
@@ -229,21 +271,17 @@ const BabysSchedulePage = () => {
     let isSchoolHours = false
     if (
       new Date(
-        `${timeNowReadable.month} ${
-          timeNowReadable.day
-        } ${timeNow.getHours()}:${timeNowReadable.minute}`
+        `${timeObject.month} ${timeObject.day} ${timeNow.getHours()}:${
+          timeObject.minute
+        }`
       ).getTime() <
-        new Date(
-          `${timeNowReadable.month} ${timeNowReadable.day} 7:20`
-        ).getTime() ||
+        new Date(`${timeObject.month} ${timeObject.day} 7:20`).getTime() ||
       new Date(
-        `${timeNowReadable.month} ${
-          timeNowReadable.day
-        } ${timeNow.getHours()}:${timeNowReadable.minute}`
+        `${timeObject.month} ${timeObject.day} ${timeNow.getHours()}:${
+          timeObject.minute
+        }`
       ).getTime() >
-        new Date(
-          `${timeNowReadable.month} ${timeNowReadable.day} 16:10`
-        ).getTime()
+        new Date(`${timeObject.month} ${timeObject.day} 16:10`).getTime()
     ) {
       isSchoolHours = false
     } else {
@@ -253,8 +291,7 @@ const BabysSchedulePage = () => {
     let minutesIn = 0
     let totalAvailableMinutes = 530
     if (isSchoolHours) {
-      minutesIn =
-        (timeNow.getHours() - 7) * 60 + Number(timeNowReadable.minute) - 20
+      minutesIn = (timeNow.getHours() - 7) * 60 + Number(timeObject.minute) - 20
     }
     return {
       isSchoolHours: isSchoolHours,
@@ -266,7 +303,8 @@ const BabysSchedulePage = () => {
     <div>
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
         <div className="w-full">
-          <TimeDisplay time={timeNowReadable} />
+          <TimeDisplay time={timeObject} />
+          <DateDisplay time={timeObject} />
           <div
             className={clsx(
               'text-theme-heading-sm w-full text-center',
@@ -277,7 +315,7 @@ const BabysSchedulePage = () => {
             {inClassNow
               ? 'Class in Session'
               : getDayProgressPercent().isSchoolHours &&
-                timeNowReadable.dayofweek !== 'Sunday'
+                timeObject.dayofweek !== 'Sunday'
               ? 'No Class'
               : 'Non-School Hours'}
           </div>
@@ -305,11 +343,11 @@ const BabysSchedulePage = () => {
                       'data-mon border-2 border-black p-2 relative',
                       {
                         'bg-[rgba(0,0,0,0.4)]':
-                          timeNowReadable.dayofweek === 'Monday',
+                          timeObject.dayofweek === 'Monday',
                       }
                     )}
                   >
-                    {timeNowReadable.dayofweek === 'Monday' ? (
+                    {timeObject.dayofweek === 'Monday' ? (
                       <DayProgressColumnDisplay
                         progressPercent={getDayProgressPercent().dayProgress}
                         isSchoolHours={getDayProgressPercent().isSchoolHours}
@@ -325,11 +363,11 @@ const BabysSchedulePage = () => {
                       'data-tue border-2 border-black p-2 relative',
                       {
                         'bg-[rgba(0,0,0,0.4)]':
-                          timeNowReadable.dayofweek === 'Tuesday',
+                          timeObject.dayofweek === 'Tuesday',
                       }
                     )}
                   >
-                    {timeNowReadable.dayofweek === 'Tuesday' ? (
+                    {timeObject.dayofweek === 'Tuesday' ? (
                       <DayProgressColumnDisplay
                         progressPercent={getDayProgressPercent().dayProgress}
                         isSchoolHours={getDayProgressPercent().isSchoolHours}
@@ -345,11 +383,11 @@ const BabysSchedulePage = () => {
                       'data-wed border-2 border-black p-2 relative',
                       {
                         'bg-[rgba(0,0,0,0.4)]':
-                          timeNowReadable.dayofweek === 'Wednesday',
+                          timeObject.dayofweek === 'Wednesday',
                       }
                     )}
                   >
-                    {timeNowReadable.dayofweek === 'Wednesday' ? (
+                    {timeObject.dayofweek === 'Wednesday' ? (
                       <DayProgressColumnDisplay
                         progressPercent={getDayProgressPercent().dayProgress}
                         isSchoolHours={getDayProgressPercent().isSchoolHours}
@@ -365,11 +403,11 @@ const BabysSchedulePage = () => {
                       'data-thu border-2 border-black p-2 relative',
                       {
                         'bg-[rgba(0,0,0,0.4)]':
-                          timeNowReadable.dayofweek === 'Thursday',
+                          timeObject.dayofweek === 'Thursday',
                       }
                     )}
                   >
-                    {timeNowReadable.dayofweek === 'Thursday' ? (
+                    {timeObject.dayofweek === 'Thursday' ? (
                       <DayProgressColumnDisplay
                         progressPercent={getDayProgressPercent().dayProgress}
                         isSchoolHours={getDayProgressPercent().isSchoolHours}
@@ -385,11 +423,11 @@ const BabysSchedulePage = () => {
                       'data-fri border-2 border-black p-2 relative',
                       {
                         'bg-[rgba(0,0,0,0.4)]':
-                          timeNowReadable.dayofweek === 'Friday',
+                          timeObject.dayofweek === 'Friday',
                       }
                     )}
                   >
-                    {timeNowReadable.dayofweek === 'Friday' ? (
+                    {timeObject.dayofweek === 'Friday' ? (
                       <DayProgressColumnDisplay
                         progressPercent={getDayProgressPercent().dayProgress}
                         isSchoolHours={getDayProgressPercent().isSchoolHours}
@@ -405,11 +443,11 @@ const BabysSchedulePage = () => {
                       'data-sat border-2 border-black p-2 relative',
                       {
                         'bg-[rgba(0,0,0,0.4)]':
-                          timeNowReadable.dayofweek === 'Saturday',
+                          timeObject.dayofweek === 'Saturday',
                       }
                     )}
                   >
-                    {timeNowReadable.dayofweek === 'Saturday' ? (
+                    {timeObject.dayofweek === 'Saturday' ? (
                       <DayProgressColumnDisplay
                         progressPercent={getDayProgressPercent().dayProgress}
                         isSchoolHours={getDayProgressPercent().isSchoolHours}
@@ -448,66 +486,12 @@ const BabysSchedulePage = () => {
                   >
                     {times[1].start} - {times[1].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={1} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={1} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={1} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={1} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={1} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={1} day={5} />
-                  </td>
+                  <ClassTableCell time={timeObject} block={1} day={1} />
+                  <ClassTableCell time={timeObject} block={1} day={2} />
+                  <ClassTableCell time={timeObject} block={1} day={3} />
+                  <ClassTableCell time={timeObject} block={1} day={4} />
+                  <ClassTableCell time={timeObject} block={1} day={5} />
+                  <ClassTableCell time={timeObject} block={1} day={6} />
                 </tr>
                 <tr
                   id="Block2"
@@ -527,66 +511,12 @@ const BabysSchedulePage = () => {
                   >
                     {times[2].start} - {times[2].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={2} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={2} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={2} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={2} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={2} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={2} day={5} />
-                  </td>
+                  <ClassTableCell time={timeObject} block={2} day={1} />
+                  <ClassTableCell time={timeObject} block={2} day={2} />
+                  <ClassTableCell time={timeObject} block={2} day={3} />
+                  <ClassTableCell time={timeObject} block={2} day={4} />
+                  <ClassTableCell time={timeObject} block={2} day={5} />
+                  <ClassTableCell time={timeObject} block={2} day={6} />
                 </tr>
                 <tr
                   id="Block3"
@@ -606,66 +536,12 @@ const BabysSchedulePage = () => {
                   >
                     {times[3].start} - {times[3].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={3} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={3} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={3} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={3} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={3} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={3} day={5} />
-                  </td>
+                  <ClassTableCell time={timeObject} block={3} day={1} />
+                  <ClassTableCell time={timeObject} block={3} day={2} />
+                  <ClassTableCell time={timeObject} block={3} day={3} />
+                  <ClassTableCell time={timeObject} block={3} day={4} />
+                  <ClassTableCell time={timeObject} block={3} day={5} />
+                  <ClassTableCell time={timeObject} block={3} day={6} />
                 </tr>
                 <tr
                   id="Block4"
@@ -685,66 +561,12 @@ const BabysSchedulePage = () => {
                   >
                     {times[4].start} - {times[4].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={4} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={4} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={4} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={4} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={4} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={4} day={5} />
-                  </td>
+                  <ClassTableCell time={timeObject} block={4} day={1} />
+                  <ClassTableCell time={timeObject} block={4} day={2} />
+                  <ClassTableCell time={timeObject} block={4} day={3} />
+                  <ClassTableCell time={timeObject} block={4} day={4} />
+                  <ClassTableCell time={timeObject} block={4} day={5} />
+                  <ClassTableCell time={timeObject} block={4} day={6} />
                 </tr>
                 <tr id="LunchBreakRow">
                   <td
@@ -789,66 +611,12 @@ const BabysSchedulePage = () => {
                   >
                     {times[5].start} - {times[5].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={5} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={5} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={5} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={5} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={5} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={5} day={5} />
-                  </td>
+                  <ClassTableCell time={timeObject} block={5} day={1} />
+                  <ClassTableCell time={timeObject} block={5} day={2} />
+                  <ClassTableCell time={timeObject} block={5} day={3} />
+                  <ClassTableCell time={timeObject} block={5} day={4} />
+                  <ClassTableCell time={timeObject} block={5} day={5} />
+                  <ClassTableCell time={timeObject} block={5} day={6} />
                 </tr>
                 <tr
                   id="Block6"
@@ -868,66 +636,12 @@ const BabysSchedulePage = () => {
                   >
                     {times[6].start} - {times[6].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={6} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={6} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={6} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={6} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={6} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={6} day={5} />
-                  </td>
+                  <ClassTableCell time={timeObject} block={6} day={1} />
+                  <ClassTableCell time={timeObject} block={6} day={2} />
+                  <ClassTableCell time={timeObject} block={6} day={3} />
+                  <ClassTableCell time={timeObject} block={6} day={4} />
+                  <ClassTableCell time={timeObject} block={6} day={5} />
+                  <ClassTableCell time={timeObject} block={6} day={6} />
                 </tr>
                 <tr
                   id="Block7"
@@ -947,66 +661,13 @@ const BabysSchedulePage = () => {
                   >
                     {times[7].start} - {times[7].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={7} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={7} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={7} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={7} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={7} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={7} day={5} />
-                  </td>
+
+                  <ClassTableCell time={timeObject} block={7} day={1} />
+                  <ClassTableCell time={timeObject} block={7} day={2} />
+                  <ClassTableCell time={timeObject} block={7} day={3} />
+                  <ClassTableCell time={timeObject} block={7} day={4} />
+                  <ClassTableCell time={timeObject} block={7} day={5} />
+                  <ClassTableCell time={timeObject} block={7} day={6} />
                 </tr>
                 <tr
                   id="Block8"
@@ -1026,66 +687,13 @@ const BabysSchedulePage = () => {
                   >
                     {times[8].start} - {times[8].end}
                   </td>
-                  <td
-                    className={clsx('data-mon border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Monday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={8} day={0} />
-                  </td>
-                  <td
-                    className={clsx('data-tue border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Tuesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={8} day={1} />
-                  </td>
-                  <td
-                    className={clsx('data-wed border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Wednesday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={8} day={2} />
-                  </td>
-                  <td
-                    className={clsx('data-thu border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Thursday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={8} day={3} />
-                  </td>
-                  <td
-                    className={clsx('data-fri border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Friday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={8} day={4} />
-                  </td>
-                  <td
-                    className={clsx('data-sat border-2 border-black p-2', {
-                      'bg-[rgba(0,0,0,0.4)]':
-                        timeNowReadable.dayofweek === 'Saturday',
-                    })}
-                    valign="middle"
-                    align="center"
-                  >
-                    <TimeSegment block={8} day={5} />
-                  </td>
+
+                  <ClassTableCell time={timeObject} block={8} day={1} />
+                  <ClassTableCell time={timeObject} block={8} day={2} />
+                  <ClassTableCell time={timeObject} block={8} day={3} />
+                  <ClassTableCell time={timeObject} block={8} day={4} />
+                  <ClassTableCell time={timeObject} block={8} day={5} />
+                  <ClassTableCell time={timeObject} block={8} day={6} />
                 </tr>
               </tbody>
             </table>
