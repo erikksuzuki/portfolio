@@ -56,39 +56,41 @@ const DayProgressColumnDisplay = ({
 }
 
 const BabysSchedulePage = () => {
-  const localtime = new Date().toLocaleString('en-US', {
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    hour12: false,
-    minute: '2-digit',
-    timeZone: 'Asia/Phnom_Penh',
-  })
-  const currentMonth = monthNames[
-    Number(localtime.split(',')[0].split('/')[0]) - 1
-  ].slice(0, 3)
-  const currentDay = localtime.split(',')[0].split('/')[1]
-  const currentTime = localtime.split(',')[1].slice(-5)
-  const currentDate = `${currentMonth} ${currentDay} ${currentTime}`
-
-  let initialTime = new Date(`${currentDate}`).getTime()
+  function getLocalDateTime(timeZone: any) {
+    const localtime = new Date().toLocaleString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      hour12: false,
+      minute: '2-digit',
+      timeZone: timeZone,
+    })
+    const thisYear = new Date().getFullYear().toString()
+    const localMonth = monthNames[
+      Number(localtime.split(',')[0].split('/')[0]) - 1
+    ].slice(0, 3)
+    const localDay = localtime.split(',')[0].split('/')[1]
+    const localTime = localtime.split(',')[1].slice(-5)
+    return `${thisYear} ${localMonth} ${localDay} ${localTime}`
+  }
+  const initialTime = getLocalDateTime('Asia/Phnom_Penh')
 
   const [timeNowHere, setTimeNowHere] = useState<Date>(new Date(initialTime))
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
   //     setTimeNowHere((prev) => new Date(new Date(prev).getTime() + 375000))
-  //   }, 50)
+  //   }, 200)
   //   return () => clearInterval(intervalId)
   // }, [initialTime])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeNowHere(new Date())
+      setTimeNowHere(new Date(getLocalDateTime('Asia/Phnom_Penh')))
     }, 1000)
     return () => clearInterval(intervalId)
   }, [initialTime])
 
-  const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
+  const timeNow = timeNowHere
   const daysOfTheWeek = [
     'Sunday',
     'Monday',
@@ -130,6 +132,7 @@ const BabysSchedulePage = () => {
   }
   const timeNowReadable = {
     dayofweek: daysOfTheWeek[timeNow.getDay()],
+    year: timeNow.getFullYear(),
     month: timeNow.getMonth() + 1,
     day: timeNow.getDate(),
     time: `${timeNow.getHours()}:${
@@ -151,15 +154,17 @@ const BabysSchedulePage = () => {
         : timeNow.getSeconds(),
     ampm: timeNow.getHours() > 12 ? 'PM' : 'AM',
   }
+
   function checkClassSlot(slotNumber: number) {
+    console.log(timeNowReadable)
     if (
       timeNow.getTime() >=
         new Date(
-          `${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].start}`
+          `${timeNowReadable.year} ${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].start}`
         ).getTime() &&
       timeNow.getTime() <=
         new Date(
-          `${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].end}`
+          `${timeNowReadable.year} ${timeNowReadable.month} ${timeNowReadable.day} ${times[slotNumber].end}`
         ).getTime()
     ) {
       if (schedule[timeNowReadable.dayofweek][slotNumber - 1] === '.') {
@@ -188,9 +193,9 @@ const BabysSchedulePage = () => {
       schedule[timeNowReadable.dayofweek].forEach(
         (timeSlot: string, index: number) => {
           const nextSlotStart: Date = new Date(
-            `${timeNowReadable.month} ${timeNowReadable.day} ${
-              times[index + 1].start
-            }`
+            `${timeNowReadable.year} ${timeNowReadable.month} ${
+              timeNowReadable.day
+            } ${times[index + 1].start}`
           )
           if (timeSlot === '.') return
           if (timeNow.getTime() < nextSlotStart.getTime()) return
@@ -204,9 +209,9 @@ const BabysSchedulePage = () => {
       schedule[timeNowReadable.dayofweek].forEach(
         (timeSlot: string, index: number) => {
           const thisBlockStart: Date = new Date(
-            `${timeNowReadable.month} ${timeNowReadable.day} ${
-              times[index + 1].start
-            }`
+            `${timeNowReadable.year} ${timeNowReadable.month} ${
+              timeNowReadable.day
+            } ${times[index + 1].start}`
           )
           // if block is empty, skip
           if (timeSlot === '.') return
