@@ -2,22 +2,22 @@
 
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 
 const TimeDisplay = ({ time }: any) => {
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
   const [timeString, setTimeString] = useState('Loading...')
   const [dateString, setDateString] = useState('')
   useEffect(() => {
@@ -56,7 +56,23 @@ const DayProgressColumnDisplay = ({
 }
 
 const BabysSchedulePage = () => {
-  let initialTime = new Date(/* 'Sep 17 16:46' */).getTime()
+  const localtime = new Date().toLocaleString('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+    timeZone: 'Asia/Phnom_Penh',
+  })
+  const currentMonth = monthNames[
+    Number(localtime.split(',')[0].split('/')[0]) - 1
+  ].slice(0, 3)
+  const currentDay = localtime.split(',')[0].split('/')[1]
+  const currentTime = localtime.split(',')[1].slice(-5)
+  const currentDate = `${currentMonth} ${currentDay} ${currentTime}`
+
+  let initialTime = new Date(`${currentDate}`).getTime()
+
   const [timeNowHere, setTimeNowHere] = useState<Date>(new Date(initialTime))
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
@@ -71,6 +87,7 @@ const BabysSchedulePage = () => {
     }, 1000)
     return () => clearInterval(intervalId)
   }, [initialTime])
+
   const timeNow = new Date(timeNowHere.getTime() + 1000 * 60 * 60 * 14)
   const daysOfTheWeek = [
     'Sunday',
@@ -271,7 +288,10 @@ const BabysSchedulePage = () => {
                   <th align="center" className="border-2 border-black p-2">
                     #
                   </th>
-                  <th align="center" className="border-2 border-black p-2">
+                  <th
+                    align="center"
+                    className="w-[120px] border-2 border-black p-2"
+                  >
                     Time
                   </th>
                   <th
@@ -292,7 +312,7 @@ const BabysSchedulePage = () => {
                     ) : (
                       <div />
                     )}
-                    Monday
+                    Mon
                   </th>
                   <th
                     align="center"
@@ -312,7 +332,7 @@ const BabysSchedulePage = () => {
                     ) : (
                       <div />
                     )}
-                    Tuesday
+                    Tue
                   </th>
                   <th
                     align="center"
@@ -332,7 +352,7 @@ const BabysSchedulePage = () => {
                     ) : (
                       <div />
                     )}
-                    Wednesday
+                    Wed
                   </th>
                   <th
                     align="center"
@@ -352,7 +372,7 @@ const BabysSchedulePage = () => {
                     ) : (
                       <div />
                     )}
-                    Thursday
+                    Thu
                   </th>
                   <th
                     align="center"
@@ -372,7 +392,7 @@ const BabysSchedulePage = () => {
                     ) : (
                       <div />
                     )}
-                    Friday
+                    Fri
                   </th>
                   <th
                     align="center"
@@ -392,7 +412,7 @@ const BabysSchedulePage = () => {
                     ) : (
                       <div />
                     )}
-                    Saturday
+                    Sat
                   </th>
                 </tr>
               </thead>
@@ -402,7 +422,7 @@ const BabysSchedulePage = () => {
                   className={clsx({ 'bg-black': checkClassSlot(1) })}
                 >
                   <td
-                    className="border-2 border-black p-2 bg-[#0A2B3E]"
+                    className="border-2 border-black p-2 bg-[#0A2B3E] w-[80px]"
                     rowSpan={4}
                     valign="middle"
                     align="center"
@@ -410,14 +430,14 @@ const BabysSchedulePage = () => {
                     AM
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[40px]"
                     valign="middle"
                     align="center"
                   >
                     1
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -496,7 +516,7 @@ const BabysSchedulePage = () => {
                     2
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -575,7 +595,7 @@ const BabysSchedulePage = () => {
                     3
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -654,7 +674,7 @@ const BabysSchedulePage = () => {
                     4
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -758,7 +778,7 @@ const BabysSchedulePage = () => {
                     5
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -837,7 +857,7 @@ const BabysSchedulePage = () => {
                     6
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -916,7 +936,7 @@ const BabysSchedulePage = () => {
                     7
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
@@ -995,7 +1015,7 @@ const BabysSchedulePage = () => {
                     8
                   </td>
                   <td
-                    className="border-2 border-black p-2"
+                    className="border-2 border-black p-2 w-[120px]"
                     valign="middle"
                     align="center"
                   >
