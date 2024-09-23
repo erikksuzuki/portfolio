@@ -134,6 +134,27 @@ const ClassTableCell = ({ time, block, day }: ClassTableCellProps) => {
   )
 }
 
+const DayNameCell = ({ time, day, fn }: any) => {
+  return (
+    <th
+      align="center"
+      className={clsx('data-mon border-2 border-black p-2 relative', {
+        'bg-[rgba(0,0,0,0.4)]': time.dayofweek === day,
+      })}
+    >
+      {time.dayofweek === day ? (
+        <DayProgressColumnDisplay
+          progressPercent={fn().dayProgress}
+          isSchoolHours={fn().isSchoolHours}
+        />
+      ) : (
+        <div />
+      )}
+      {day.slice(0, 3)}
+    </th>
+  )
+}
+
 const DayProgressColumnDisplay = ({
   progressPercent,
   isSchoolHours,
@@ -337,126 +358,36 @@ const BabysSchedulePage = () => {
                   >
                     Time
                   </th>
-                  <th
-                    align="center"
-                    className={clsx(
-                      'data-mon border-2 border-black p-2 relative',
-                      {
-                        'bg-[rgba(0,0,0,0.4)]':
-                          timeObject.dayofweek === 'Monday',
-                      }
-                    )}
-                  >
-                    {timeObject.dayofweek === 'Monday' ? (
-                      <DayProgressColumnDisplay
-                        progressPercent={getDayProgressPercent().dayProgress}
-                        isSchoolHours={getDayProgressPercent().isSchoolHours}
-                      />
-                    ) : (
-                      <div />
-                    )}
-                    Mon
-                  </th>
-                  <th
-                    align="center"
-                    className={clsx(
-                      'data-tue border-2 border-black p-2 relative',
-                      {
-                        'bg-[rgba(0,0,0,0.4)]':
-                          timeObject.dayofweek === 'Tuesday',
-                      }
-                    )}
-                  >
-                    {timeObject.dayofweek === 'Tuesday' ? (
-                      <DayProgressColumnDisplay
-                        progressPercent={getDayProgressPercent().dayProgress}
-                        isSchoolHours={getDayProgressPercent().isSchoolHours}
-                      />
-                    ) : (
-                      <div />
-                    )}
-                    Tue
-                  </th>
-                  <th
-                    align="center"
-                    className={clsx(
-                      'data-wed border-2 border-black p-2 relative',
-                      {
-                        'bg-[rgba(0,0,0,0.4)]':
-                          timeObject.dayofweek === 'Wednesday',
-                      }
-                    )}
-                  >
-                    {timeObject.dayofweek === 'Wednesday' ? (
-                      <DayProgressColumnDisplay
-                        progressPercent={getDayProgressPercent().dayProgress}
-                        isSchoolHours={getDayProgressPercent().isSchoolHours}
-                      />
-                    ) : (
-                      <div />
-                    )}
-                    Wed
-                  </th>
-                  <th
-                    align="center"
-                    className={clsx(
-                      'data-thu border-2 border-black p-2 relative',
-                      {
-                        'bg-[rgba(0,0,0,0.4)]':
-                          timeObject.dayofweek === 'Thursday',
-                      }
-                    )}
-                  >
-                    {timeObject.dayofweek === 'Thursday' ? (
-                      <DayProgressColumnDisplay
-                        progressPercent={getDayProgressPercent().dayProgress}
-                        isSchoolHours={getDayProgressPercent().isSchoolHours}
-                      />
-                    ) : (
-                      <div />
-                    )}
-                    Thu
-                  </th>
-                  <th
-                    align="center"
-                    className={clsx(
-                      'data-fri border-2 border-black p-2 relative',
-                      {
-                        'bg-[rgba(0,0,0,0.4)]':
-                          timeObject.dayofweek === 'Friday',
-                      }
-                    )}
-                  >
-                    {timeObject.dayofweek === 'Friday' ? (
-                      <DayProgressColumnDisplay
-                        progressPercent={getDayProgressPercent().dayProgress}
-                        isSchoolHours={getDayProgressPercent().isSchoolHours}
-                      />
-                    ) : (
-                      <div />
-                    )}
-                    Fri
-                  </th>
-                  <th
-                    align="center"
-                    className={clsx(
-                      'data-sat border-2 border-black p-2 relative',
-                      {
-                        'bg-[rgba(0,0,0,0.4)]':
-                          timeObject.dayofweek === 'Saturday',
-                      }
-                    )}
-                  >
-                    {timeObject.dayofweek === 'Saturday' ? (
-                      <DayProgressColumnDisplay
-                        progressPercent={getDayProgressPercent().dayProgress}
-                        isSchoolHours={getDayProgressPercent().isSchoolHours}
-                      />
-                    ) : (
-                      <div />
-                    )}
-                    Sat
-                  </th>
+                  <DayNameCell
+                    time={timeObject}
+                    day="Monday"
+                    fn={getDayProgressPercent}
+                  />
+                  <DayNameCell
+                    time={timeObject}
+                    day="Tuesday"
+                    fn={getDayProgressPercent}
+                  />
+                  <DayNameCell
+                    time={timeObject}
+                    day="Wednesday"
+                    fn={getDayProgressPercent}
+                  />
+                  <DayNameCell
+                    time={timeObject}
+                    day="Thursday"
+                    fn={getDayProgressPercent}
+                  />
+                  <DayNameCell
+                    time={timeObject}
+                    day="Friday"
+                    fn={getDayProgressPercent}
+                  />
+                  <DayNameCell
+                    time={timeObject}
+                    day="Saturday"
+                    fn={getDayProgressPercent}
+                  />
                 </tr>
               </thead>
               <tbody>
