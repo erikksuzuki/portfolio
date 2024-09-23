@@ -73,22 +73,22 @@ function getLocalDateTime(timeZone: any) {
   return `${thisYear} ${localMonth} ${localDay} ${localTime}:${seconds}`
 }
 
-const TimeDisplay = ({ time }: any) => {
+const ClockDisplay = ({ time }: any) => {
   const [timeString, setTimeString] = useState<any>()
   useEffect(() => {
     setTimeString(time)
   }, [time])
   return (
-    <div className="text-left text-theme-heading-sm inline-block w-[108px]">
-      <div className="relative">
-        <figure className="absolute top-[2px] right-0 text-theme-xs">
+    <div className="text-right text-theme-heading-sm inline-block w-[108px]">
+      <div className="relative pr-6">
+        <figure className="absolute top-[2px] right-[0px] text-theme-xs">
           {timeString?.ampm}
         </figure>
         {timeString?.hour.toString().length === 2
           ? timeString.hour
           : '0' + timeString?.hour}
         :{timeString?.minute}{' '}
-        <figure className="absolute bottom-[4px] right-0 text-theme-sm">
+        <figure className="absolute bottom-[4px] right-[0px] text-theme-sm">
           {timeString?.second}
         </figure>
       </div>
@@ -324,8 +324,10 @@ const BabysSchedulePage = () => {
     <div>
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
         <div className="w-full">
-          <TimeDisplay time={timeObject} />
-          <DateDisplay time={timeObject} />
+          <div className="text-right">
+            <ClockDisplay time={timeObject} />
+            <DateDisplay time={timeObject} />
+          </div>
           <div
             className={clsx(
               'text-theme-heading-sm w-full text-center',
@@ -337,7 +339,7 @@ const BabysSchedulePage = () => {
               ? 'Class in Session'
               : getDayProgressPercent().isSchoolHours &&
                 timeObject.dayofweek !== 'Sunday'
-              ? 'No Class'
+              ? 'Not in Class'
               : 'Non-School Hours'}
           </div>
           <div className="w-full text-center mb-4">
