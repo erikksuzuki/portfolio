@@ -6,6 +6,7 @@ import ChemicalMolecules from '@/assets/coding-interview/reaction.png'
 import ChemicalMoleculesTwo from '@/assets/coding-interview/reaction2.png'
 import Image from 'next/image'
 import clsx from 'clsx'
+import HistoryListItem from './components/HistoryListItem'
 
 export interface HistoryObject {
   input: string | null
@@ -80,23 +81,18 @@ const CodingIntervieewPage = () => {
         </div>
         <div>
           <div className="text-center py-6 text-theme-heading-md">{`${resultValue}º`}</div>
-          <div>
+          <ul>
             {valueHistory.map((historyItem: HistoryObject, index: number) => {
               const lastItem = index === valueHistory.length - 1
               return (
-                <div
-                  className={clsx(
-                    'flex flex-row justify-between gap-x-[100px] items-center py-4 px-2',
-                    { 'border-b border-[rgba(255,255,255,0.3)]': !lastItem }
-                  )}
+                <HistoryListItem
                   key={index}
-                >
-                  <div className="text-theme-xs">{historyItem.input}</div>
-                  <div className="text-theme-lg">{historyItem.value}º</div>
-                </div>
+                  historyItem={historyItem}
+                  lastItem={lastItem}
+                />
               )
             })}
-          </div>
+          </ul>
         </div>
       </div>
     </section>
