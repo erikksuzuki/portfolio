@@ -11,7 +11,7 @@ const HistoryListItem = ({
   return (
     <li
       className={clsx(
-        'flex flex-row justify-between gap-x-[100px] items-center py-4 px-2',
+        'flex flex-row justify-between gap-x-[100px] items-center py-4',
         { 'border-b border-[rgba(255,255,255,0.3)]': !lastItem }
       )}
     >

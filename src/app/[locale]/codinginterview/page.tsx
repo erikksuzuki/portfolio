@@ -100,17 +100,22 @@ const CodingIntervieewPage = () => {
         </div>
         <div>
           <TemperatureIndicator temp={resultValue} />
-          <ul>
-            {valueHistory.map((historyItem: HistoryObject, index: number) => {
-              const lastItem = index === valueHistory.length - 1
-              return (
-                <HistoryListItem
-                  key={index}
-                  historyItem={historyItem}
-                  lastItem={lastItem}
-                />
-              )
-            })}
+          <ul className="pt-8">
+            <label className="text-theme-lg">Previous query history</label>
+            {valueHistory.length ? (
+              valueHistory.map((historyItem: HistoryObject, index: number) => {
+                const lastItem = index === valueHistory.length - 1
+                return (
+                  <HistoryListItem
+                    key={index}
+                    historyItem={historyItem}
+                    lastItem={lastItem}
+                  />
+                )
+              })
+            ) : (
+              <div className="text-theme-sm py-4">No recent history</div>
+            )}
           </ul>
         </div>
       </div>
