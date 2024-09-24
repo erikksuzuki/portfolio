@@ -58,7 +58,7 @@ const CodingIntervieewPage = () => {
         Chemical Reaction Temperature Calculator
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
-        <div>
+        <section>
           <form action={handleSubmit} className="flex flex-col gap-x-4 mb-8">
             <label className="text-theme-sm mb-1">
               Input reaction in SMILES format
@@ -98,7 +98,7 @@ const CodingIntervieewPage = () => {
               placeholder graph for illustration purposes only
             </figure>
           </article>
-        </div>
+        </section>
         <section>
           <TemperatureIndicator temp={resultValue} loading={loading} />
           <ul className="pt-8">
