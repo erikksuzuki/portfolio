@@ -63,10 +63,10 @@ const CodingIntervieewPage = () => {
             <label className="text-theme-sm mb-1">
               Input reaction in SMILES format
             </label>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-col md:flex-row gap-2">
               <input
                 disabled={loading}
-                className="text-black px-2 py-1 rounded-sm border border-[rgba(255,255,255,0.4)]"
+                className="text-black px-3 py-2 rounded-sm border border-[rgba(255,255,255,0.4)]"
                 value={inputValue}
                 onChange={(e) => handleInput(e.target.value)}
               />
@@ -74,7 +74,7 @@ const CodingIntervieewPage = () => {
                 type="submit"
                 disabled={loading}
                 className={clsx(
-                  'ml-2 px-2 py-1 rounded-sm border border-[rgba(255,255,255,0.4)]',
+                  'px-3 py-2 rounded-sm border border-[rgba(255,255,255,0.4)]',
                   { 'bg-[rgba(0,0,255,0.4)]': !loading },
                   { 'bg-[rgba(0,0,0,0.4)] opacity-[0.7]': loading }
                 )}
@@ -100,7 +100,7 @@ const CodingIntervieewPage = () => {
           </article>
         </div>
         <div>
-          <TemperatureIndicator temp={resultValue} />
+          <TemperatureIndicator temp={resultValue} loading={loading} />
           <ul className="pt-8">
             <label className="text-theme-lg">Previous query history</label>
             {loading && <LoadingHistorySkeleton />}
