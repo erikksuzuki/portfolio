@@ -19,22 +19,32 @@ const CodingIntervieewPage = () => {
     'CN(C)c1cccc([N+](=O)[O-])c1C#N.CO.Cl.[Fe]>>CN(C)c1cccc(N)c1C#N'
   )
   const [resultValue, setResultValue] = useState<number>(0)
-  const [graphReversed, setGraphReversed] = useState<any>(true)
+  const [graphReversed, setGraphReversed] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const [valueHistory, setValueHistory] = useState<HistoryObject[]>([])
 
   const graphCanvas = graphReversed ? ChemicalMolecules : ChemicalMoleculesTwo
 
-  async function handleSubmit() {
+  async function fetchTemperatureCalculated() {
     const temperature: number = await getTemperatureFromSmile(inputValue)
     const historyUpdate = [...valueHistory]
-    historyUpdate.push({
+    historyUpdate.unshift({
       input: inputValue,
       value: temperature,
     })
     setValueHistory(historyUpdate)
     setResultValue(temperature)
+  }
 
-    console.log('Submitted!')
+  function handleSubmit() {
+    let fetchTimeout
+    if (!loading) clearTimeout(fetchTimeout)
+    if (loading) return
+    setLoading(true)
+    fetchTimeout = setTimeout(() => {
+      fetchTemperatureCalculated()
+      setLoading(false)
+    }, 1000)
   }
 
   function handleInput(input: string) {
@@ -60,9 +70,13 @@ const CodingIntervieewPage = () => {
               />
               <button
                 type="submit"
-                className="ml-2 px-2 py-1 rounded-sm bg-[rgba(0,0,255,0.4)] border border-[rgba(255,255,255,0.4)]"
+                className={clsx(
+                  'ml-2 px-2 py-1 rounded-sm border border-[rgba(255,255,255,0.4)]',
+                  { 'bg-[rgba(0,0,255,0.4)]': !loading },
+                  { 'bg-[rgba(0,0,0,0.4)] opacity-[0.7]': loading }
+                )}
               >
-                Calculate
+                {loading ? 'Loading...' : 'Calculate'}
               </button>
             </div>
           </form>
