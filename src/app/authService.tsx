@@ -61,3 +61,15 @@ export async function getSteamPlayerInfo() {
     console.log(error)
   }
 }
+
+export async function getTemperatureFromSmile(smile: string) {
+  try {
+    const response = await fetch(
+      `/api/coding-interview?smile=${smile}`,
+      getHeaders
+    )
+    if (response) return await response.json()
+  } catch (error) {
+    console.log(error)
+  }
+}
