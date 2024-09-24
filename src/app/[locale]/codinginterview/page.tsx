@@ -53,7 +53,7 @@ const CodingIntervieewPage = () => {
     setGraphReversed(!graphReversed)
   }
   return (
-    <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
+    <main className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
       <h1 className="text-center text-theme-heading-sm mb-10">
         Chemical Reaction Temperature Calculator
       </h1>
@@ -99,7 +99,7 @@ const CodingIntervieewPage = () => {
             </figure>
           </article>
         </div>
-        <div>
+        <section>
           <TemperatureIndicator temp={resultValue} loading={loading} />
           <ul className="pt-8">
             <label className="text-theme-lg">Previous query history</label>
@@ -121,9 +121,9 @@ const CodingIntervieewPage = () => {
               </div>
             )}
           </ul>
-        </div>
+        </section>
       </div>
-    </section>
+    </main>
   )
 }
 
