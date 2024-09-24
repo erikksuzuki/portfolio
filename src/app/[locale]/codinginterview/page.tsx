@@ -20,7 +20,7 @@ const CodingIntervieewPage = () => {
   )
   const [resultValue, setResultValue] = useState<number>(0)
   const [graphReversed, setGraphReversed] = useState<boolean>(true)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   const [valueHistory, setValueHistory] = useState<HistoryObject[]>([])
 
   const graphCanvas = graphReversed ? ChemicalMolecules : ChemicalMoleculesTwo
@@ -56,7 +56,7 @@ const CodingIntervieewPage = () => {
       <h1 className="text-center text-theme-heading-sm mb-10">
         Chemical Reaction Temperature Calculator
       </h1>
-      <div className="grid grid-cols-2 gap-x-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
         <div>
           <form action={handleSubmit} className="flex flex-col gap-x-4 mb-8">
             <label className="text-theme-sm mb-1">
@@ -64,12 +64,14 @@ const CodingIntervieewPage = () => {
             </label>
             <div className="flex flex-row gap-2">
               <input
+                disabled={loading}
                 className="text-black px-2 py-1 rounded-sm border border-[rgba(255,255,255,0.4)]"
                 value={inputValue}
                 onChange={(e) => handleInput(e.target.value)}
               />
               <button
                 type="submit"
+                disabled={loading}
                 className={clsx(
                   'ml-2 px-2 py-1 rounded-sm border border-[rgba(255,255,255,0.4)]',
                   { 'bg-[rgba(0,0,255,0.4)]': !loading },
@@ -80,19 +82,21 @@ const CodingIntervieewPage = () => {
               </button>
             </div>
           </form>
-          <figure className="px-3 pt-16 pb-6 border border-[rgba(255,255,255,0.3)] rounded-xl">
-            <Image
-              alt="Chemical Reaction"
-              src={graphCanvas.src}
-              width={363}
-              height={137}
-              className="w-full"
-            />
-            <h4 className="mt-4 text-theme-xs text-center">{inputValue}</h4>
-          </figure>
-          <h4 className="mt-4 text-theme-xs text-center text-[#F88]">
-            placeholder graph for illustration purposes only
-          </h4>
+          <article>
+            <figure className="px-3 pt-16 pb-6 border border-[rgba(255,255,255,0.3)] rounded-xl">
+              <Image
+                alt="Chemical Reaction"
+                src={graphCanvas.src}
+                width={363}
+                height={137}
+                className="w-full"
+              />
+              <h4 className="mt-4 text-theme-xs text-center">{inputValue}</h4>
+            </figure>
+            <figure className="mt-4 text-theme-xs text-center text-[#F88]">
+              placeholder graph for illustration purposes only
+            </figure>
+          </article>
         </div>
         <div>
           <TemperatureIndicator temp={resultValue} />
