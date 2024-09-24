@@ -15,8 +15,8 @@ const HistoryListItem = ({
         { 'border-b border-[rgba(255,255,255,0.3)]': !lastItem }
       )}
     >
-      <div className="text-theme-xs">{historyItem.input}</div>
-      <div className="text-theme-lg">{historyItem.value}º</div>
+      <p className="text-theme-xs">{historyItem.input}</p>
+      <p className="text-theme-lg">{historyItem.value}º</p>
     </li>
   )
 }
