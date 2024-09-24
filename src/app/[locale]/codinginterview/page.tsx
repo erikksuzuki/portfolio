@@ -7,6 +7,7 @@ import ChemicalMoleculesTwo from '@/assets/coding-interview/reaction2.png'
 import Image from 'next/image'
 import clsx from 'clsx'
 import HistoryListItem from './components/HistoryListItem'
+import TemperatureIndicator from './components/TemperatureIndicator'
 
 export interface HistoryObject {
   input: string | null
@@ -80,7 +81,7 @@ const CodingIntervieewPage = () => {
           </h4>
         </div>
         <div>
-          <div className="text-center py-6 text-theme-heading-md">{`${resultValue}º`}</div>
+          <TemperatureIndicator temp={resultValue} />
           <ul>
             {valueHistory.map((historyItem: HistoryObject, index: number) => {
               const lastItem = index === valueHistory.length - 1
