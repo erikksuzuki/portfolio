@@ -8,6 +8,7 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import HistoryListItem from './components/HistoryListItem'
 import TemperatureIndicator from './components/TemperatureIndicator'
+import LoadingHistorySkeleton from './components/LoadingHistorySkeleton'
 
 export interface HistoryObject {
   input: string | null
@@ -82,8 +83,8 @@ const CodingIntervieewPage = () => {
               </button>
             </div>
           </form>
-          <article>
-            <figure className="px-3 pt-16 pb-6 border border-[rgba(255,255,255,0.3)] rounded-xl">
+          <article className="mb-10">
+            <figure className="px-3 pt-16 pb-6 bg-[rgba(0,0,0,0.2)] border border-[rgba(255,255,255,0.3)] rounded-xl">
               <Image
                 alt="Chemical Reaction"
                 src={graphCanvas.src}
@@ -102,7 +103,8 @@ const CodingIntervieewPage = () => {
           <TemperatureIndicator temp={resultValue} />
           <ul className="pt-8">
             <label className="text-theme-lg">Previous query history</label>
-            {valueHistory.length ? (
+            {loading && <LoadingHistorySkeleton />}
+            {valueHistory.length > 0 &&
               valueHistory.map((historyItem: HistoryObject, index: number) => {
                 const lastItem = index === valueHistory.length - 1
                 return (
@@ -112,9 +114,11 @@ const CodingIntervieewPage = () => {
                     lastItem={lastItem}
                   />
                 )
-              })
-            ) : (
-              <div className="text-theme-sm py-4">No recent history</div>
+              })}
+            {valueHistory.length === 0 && (
+              <div className="text-theme-sm py-4">
+                {loading ? '' : 'No recent history'}
+              </div>
             )}
           </ul>
         </div>
