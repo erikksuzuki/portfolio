@@ -1,8 +1,9 @@
 'use client'
 
-import { getTemperatureFromSmile } from '@/app/authService'
 import { useState } from 'react'
+import { getTemperatureFromSmile } from '@/app/authService'
 import ChemicalMolecules from '@/assets/coding-interview/reaction.png'
+import ChemicalMoleculesTwo from '@/assets/coding-interview/reaction2.png'
 import Image from 'next/image'
 import clsx from 'clsx'
 
@@ -16,7 +17,10 @@ const CodingIntervieewPage = () => {
     'CN(C)c1cccc([N+](=O)[O-])c1C#N.CO.Cl.[Fe]>>CN(C)c1cccc(N)c1C#N'
   )
   const [resultValue, setResultValue] = useState<number>(0)
+  const [graphReversed, setGraphReversed] = useState<any>(true)
   const [valueHistory, setValueHistory] = useState<HistoryObject[]>([])
+
+  const graphCanvas = graphReversed ? ChemicalMolecules : ChemicalMoleculesTwo
 
   async function handleSubmit() {
     const temperature: number = await getTemperatureFromSmile(inputValue)
@@ -29,6 +33,11 @@ const CodingIntervieewPage = () => {
     setResultValue(temperature)
 
     console.log('Submitted!')
+  }
+
+  function handleInput(input: string) {
+    setInputValue(input)
+    setGraphReversed(!graphReversed)
   }
   return (
     <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
@@ -45,7 +54,7 @@ const CodingIntervieewPage = () => {
               <input
                 className="text-black px-2 py-1 rounded-sm border border-[rgba(255,255,255,0.4)]"
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={(e) => handleInput(e.target.value)}
               />
               <button
                 type="submit"
@@ -55,16 +64,19 @@ const CodingIntervieewPage = () => {
               </button>
             </div>
           </form>
-          <figure className="px-3 pt-16 pb-6 border border-white rounded-xl">
+          <figure className="px-3 pt-16 pb-6 border border-[rgba(255,255,255,0.3)] rounded-xl">
             <Image
               alt="Chemical Reaction"
-              src={ChemicalMolecules.src}
+              src={graphCanvas.src}
               width={363}
               height={137}
               className="w-full"
             />
             <h4 className="mt-4 text-theme-xs text-center">{inputValue}</h4>
           </figure>
+          <h4 className="mt-4 text-theme-xs text-center text-[#F88]">
+            placeholder graph for illustration purposes only
+          </h4>
         </div>
         <div>
           <div className="text-center py-6 text-theme-heading-md">{`${resultValue}º`}</div>
@@ -74,13 +86,13 @@ const CodingIntervieewPage = () => {
               return (
                 <div
                   className={clsx(
-                    'flex flex-row justify-between gap-x-[100px] items-center py-4 px-2 border-white',
-                    { 'border-b': !lastItem }
+                    'flex flex-row justify-between gap-x-[100px] items-center py-4 px-2',
+                    { 'border-b border-[rgba(255,255,255,0.3)]': !lastItem }
                   )}
                   key={index}
                 >
                   <div className="text-theme-xs">{historyItem.input}</div>
-                  <div>{historyItem.value}º</div>
+                  <div className="text-theme-lg">{historyItem.value}º</div>
                 </div>
               )
             })}
