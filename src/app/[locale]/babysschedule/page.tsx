@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { monthNames } from '@/components/ClassScheduler/static/monthNames'
-import { daysOfTheWeek } from '@/components/ClassScheduler/static/daysOfTheWeek'
-import { times } from '@/components/ClassScheduler/static/times'
-import { schedule } from '@/components/ClassScheduler/static/schedule'
-import { getLocalDateString } from '@/utils/getLocalDateString'
-import { formatAMPM } from '@/utils/formatDateTime'
-import { formatMilliseconds } from '@/utils/formatMilliseconds'
+import clsx from "clsx";
+import { useEffect, useState } from "react";
+import { monthNames } from "@/components/ClassScheduler/static/monthNames";
+import { daysOfTheWeek } from "@/components/ClassScheduler/static/daysOfTheWeek";
+import { times } from "@/components/ClassScheduler/static/times";
+import { schedule } from "@/components/ClassScheduler/static/schedule";
+import { getLocalDateString } from "@/utils/getLocalDateString";
+import { formatAMPM } from "@/utils/formatDateTime";
+import { formatMilliseconds } from "@/utils/formatMilliseconds";
 
-import { type ClassTableCellProps } from '@/components/ClassScheduler/types/ClassTableCellProps'
-import { type TimeObject } from '@/components/ClassScheduler/types/TimeObject'
+import { type ClassTableCellProps } from "@/components/ClassScheduler/types/ClassTableCellProps";
+import { type TimeObject } from "@/components/ClassScheduler/types/TimeObject";
 
 const ClockDisplay = ({ time }: { time: TimeObject }) => {
-  const [timeString, setTimeString] = useState<TimeObject>()
+  const [timeString, setTimeString] = useState<TimeObject>();
   useEffect(() => {
-    setTimeString(time)
-  }, [time])
+    setTimeString(time);
+  }, [time]);
   return (
     <div className="text-right text-theme-heading-sm inline-block w-[108px]">
       <div className="relative pr-6">
@@ -26,59 +26,59 @@ const ClockDisplay = ({ time }: { time: TimeObject }) => {
         </figure>
         {timeString?.hour.toString().length === 2
           ? timeString.hour
-          : '0' + timeString?.hour}
-        :{timeString?.minute}{' '}
+          : "0" + timeString?.hour}
+        :{timeString?.minute}{" "}
         <figure className="absolute bottom-[4px] right-[0px] text-theme-sm">
           {timeString?.second}
         </figure>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const TimeUntilDisplay = ({
   timeUntilString,
   inClassNow,
 }: {
-  timeUntilString: string
-  inClassNow: boolean
+  timeUntilString: string;
+  inClassNow: boolean;
 }) => {
-  const [string, setString] = useState<string | undefined>()
+  const [string, setString] = useState<string | undefined>();
   useEffect(() => {
-    setString(timeUntilString)
-  }, [timeUntilString])
+    setString(timeUntilString);
+  }, [timeUntilString]);
   return (
     <div className="text-left text-theme-heading-xs inline-block w-[180px]">
       <div className="relative pr-6">{string}</div>
       <figure className="text-theme-md">
-        {inClassNow ? 'until next break' : 'until next class'}
+        {inClassNow ? "until next break" : "until next class"}
       </figure>
     </div>
-  )
-}
+  );
+};
 
 const DateDisplay = ({ time }: { time: TimeObject }) => {
-  const [dateString, setDateString] = useState<string>('')
+  const [dateString, setDateString] = useState<string>("");
   useEffect(() => {
     setDateString(
       `${time.dayofweek}, ${monthNames[time.month - 1]} ${time.day}`
-    )
-  }, [time])
-  return <div>{dateString}</div>
-}
+    );
+  }, [time]);
+  return <div>{dateString}</div>;
+};
 
 interface DayNameCellProps {
-  time: TimeObject
-  day: string
-  fn: any
+  time: TimeObject;
+  day: string;
+  fn: any;
 }
 
 const DayNameCell = ({ time, day, fn }: DayNameCellProps) => {
   return (
     <th
       align="center"
-      className={clsx('data-mon border-2 border-black p-2 relative', {
-        'bg-[rgba(0,0,0,0.4)]': time.dayofweek === day,
+      className={clsx("data-mon border-2 border-black p-2 relative", {
+        "bg-[rgba(0,0,0,0.4)]": time.dayofweek === day,
       })}
     >
       {time.dayofweek === day ? (
@@ -91,15 +91,15 @@ const DayNameCell = ({ time, day, fn }: DayNameCellProps) => {
       )}
       {day.slice(0, 3)}
     </th>
-  )
-}
+  );
+};
 
 const DayProgressColumnDisplay = ({
   progressPercent,
   isSchoolHours,
 }: {
-  progressPercent: number
-  isSchoolHours: boolean
+  progressPercent: number;
+  isSchoolHours: boolean;
 }) => {
   return (
     <div className="w-full left-0 h-[478px] absolute top-[42px]">
@@ -107,13 +107,13 @@ const DayProgressColumnDisplay = ({
         style={{
           height: `${progressPercent * 478}px`,
         }}
-        className={clsx('absolute w-full left-0 top-0', {
-          'border-b-2 border-[#fff]': isSchoolHours,
+        className={clsx("absolute w-full left-0 top-0", {
+          "border-b-2 border-[#fff]": isSchoolHours,
         })}
       />
     </div>
-  )
-}
+  );
+};
 
 const ClassSegmentCells = ({ block }: { block: number }) => {
   return (
@@ -129,34 +129,34 @@ const ClassSegmentCells = ({ block }: { block: number }) => {
         {times[block].start} - {times[block].end}
       </td>
     </>
-  )
-}
+  );
+};
 
 const TimeSegment = ({ block, day }: { block: number; day: number }) => {
-  if (schedule[daysOfTheWeek[day + 1]][block - 1] === '.' ? '' : 'class') {
-    return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>
+  if (schedule[daysOfTheWeek[day + 1]][block - 1] === "." ? "" : "class") {
+    return <div className="w-full h-full bg-[rgba(255,255,255,0.4)]">-</div>;
   } else {
-    return <div></div>
+    return <div></div>;
   }
-}
+};
 
 const ClassTableCell = ({ time, block, day }: ClassTableCellProps) => {
   return (
     <td
-      className={clsx('data-mon border-2 border-black p-2', {
-        'bg-[rgba(0,0,0,0.4)]': time.dayofweek === daysOfTheWeek[day],
+      className={clsx("data-mon border-2 border-black p-2", {
+        "bg-[rgba(0,0,0,0.4)]": time.dayofweek === daysOfTheWeek[day],
       })}
       valign="middle"
       align="center"
     >
       <TimeSegment block={block} day={day - 1} />
     </td>
-  )
-}
+  );
+};
 
 const BabysSchedulePage = () => {
-  const initialTime = getLocalDateString('Asia/Phnom_Penh')
-  const [timeNow, setTimeNowHere] = useState<Date>(new Date(initialTime))
+  const initialTime = getLocalDateString("Asia/Phnom_Penh");
+  const [timeNow, setTimeNowHere] = useState<Date>(new Date(initialTime));
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
@@ -167,10 +167,10 @@ const BabysSchedulePage = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeNowHere(new Date(getLocalDateString('Asia/Phnom_Penh')))
-    }, 1000)
-    return () => clearInterval(intervalId)
-  }, [initialTime])
+      setTimeNowHere(new Date(getLocalDateString("Asia/Phnom_Penh")));
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [initialTime]);
 
   const timeObject: TimeObject = {
     dayofweek: daysOfTheWeek[timeNow.getDay()],
@@ -194,8 +194,8 @@ const BabysSchedulePage = () => {
       new Date().getSeconds().toString().length === 1
         ? `0${new Date().getSeconds()}`
         : new Date().getSeconds(),
-    ampm: timeNow.getHours() > 12 ? 'PM' : 'AM',
-  }
+    ampm: timeNow.getHours() > 12 ? "PM" : "AM",
+  };
 
   function checkClassSlot(slotNumber: number) {
     if (
@@ -208,13 +208,13 @@ const BabysSchedulePage = () => {
           `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[slotNumber].end}`
         ).getTime()
     ) {
-      if (schedule[timeObject.dayofweek][slotNumber - 1] === '.') {
-        return false
+      if (schedule[timeObject.dayofweek][slotNumber - 1] === ".") {
+        return false;
       } else {
-        return true
+        return true;
       }
     } else {
-      return false
+      return false;
     }
   }
   const inClassNow =
@@ -227,67 +227,67 @@ const BabysSchedulePage = () => {
     !checkClassSlot(7) &&
     !checkClassSlot(8)
       ? false
-      : true
+      : true;
   function calculateTimeBetween(): { label: string; timeUntil: string } {
     if (inClassNow) {
-      let currentBlock = 1
+      let currentBlock = 1;
       schedule[timeObject.dayofweek].forEach(
         (timeSlot: string, index: number) => {
           const nextSlotStart: Date = new Date(
             `${timeObject.year} ${timeObject.month} ${timeObject.day} ${
               times[index + 1].start
             }`
-          )
-          if (timeSlot === '.') return
-          if (timeNow.getTime() < nextSlotStart.getTime()) return
-          currentBlock = index + 1
+          );
+          if (timeSlot === ".") return;
+          if (timeNow.getTime() < nextSlotStart.getTime()) return;
+          currentBlock = index + 1;
         }
-      )
-      const targetTime = `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[currentBlock].end}`
+      );
+      const targetTime = `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[currentBlock].end}`;
       const timeUntilMiliseconds = Number(
         new Date(targetTime).getTime() - timeNow.getTime()
-      )
+      );
       return {
         label: `Current class ends at ${formatAMPM(targetTime)}`,
         timeUntil:
           timeUntilMiliseconds < 0
-            ? 'N/A'
+            ? "N/A"
             : formatMilliseconds(timeUntilMiliseconds, true),
-      }
+      };
     } else {
-      let currentBlock = 1
-      let blockFound = false
+      let currentBlock = 1;
+      let blockFound = false;
       schedule[timeObject.dayofweek].forEach(
         (timeSlot: string, index: number) => {
           const thisBlockStart: Date = new Date(
             `${timeObject.year} ${timeObject.month} ${timeObject.day} ${
               times[index + 1].start
             }`
-          )
+          );
           // if block is empty, skip
-          if (timeSlot === '.') return
-          if (thisBlockStart.getTime() < timeNow.getTime()) return
-          if (blockFound) return
-          blockFound = true
-          currentBlock = index + 1
+          if (timeSlot === ".") return;
+          if (thisBlockStart.getTime() < timeNow.getTime()) return;
+          if (blockFound) return;
+          blockFound = true;
+          currentBlock = index + 1;
         }
-      )
-      const targetTime = `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[currentBlock].start}`
+      );
+      const targetTime = `${timeObject.year} ${timeObject.month} ${timeObject.day} ${times[currentBlock].start}`;
       const timeUntilMiliseconds = Number(
         new Date(targetTime).getTime() - timeNow.getTime()
-      )
+      );
       return {
         label: `Next class starts at ${formatAMPM(targetTime)}`,
         timeUntil:
           timeUntilMiliseconds < 0
-            ? 'N/A'
+            ? "N/A"
             : formatMilliseconds(timeUntilMiliseconds, true),
-      }
+      };
     }
   }
 
   function getDayProgressPercent() {
-    let isSchoolHours = false
+    let isSchoolHours = false;
     if (
       new Date(
         `${timeObject.month} ${timeObject.day} ${timeNow.getHours()}:${
@@ -302,25 +302,29 @@ const BabysSchedulePage = () => {
       ).getTime() >
         new Date(`${timeObject.month} ${timeObject.day} 16:10`).getTime()
     ) {
-      isSchoolHours = false
+      isSchoolHours = false;
     } else {
-      isSchoolHours = true
+      isSchoolHours = true;
     }
 
-    let minutesIn = 0
-    let totalAvailableMinutes = 530
+    let minutesIn = 0;
+    let totalAvailableMinutes = 530;
     if (isSchoolHours) {
-      minutesIn = (timeNow.getHours() - 7) * 60 + Number(timeObject.minute) - 20
+      minutesIn =
+        (timeNow.getHours() - 7) * 60 + Number(timeObject.minute) - 20;
     }
     return {
       isSchoolHours: isSchoolHours,
       dayProgress: Number(minutesIn / totalAvailableMinutes),
-    }
+    };
   }
 
   return (
     <div>
       <section className="text-left gap-y-6 py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px] relative">
+        <h1 className="text-center text-theme-heading-xs w-full">
+          Teaching Schedule
+        </h1>
         <div className="w-full">
           <header className="flex flex-row justify-between">
             <div>
@@ -336,17 +340,17 @@ const BabysSchedulePage = () => {
           </header>
           <div
             className={clsx(
-              'text-theme-heading-sm w-full text-center',
-              { 'text-[#0f0]': !inClassNow },
-              { 'text-[red]': inClassNow }
+              "text-theme-heading-sm w-full text-center",
+              { "text-[#0f0]": !inClassNow },
+              { "text-[red]": inClassNow }
             )}
           >
             {inClassNow
-              ? 'Class in Session'
+              ? "Class in Session"
               : getDayProgressPercent().isSchoolHours &&
-                timeObject.dayofweek !== 'Sunday'
-              ? 'Not in Class'
-              : 'Non-School Hours'}
+                timeObject.dayofweek !== "Sunday"
+              ? "Not in Class"
+              : "Non-School Hours"}
           </div>
           <div className="w-full text-center mb-4">
             {calculateTimeBetween().label}
@@ -399,7 +403,7 @@ const BabysSchedulePage = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className={clsx({ 'bg-black': checkClassSlot(1) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(1) })}>
                   <td
                     className="border-2 border-black p-2 bg-[#0A2B3E] w-[80px]"
                     rowSpan={4}
@@ -416,7 +420,7 @@ const BabysSchedulePage = () => {
                   <ClassTableCell time={timeObject} block={1} day={5} />
                   <ClassTableCell time={timeObject} block={1} day={6} />
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(2) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(2) })}>
                   <ClassSegmentCells block={2} />
                   <ClassTableCell time={timeObject} block={2} day={1} />
                   <ClassTableCell time={timeObject} block={2} day={2} />
@@ -425,7 +429,7 @@ const BabysSchedulePage = () => {
                   <ClassTableCell time={timeObject} block={2} day={5} />
                   <ClassTableCell time={timeObject} block={2} day={6} />
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(3) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(3) })}>
                   <ClassSegmentCells block={3} />
                   <ClassTableCell time={timeObject} block={3} day={1} />
                   <ClassTableCell time={timeObject} block={3} day={2} />
@@ -434,7 +438,7 @@ const BabysSchedulePage = () => {
                   <ClassTableCell time={timeObject} block={3} day={5} />
                   <ClassTableCell time={timeObject} block={3} day={6} />
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(4) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(4) })}>
                   <ClassSegmentCells block={4} />
                   <ClassTableCell time={timeObject} block={4} day={1} />
                   <ClassTableCell time={timeObject} block={4} day={2} />
@@ -460,7 +464,7 @@ const BabysSchedulePage = () => {
                     {times[0].start} - {times[0].end}
                   </td>
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(5) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(5) })}>
                   <td
                     className="border-2 border-black p-2 bg-[#0A2B3E]"
                     rowSpan={4}
@@ -477,7 +481,7 @@ const BabysSchedulePage = () => {
                   <ClassTableCell time={timeObject} block={5} day={5} />
                   <ClassTableCell time={timeObject} block={5} day={6} />
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(6) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(6) })}>
                   <ClassSegmentCells block={6} />
                   <ClassTableCell time={timeObject} block={6} day={1} />
                   <ClassTableCell time={timeObject} block={6} day={2} />
@@ -486,7 +490,7 @@ const BabysSchedulePage = () => {
                   <ClassTableCell time={timeObject} block={6} day={5} />
                   <ClassTableCell time={timeObject} block={6} day={6} />
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(7) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(7) })}>
                   <ClassSegmentCells block={7} />
                   <ClassTableCell time={timeObject} block={7} day={1} />
                   <ClassTableCell time={timeObject} block={7} day={2} />
@@ -495,7 +499,7 @@ const BabysSchedulePage = () => {
                   <ClassTableCell time={timeObject} block={7} day={5} />
                   <ClassTableCell time={timeObject} block={7} day={6} />
                 </tr>
-                <tr className={clsx({ 'bg-black': checkClassSlot(8) })}>
+                <tr className={clsx({ "bg-black": checkClassSlot(8) })}>
                   <ClassSegmentCells block={8} />
                   <ClassTableCell time={timeObject} block={8} day={1} />
                   <ClassTableCell time={timeObject} block={8} day={2} />
@@ -510,7 +514,7 @@ const BabysSchedulePage = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default BabysSchedulePage
+export default BabysSchedulePage;
