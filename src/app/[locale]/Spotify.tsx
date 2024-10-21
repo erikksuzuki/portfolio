@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import TopArtistsList from '../../components/SpotifySection/TopArtists'
+import TopArtistsList from '@/components/SpotifySection/TopArtists'
 import {
   getSpotifyPlayingNow,
   getSpotifyRecentlyPlayed,
   getSpotifyTopArtists,
 } from '@/app/authService'
-import SpotifyRecentTracks from '../../components/SpotifySection/RecentTracks'
-import SpotifyAlbumMosaic from '../../components/SpotifySection/AlbumMosaic'
+import SpotifyRecentTracks from '@/components/SpotifySection/RecentTracks'
+import SpotifyAlbumMosaic from '@/components/SpotifySection/AlbumMosaic'
 import SpotifyLoadingBackground from '@/assets/backgrounds/spotify.jpg'
 // import jp from 'javascript-time-ago/locale/jp'
 
