@@ -1,39 +1,40 @@
-import { useMessages, useTranslations } from 'next-intl'
+import { useMessages, useTranslations } from "next-intl";
 
-import WorkDescription from '@/components/common/WorkDescription'
-import SocialLinks from '@/components/common/SocialLinks'
-import { socialLinkData } from '../socialLinkData'
-import LanguagePicker from '@/components/common/LanguageSwitcher'
+import WorkDescription from "@/components/common/WorkDescription";
+import SocialLinks from "@/components/common/SocialLinks";
+import { socialLinkData } from "../socialLinkData";
+import LanguagePicker from "@/components/common/LanguageSwitcher";
 
-import AsciiPortrait from '@/components/Header/AsciiPortrait'
+import AsciiPortrait from "@/components/Header/AsciiPortrait";
 
-import SpotifySection from '@/app/[locale]/Spotify'
-import BlockscopeSection from './Blockscope'
-import FreeportSection from './Freeport'
-import GeminiSection from './Gemini'
-import FreelanceSection from './Freelance'
-import SteamSection from './Steam'
+import SpotifySection from "@/app/[locale]/Spotify";
+import BlockscopeSection from "./Blockscope";
+import FreeportSection from "./Freeport";
+import GeminiSection from "./Gemini";
+import FreelanceSection from "./Freelance";
+import SteamSection from "./Steam";
+import ReadingSection from "./Reading";
 
 export default function Home() {
-  const t = useTranslations('header')
-  const messages = useMessages() as any
+  const t = useTranslations("header");
+  const messages = useMessages() as any;
   const paragraphsArray = Object.values(
     messages.header.introduction.paragraphs ?? {}
-  )
+  );
   const technologiesArray: string[] = [
-    'React',
-    'Next.js 14',
-    'Tailwind CSS',
-    'Supabase',
-    'Vercel',
-    'Contentful',
-    'Gsap',
-    'Framer Motion',
-    'Mantine UI',
-    'Radix UI',
-    'Zustand',
-    'Tauri',
-  ]
+    "React",
+    "Next.js 14",
+    "Tailwind CSS",
+    "Supabase",
+    "Vercel",
+    "Contentful",
+    "Gsap",
+    "Framer Motion",
+    "Mantine UI",
+    "Radix UI",
+    "Zustand",
+    "Tauri",
+  ];
 
   return (
     <div>
@@ -44,12 +45,12 @@ export default function Home() {
           </div>
           <div className="md:order-1 order-2">
             <WorkDescription
-              label={t('introduction.heading')}
-              title={t('introduction.name')}
+              label={t("introduction.heading")}
+              title={t("introduction.name")}
               headerTitle
               paragraphs={paragraphsArray}
               technologies={technologiesArray}
-              technologiesLabel={t('introduction.technologyline')}
+              technologiesLabel={t("introduction.technologyline")}
             />
             <SocialLinks
               data={socialLinkData}
@@ -81,7 +82,8 @@ export default function Home() {
         <GeminiSection />
         <FreelanceSection columnsReversed />
       </div>
+      <ReadingSection />
       <SteamSection />
     </div>
-  )
+  );
 }
