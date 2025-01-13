@@ -13,6 +13,7 @@ import FreeportSection from './Freeport'
 import GeminiSection from './Gemini'
 import FreelanceSection from './Freelance'
 import SteamSection from './Steam'
+import ReadingSection from './Reading'
 
 export default function Home() {
   const t = useTranslations('header')
@@ -71,7 +72,7 @@ export default function Home() {
             <div className="p-4 rounded-md border border-white">some content</div>
             <div className="p-4 rounded-md border border-white">some content</div>
           </div>
-        </section>
+        </section> 
       */}
       </main>
       <SpotifySection />
@@ -81,6 +82,7 @@ export default function Home() {
         <GeminiSection />
         <FreelanceSection columnsReversed />
       </div>
+      <ReadingSection />
       <SteamSection />
     </div>
   )
