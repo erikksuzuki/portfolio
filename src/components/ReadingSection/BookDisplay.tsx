@@ -1,6 +1,6 @@
-import { BookProperties } from "@/components/ReadingSection/BookDetails";
-import { truncateParagraph } from "@/utils/formatString";
-import * as AspectRatio from "@radix-ui/react-aspect-ratio";
+import { BookProperties } from '@/components/ReadingSection/BookDetails';
+import { truncateParagraph } from '@/utils/formatString';
+import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 
 interface BookDisplayProps {
   setBookDetails: (book: BookProperties) => void;

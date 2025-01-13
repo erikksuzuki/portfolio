@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import IconExternalPage from "@/assets/icons/common/IconExternalPage";
-import Link from "next/link";
+import IconExternalPage from '@/assets/icons/common/IconExternalPage';
+import Link from 'next/link';
 
 export interface BookProperties {
   coverSrc?: string;
@@ -10,7 +10,7 @@ export interface BookProperties {
   year?: string;
   description?: string;
   amazonLink?: string;
-  "ISBN-10"?: string;
+  'ISBN-10'?: string;
   pages?: number;
 }
 
@@ -18,9 +18,9 @@ const BookDetails = (bookDetails: BookProperties) => {
   return (
     <aside className="w-full hidden md:flex items-center justify-center bg-acryllic-black rounded-lg border border-[rgba(255,255,255,0.1)]">
       <div className="md:px-8 px-4 py-8 w-full max-w-[460px]">
-        {bookDetails?.["ISBN-10"] && (
+        {bookDetails?.['ISBN-10'] && (
           <div className="text-theme-xs opacity-40">
-            ISBN-10: {bookDetails["ISBN-10"]}
+            ISBN-10: {bookDetails['ISBN-10']}
           </div>
         )}
         <h2 className="text-theme-md capitalize font-bold mb-3">
