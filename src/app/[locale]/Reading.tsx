@@ -1,27 +1,27 @@
-'use client';
-import KindleIcon from '@/assets/kindleicon.webp';
+'use client'
+import KindleIcon from '@/assets/kindleicon.webp'
 
-import * as AspectRatio from '@radix-ui/react-aspect-ratio';
+import * as AspectRatio from '@radix-ui/react-aspect-ratio'
 
-import BookShelvesBG from '@/assets/bookcovers/ReadingSectionBG.jpg';
+import BookShelvesBG from '@/assets/bookcovers/ReadingSectionBG.jpg'
 
-import clsx from 'clsx';
-import { truncateParagraph } from '@/utils/formatString';
-import { useEffect, useState } from 'react';
-import { books } from 'src/data/books';
+import clsx from 'clsx'
+import { truncateParagraph } from '@/utils/formatString'
+import { useEffect, useState } from 'react'
+import { books } from 'src/data/books'
 import BookDetails, {
   BookProperties,
-} from '@/components/ReadingSection/BookDetails';
-import BookDisplay from '@/components/ReadingSection/BookDisplay';
+} from '@/components/ReadingSection/BookDetails'
+import BookDisplay from '@/components/ReadingSection/BookDisplay'
 
-const bookList = books as BookProperties[];
+const bookList = books as BookProperties[]
 
 const ReadingSection = () => {
-  const [bookDetails, setBookDetails] = useState<BookProperties | null>(null);
+  const [bookDetails, setBookDetails] = useState<BookProperties | null>(null)
 
   useEffect(() => {
-    setBookDetails(bookList[0]);
-  }, []);
+    setBookDetails(bookList[0])
+  }, [])
 
   return (
     <section
@@ -63,7 +63,7 @@ const ReadingSection = () => {
         <BookDetails {...bookDetails} />
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default ReadingSection;
+export default ReadingSection

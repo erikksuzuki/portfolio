@@ -1,9 +1,9 @@
-import PerennialPhilosophy from '@/assets/bookcovers/perennialphilosophy.jpg';
-import Gold from '@/assets/bookcovers/gold.jpg';
-import DiamondCutter from '@/assets/bookcovers/diamondcutter.jpg';
-import LastDefenderOfCamelot from '@/assets/bookcovers/lastdefenderofcamelot.jpg';
-import LordOfLightCover from '@/assets/bookcovers/LordOfLightCover.jpg';
-import Kybalion from '@/assets/bookcovers/kybalion.jpg';
+import PerennialPhilosophy from '@/assets/bookcovers/perennialphilosophy.jpg'
+import Gold from '@/assets/bookcovers/gold.jpg'
+import DiamondCutter from '@/assets/bookcovers/diamondcutter.jpg'
+import LastDefenderOfCamelot from '@/assets/bookcovers/lastdefenderofcamelot.jpg'
+import LordOfLightCover from '@/assets/bookcovers/LordOfLightCover.jpg'
+import Kybalion from '@/assets/bookcovers/kybalion.jpg'
 
 export const books = [
   {
@@ -69,4 +69,4 @@ export const books = [
     'ISBN-10': '0143131680',
     pages: 176,
   },
-];
+]

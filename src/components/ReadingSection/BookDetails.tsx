@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import IconExternalPage from '@/assets/icons/common/IconExternalPage';
-import Link from 'next/link';
+import IconExternalPage from '@/assets/icons/common/IconExternalPage'
+import Link from 'next/link'
 
 export interface BookProperties {
-  coverSrc?: string;
-  title?: string;
-  author?: string;
-  year?: string;
-  description?: string;
-  amazonLink?: string;
-  'ISBN-10'?: string;
-  pages?: number;
+  coverSrc?: string
+  title?: string
+  author?: string
+  year?: string
+  description?: string
+  amazonLink?: string
+  'ISBN-10'?: string
+  pages?: number
 }
 
 const BookDetails = (bookDetails: BookProperties) => {
@@ -48,7 +48,7 @@ const BookDetails = (bookDetails: BookProperties) => {
         )}
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default BookDetails;
+export default BookDetails
