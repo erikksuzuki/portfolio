@@ -1,26 +1,26 @@
-import { useMessages, useTranslations } from 'next-intl';
+import { useMessages, useTranslations } from 'next-intl'
 
-import WorkDescription from '@/components/common/WorkDescription';
-import SocialLinks from '@/components/common/SocialLinks';
-import { socialLinkData } from '../socialLinkData';
-import LanguagePicker from '@/components/common/LanguageSwitcher';
+import WorkDescription from '@/components/common/WorkDescription'
+import SocialLinks from '@/components/common/SocialLinks'
+import { socialLinkData } from '../socialLinkData'
+import LanguagePicker from '@/components/common/LanguageSwitcher'
 
-import AsciiPortrait from '@/components/Header/AsciiPortrait';
+import AsciiPortrait from '@/components/Header/AsciiPortrait'
 
-import SpotifySection from '@/app/[locale]/Spotify';
-import BlockscopeSection from './Blockscope';
-import FreeportSection from './Freeport';
-import GeminiSection from './Gemini';
-import FreelanceSection from './Freelance';
-import SteamSection from './Steam';
-import ReadingSection from './Reading';
+import SpotifySection from '@/app/[locale]/Spotify'
+import BlockscopeSection from './Blockscope'
+import FreeportSection from './Freeport'
+import GeminiSection from './Gemini'
+import FreelanceSection from './Freelance'
+import SteamSection from './Steam'
+import ReadingSection from './Reading'
 
 export default function Home() {
-  const t = useTranslations('header');
-  const messages = useMessages() as any;
+  const t = useTranslations('header')
+  const messages = useMessages() as any
   const paragraphsArray = Object.values(
     messages.header.introduction.paragraphs ?? {}
-  );
+  )
   const technologiesArray: string[] = [
     'React',
     'Next.js 14',
@@ -34,7 +34,7 @@ export default function Home() {
     'Radix UI',
     'Zustand',
     'Tauri',
-  ];
+  ]
 
   return (
     <div>
@@ -85,5 +85,5 @@ export default function Home() {
       <ReadingSection />
       <SteamSection />
     </div>
-  );
+  )
 }
