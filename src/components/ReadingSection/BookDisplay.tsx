@@ -1,4 +1,5 @@
 import { BookProperties } from '@/components/ReadingSection/BookDetails'
+import { useResponsive } from '@/hooks/useResponsive'
 import { truncateParagraph } from '@/utils/formatString'
 import * as AspectRatio from '@radix-ui/react-aspect-ratio'
 
@@ -8,16 +9,20 @@ interface BookDisplayProps {
 }
 
 const BookDisplay = ({ book, setBookDetails }: BookDisplayProps) => {
+  const { isAboveMd } = useResponsive('md')
   const coverSrc = book.coverSrc
   const title = book.title
   const author = book.author
   const year = book.year
   const bookCoverCaption = `${title} by ${author}, ${year}`
+
   return (
     <div
       className="cursor-pointer"
       onClick={() => {
-        setBookDetails(book)
+        isAboveMd
+          ? setBookDetails(book)
+          : window.open(book.amazonLink, '_newtab')
       }}
     >
       <figure className="border-white mb-2">
