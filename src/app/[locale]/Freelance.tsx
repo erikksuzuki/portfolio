@@ -35,6 +35,11 @@ const FreelanceSection = ({
           href: 'https://www.moneydigest.sg/comex-2015-it-show-at-suntec-city-3-6-sept-2015/',
           iconSrc: MoneyDigestIcon.src,
         },
+        {
+          label: 'WordPress Portfolio',
+          href: 'https://sgprojectarchive.vercel.app/',
+          iconSrc: 'https://sgprojectarchive.vercel.app/art-palette-icon.png',
+        },
       ]}
       technologiesArray={[
         'HTML',
