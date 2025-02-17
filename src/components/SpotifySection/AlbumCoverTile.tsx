@@ -2,7 +2,7 @@ const AlbumCoverTile = ({ artist }: any) => {
   return (
     <div
       style={{
-        backgroundImage: `url(${artist.images[0].url})`,
+        backgroundImage: `url(${artist?.images[0]?.url ?? ''})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
       }}
