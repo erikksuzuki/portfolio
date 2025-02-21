@@ -9,6 +9,7 @@ import FreelanceBackground from '@/assets/backgrounds/freelance.jpg'
 import { runFreelanceAnimations } from '@/components/WorkFreelance/animations'
 import SlideShowFreelanceLogo from '@/components/WorkFreelance/SlideShowLogo'
 import SlideShowScreenshots from '@/components/WorkFreelance/SlideShowScreenshots'
+import ArtPaletteIcon from '@/assets/link-icons/art-palette-icon.png'
 
 const FreelanceSection = ({
   columnsReversed = false,
@@ -38,7 +39,7 @@ const FreelanceSection = ({
         {
           label: 'WordPress Portfolio',
           href: 'https://sgprojectarchive.vercel.app/',
-          iconSrc: 'https://sgprojectarchive.vercel.app/art-palette-icon.png',
+          iconSrc: ArtPaletteIcon.src,
         },
       ]}
       technologiesArray={[
