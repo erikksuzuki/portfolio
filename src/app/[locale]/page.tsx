@@ -5,7 +5,7 @@ import SocialLinks from '@/components/common/SocialLinks'
 import { socialLinkData } from '../socialLinkData'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
 
-import AsciiPortrait from '@/components/Header/AsciiPortrait'
+import LinkImage from '@/assets/linksprite.gif'
 
 import SpotifySection from '@/app/[locale]/Spotify'
 import BlockscopeSection from './Blockscope'
@@ -59,7 +59,11 @@ export default function Home() {
             />
           </div>
           <div className="md:order-2 order-1 flex flex-col justify-center items-center">
-            <AsciiPortrait />
+            <img
+              src={LinkImage.src}
+              alt={'LinkGifImage'}
+              className="w-full h-auto"
+            />
           </div>
         </section>
         {/* 

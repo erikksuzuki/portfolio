@@ -21,7 +21,10 @@ const SpotifySection = () => {
     getSpotifyTopArtists(48, 'medium_term').then((data) =>
       setTopArtists(data.items)
     )
-    getSpotifyRecentlyPlayed(10).then((data) => setRecentTracks(data.items))
+    getSpotifyRecentlyPlayed(10).then((data) => {
+      setRecentTracks(data.items)
+      console.log(data)
+    })
     getSpotifyPlayingNow().then((data) => setPlayingNow(data))
   }
 
