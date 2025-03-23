@@ -20,11 +20,12 @@ const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 interface WorkSectionProps {
-  animationFunction: any
+  animationFunction?: any
   translationKey: NamespaceKeys<IntlMessages, any>
   columnsReversed?: boolean
   linkArray: ExperienceLink[]
   technologiesArray: string[]
+  ctaSection?: () => ReactElement
   illustrationBgSrc: string
   illustrationSlides: ReactElement[]
 }
@@ -35,6 +36,7 @@ export default function WorkSection({
   columnsReversed,
   linkArray,
   technologiesArray,
+  ctaSection,
   illustrationBgSrc,
   illustrationSlides,
 }: WorkSectionProps) {
@@ -54,9 +56,11 @@ export default function WorkSection({
   const triggerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger)
   useIsomorphicLayoutEffect(() => {
-    const pin = animationFunction(triggerRef.current)
-    return () => {
-      pin.kill()
+    if (animationFunction) {
+      const pin = animationFunction(triggerRef.current)
+      return () => {
+        pin.kill()
+      }
     }
   }, [])
 
@@ -65,7 +69,7 @@ export default function WorkSection({
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 pb-28">
         <div
           className={clsx(
-            'order-2 flex items-center',
+            'order-2 flex flex-col items-center',
             { 'md:order-1': !columnsReversed },
             { 'md:order-2': columnsReversed }
           )}
@@ -78,6 +82,7 @@ export default function WorkSection({
             technologies={technologiesArray}
             links={linkArray}
           />
+          <div className="w-full">{ctaSection && ctaSection()}</div>
         </div>
         <div
           className={clsx(
