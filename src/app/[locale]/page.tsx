@@ -14,6 +14,7 @@ import GeminiSection from './Gemini'
 import FreelanceSection from './Freelance'
 import SteamSection from './Steam'
 import ReadingSection from './Reading'
+import AkamiSection from './Akami'
 
 export default function Home() {
   const t = useTranslations('header')
@@ -24,6 +25,7 @@ export default function Home() {
   const technologiesArray: string[] = [
     'React',
     'Next.js 14',
+    'Expo React Native',
     'Tailwind CSS',
     'Supabase',
     'Vercel',
@@ -33,7 +35,6 @@ export default function Home() {
     'Mantine UI',
     'Radix UI',
     'Zustand',
-    'Tauri',
   ]
 
   return (
@@ -81,10 +82,11 @@ export default function Home() {
       </main>
       <SpotifySection />
       <div className="py-24 px-4 md:px-8 w-full mx-auto max-w-[1024px]">
-        <BlockscopeSection />
-        <FreeportSection columnsReversed />
-        <GeminiSection />
-        <FreelanceSection columnsReversed />
+        <AkamiSection />
+        <BlockscopeSection columnsReversed />
+        <FreeportSection />
+        <GeminiSection columnsReversed />
+        <FreelanceSection />
       </div>
       <ReadingSection />
       <SteamSection />

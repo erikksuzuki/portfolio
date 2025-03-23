@@ -33,7 +33,7 @@ const FreeportSection = ({
         },
         {
           label: 'Website',
-          href: 'https://freeport.app',
+          href: 'https://web.archive.org/web/20241210091024/https://freeport.app/',
           iconSrc: FreeportIcon.src,
         },
       ]}
