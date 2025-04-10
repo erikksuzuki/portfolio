@@ -5,7 +5,7 @@ import SocialLinks from '@/components/common/SocialLinks'
 import { socialLinkData } from '../socialLinkData'
 import LanguagePicker from '@/components/common/LanguageSwitcher'
 
-import LinkImage from '@/assets/linksprite.gif'
+import LinkImage from '@/assets/desk_illustration.jpg'
 
 import SpotifySection from '@/app/[locale]/Spotify'
 import BlockscopeSection from './Blockscope'
