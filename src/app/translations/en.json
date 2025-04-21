@@ -3,7 +3,7 @@
   "landing": {
     "metadata": {
       "title": "Eric Suzuki - Full Stack Web Developer",
-      "description": "Product Engineer experienced with complex Software-as-a-Service platforms, specializing in front-end architecture and building pixel-perfect, customized UI component libraries"
+      "description": "Senior Product Engineer experienced with complex Software-as-a-Service platforms, specializing in front-end architecture and building pixel-perfect, customized UI component libraries"
     }
   },
   "header": {
@@ -11,8 +11,8 @@
       "heading": "Hi, my name is",
       "name": "Eric Suzuki",
       "paragraphs": {
-        "1": "I'm a Product Engineer experienced with complex Software-as-a-Service platforms, specializing in building, optimizing and testing front-end features, architecture and pixel-perfect component libraries from the ground up using SOLID programming principles. The source code for this portfolio can be found in the Github link below.",
-        "2": "In the past decade, I've worked with some trailblazing blockchain-related companies such as Gemini and Freeport and my career has featured Web 3 projects prominently. I'm a major geek, sci-fi fan and film aficionado, and my other hobbies and interests include metaphysics, religion, classic rock and literature."
+        "1": "I'm a Senior Product Engineer experienced with complex Software-as-a-Service platforms, specializing in building, optimizing and testing front-end features, architecture and pixel-perfect component libraries from the ground up. The source code for this portfolio can be found in the Github link below.",
+        "2": "In the past decade, I've worked with some trailblazing blockchain-related companies such as Gemini and Freeport and various exciting, Silicon Valley-based startups. I'm a major geek, sci-fi fan and film aficionado, and my other hobbies and interests include metaphysics, religion, classic rock and literature."
       },
       "technologyline": "Technologies I enjoy working with:",
       "findmeline": "Find me on:"
@@ -25,7 +25,7 @@
   },
   "akami": {
     "akami": {
-      "heading": "Astrology iOS App",
+      "heading": "AI-Powered Astrology iOS App",
       "name": "AKAMI.app",
       "paragraphs": {
         "1": "AKAMI is a mobile astrology app that provides daily horoscopes, natal chart readings and other astrological services.",
@@ -34,7 +34,8 @@
       "achievements": {
         "1": "Supports 12 languages",
         "2": "Generates daily horoscopes using OpenAI's GPT-4o model",
-        "3": "Realistic text-to-speech audio playback"
+        "3": "Realistic text-to-speech audio playback",
+        "4": "Intelligently caches and stores GPT-generated data for new users and offline use"
       }
     }
   },
@@ -107,7 +108,7 @@
         "2": "During that time I worked primarily with Wordpress and related plugins, and plain HTML/CSS. "
       },
       "achievements": {
-        "1": "As a project manager, upheld and deadlines of deliverables and projects for more than 30 agency clients",
+        "1": "As a project manager, upheld deadlines of deliverables and projects for more than 30 agency clients",
         "2": "Mentored a small team of web designers in the design and publishing of responsive Wordpress webpages",
         "3": "Participated in meetings with various agency clients to discuss and clarify website requirements",
         "4": "Invoiced, billed and corresponded with various personal clients",
