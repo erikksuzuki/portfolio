@@ -1,12 +1,9 @@
 'use client'
 import KindleIcon from '@/assets/kindleicon.webp'
 
-import * as AspectRatio from '@radix-ui/react-aspect-ratio'
-
 import BookShelvesBG from '@/assets/bookcovers/ReadingSectionBG.jpg'
 
 import clsx from 'clsx'
-import { truncateParagraph } from '@/utils/formatString'
 import { useEffect, useState } from 'react'
 import { books } from 'src/data/books'
 import BookDetails, {
