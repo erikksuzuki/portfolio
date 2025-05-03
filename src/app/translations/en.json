@@ -32,7 +32,7 @@
         "2": "This solo development project was a great opportunity to learn about mobile development and the React Native and Apple Developer ecosystem. I built the app from the ground up, including the UI, API integration and state management."
       },
       "achievements": {
-        "1": "Supports 12 languages",
+        "1": "Supports 17 languages",
         "2": "Generates daily horoscopes using OpenAI's GPT-4o model",
         "3": "Realistic text-to-speech audio playback",
         "4": "Intelligently caches and stores GPT-generated data for new users and offline use"
