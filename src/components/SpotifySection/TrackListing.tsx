@@ -23,9 +23,9 @@ const SpotifyTrackListing = ({ track, lastItem }: any) => {
   const timeAgo = new TimeAgo('en-US')
   const playedAt = new Date(track.played_at).getTime()
 
-  const attributions = track.track.artists
-    .map((artist: any) => artist.name)
-    .join(', ')
+  const attributions = track?.track?.artists
+    ? track.track.artists.map((artist: any) => artist.name).join(', ')
+    : 'Unknown Artist'
 
   const listItem = (
     <li

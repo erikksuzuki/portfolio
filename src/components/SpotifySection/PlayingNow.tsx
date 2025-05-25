@@ -10,9 +10,9 @@ import Link from 'next/link'
 
 const SpotifyPlayingNow = ({ data }: any) => {
   const { isAboveMd } = useResponsive('md')
-  const attributions = data?.item.artists
-    .map((artist: any) => artist.name)
-    .join(', ')
+  const attributions = data?.item?.artists
+    ? data?.item?.artists.map((artist: any) => artist.name).join(', ')
+    : 'Unknown Artist'
 
   const listItem = (
     <li className="flex items-center justify-between w-full mb-3 pb-3 border-b border-[rgba(255,255,255,0.1)]">
