@@ -6,6 +6,7 @@ import * as Tooltip from '@radix-ui/react-tooltip'
 import clsx from 'clsx'
 import Link from 'next/link'
 import IconExternalPage from '@/assets/icons/common/IconExternalPage'
+import { decode } from 'he'
 
 const SteamGameDetails = ({ gameData, playerData }: any) => {
   const humanizeDuration = require('humanize-duration')
@@ -28,7 +29,7 @@ const SteamGameDetails = ({ gameData, playerData }: any) => {
         <p className="text-theme-xs">Released {releaseDateFormatted}</p>
       </div>
       <p className="text-theme-xs mb-3">
-        {gameData?.details.short_description}
+        {decode(gameData?.details.short_description)}
       </p>
       <p className="text-theme-xs mb-3">
         Total playtime since account creation:
