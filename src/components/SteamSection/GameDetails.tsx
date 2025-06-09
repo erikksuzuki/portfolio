@@ -12,6 +12,11 @@ const SteamGameDetails = ({ gameData, playerData }: any) => {
   const releaseDateFormatted = gameData
     ? formatDateOrdinal(gameData.details.release_date, true, true)
     : ''
+  function decodeHtml(html: string) {
+    const txt = document.createElement('textarea')
+    txt.innerHTML = html
+    return txt.value
+  }
   return (
     <div className="md:px-8 px-4 py-8 w-full max-w-[460px]">
       <Image
@@ -23,7 +28,7 @@ const SteamGameDetails = ({ gameData, playerData }: any) => {
       />
       <div className="flex flex-row justify-between items-end mb-3">
         <h2 className="text-theme-sm capitalize font-bold">
-          {gameData?.details.name.toLowerCase()}
+          {decodeHtml(gameData?.details.name.toLowerCase())}
         </h2>
         <p className="text-theme-xs">Released {releaseDateFormatted}</p>
       </div>
