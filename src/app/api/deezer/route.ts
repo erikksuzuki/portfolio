@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
       ? 'Could not find albums on Deezer'
       : 'Deezer search query did not provided any results'
     : undefined
-
   const response = NextResponse.json(
     {
       success,
@@ -24,44 +23,21 @@ export async function GET(request: NextRequest) {
     { status: !success ? (albumResults ? 404 : 400) : 200 }
   )
 
-  // --- CORS headers here ---
-  const origin = request.headers.get('origin') || ''
-
-  const allowedOrigins = [
-    'https://peij-webapp.vercel.app',
-    'http://localhost:5173',
-    // add your other allowed origins here
-  ]
-
-  if (allowedOrigins.includes(origin)) {
-    response.headers.set('Access-Control-Allow-Origin', origin)
-  }
-  // For OPTIONS preflight requests, we have to respond separately (see below)
-
+  response.headers.set('Access-Control-Allow-Origin', '*')
   response.headers.set('Access-Control-Allow-Methods', 'GET,OPTIONS')
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
-  response.headers.set('Access-Control-Allow-Credentials', 'true') // if needed
+  // Note: Do NOT set Access-Control-Allow-Credentials with '*' origin
+  // because browsers block this combination
 
   return response
 }
 
-// Also handle OPTIONS preflight request
 export async function OPTIONS(request: NextRequest) {
   const response = NextResponse.json(null, { status: 204 })
 
-  const origin = request.headers.get('origin') || ''
-
-  const allowedOrigins = [
-    'https://project1.vercel.app',
-    'https://project2.vercel.app',
-  ]
-
-  if (allowedOrigins.includes(origin)) {
-    response.headers.set('Access-Control-Allow-Origin', origin)
-  }
+  response.headers.set('Access-Control-Allow-Origin', '*')
   response.headers.set('Access-Control-Allow-Methods', 'GET,OPTIONS')
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
-  response.headers.set('Access-Control-Allow-Credentials', 'true')
 
   return response
 }
