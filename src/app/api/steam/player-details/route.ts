@@ -13,12 +13,13 @@ export async function GET(request: NextRequest) {
   const recentGames: any = await getPlayerRecentlyPlayed()
 
   // const recentlyPlayed: any = await getPlayerRecentlyPlayed()
-  const recentlyPlayed = ownedGames.response.games
-    .sort((a: any, b: any) => {
-      if (a.rtime_last_played < b.rtime_last_played) return 1
-      if (a.rtime_last_played > b.rtime_last_played) return -1
-    })
-    .slice(0, 10)
+  const recentlyPlayed =
+    ownedGames.response?.games
+      .sort((a: any, b: any) => {
+        if (a.rtime_last_played < b.rtime_last_played) return 1
+        if (a.rtime_last_played > b.rtime_last_played) return -1
+      })
+      .slice(0, 10) || []
 
   async function getAllGameData() {
     const data = Promise.all(
@@ -71,9 +72,9 @@ export async function GET(request: NextRequest) {
 
       rtime_last_played: new Date(
         Number(
-          ownedGames.response.games.filter(
+          ownedGames.response?.games.filter(
             (ownedGame: any) => ownedGame.appid === game.appid
-          )[0].rtime_last_played
+          )[0].rtime_last_played || 0
         ) * 1000
       ),
       // playtime_2weeks: game.playtime_2weeks ?? undefined,
