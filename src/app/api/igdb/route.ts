@@ -9,11 +9,11 @@ export async function GET(request: NextRequest) {
     .from('twitch')
     .select('*')
     .single()
-  // const now = new Date().getTime()
-  // const expiredTime = existingTokenData.expires_at
-  //   ? new Date(existingTokenData.expires_at).getTime()
-  //   : new Date().getTime() - 3600000 // Default to 1 hour if no expiration time is set
-  // const tokenHasExpired: boolean = now > expiredTime
+  const now = new Date().getTime()
+  const expiredTime = existingTokenData.expires_at
+    ? new Date(existingTokenData.expires_at).getTime()
+    : new Date().getTime() - 3600000 // Default to 1 hour if no expiration time is set
+  const tokenHasExpired: boolean = now > expiredTime
   //
   // async function fetchGames(accessToken: string) {
   //   const res = await fetch('https://api.igdb.com/v4/games', {
@@ -46,9 +46,9 @@ export async function GET(request: NextRequest) {
     query,
     message: 'This is a test response from the IGDB API route',
     existingTokenData,
-    // now,
-    // expiredTime,
-    // tokenHasExpired,
+    now,
+    expiredTime,
+    tokenHasExpired,
   }
 
   // return NextResponse.json(igdbData)
