@@ -1,14 +1,14 @@
-// import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/utils/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 // import { refreshIGDBToken } from './refreshIGDBToken'
 
 export async function GET(request: NextRequest) {
   const searchParams = new URL(request.url).searchParams
   const query: any = searchParams.get('query')
-  // const { data: existingTokenData } = await createClient()
-  //   .from('twitch')
-  //   .select('*')
-  //   .single()
+  const { data: existingTokenData } = await createClient()
+    .from('twitch')
+    .select('*')
+    .single()
   // const now = new Date().getTime()
   // const expiredTime = existingTokenData.expires_at
   //   ? new Date(existingTokenData.expires_at).getTime()
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
   const testSupabaseTokenData = {
     query,
     message: 'This is a test response from the IGDB API route',
-    // existingTokenData,
+    existingTokenData,
     // now,
     // expiredTime,
     // tokenHasExpired,
