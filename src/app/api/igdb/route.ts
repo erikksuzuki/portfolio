@@ -24,9 +24,10 @@ export async function GET(request: NextRequest) {
         Accept: 'application/json',
         'Content-Type': 'text/plain',
       },
-      body: `fields name, cover.url, genres.name, first_release_date, involved_companies.company.name, involved_companies.publisher; limit 10; search "${query}";`,
+      body: `fields name, cover.url, genres.name, first_release_date, involved_companies.company.name, involved_companies.publisher, category; limit 10; search "${query}";`,
     })
     const data = await res.json()
+
     return data
   }
 
