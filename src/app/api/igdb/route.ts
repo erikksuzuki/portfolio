@@ -42,5 +42,23 @@ export async function GET(request: NextRequest) {
   }
   const igdbData = await getIGDBData()
 
-  return NextResponse.json(igdbData)
+  const response = NextResponse.json(igdbData)
+
+  response.headers.set('Access-Control-Allow-Origin', '*')
+  response.headers.set('Access-Control-Allow-Methods', 'GET,OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
+  // Note: Do NOT set Access-Control-Allow-Credentials with '*' origin
+  // because browsers block this combination
+
+  return response
+}
+
+export async function OPTIONS(request: NextRequest) {
+  const response = NextResponse.json(null, { status: 204 })
+
+  response.headers.set('Access-Control-Allow-Origin', '*')
+  response.headers.set('Access-Control-Allow-Methods', 'GET,OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
+
+  return response
 }
