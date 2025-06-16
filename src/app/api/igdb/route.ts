@@ -16,11 +16,10 @@ export async function GET(request: NextRequest) {
   const tokenHasExpired: boolean = now > expiredTime
 
   async function fetchGames(accessToken: string) {
-    const YOUR_TWITCH_CLIENT_ID = 'vvj8is9ozlb9gjxzi5tob9qhkn4cb5'
     const res = await fetch('https://api.igdb.com/v4/games', {
       method: 'POST',
       headers: {
-        'Client-ID': YOUR_TWITCH_CLIENT_ID,
+        'Client-ID': process.env.TWITCH_CLIENT_ID ?? '',
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
         'Content-Type': 'text/plain',
