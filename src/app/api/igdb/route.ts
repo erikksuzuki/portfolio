@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     .select('*')
     .single()
   const now = new Date().getTime()
-  const expiredTime = existingTokenData.expires_at
+  const expiredTime = existingTokenData?.expires_at
     ? new Date(existingTokenData.expires_at).getTime()
     : new Date().getTime() - 3600000 // Default to 1 hour if no expiration time is set
   const tokenHasExpired: boolean = now > expiredTime
