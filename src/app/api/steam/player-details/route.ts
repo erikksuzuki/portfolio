@@ -111,16 +111,16 @@ export async function GET(request: NextRequest) {
   )
 
   const data = {
-    name: summary.response.players[0]?.personaname,
-    profileurl: summary.response.players[0]?.profileurl,
+    name: summary.response?.players[0]?.personaname,
+    profileurl: summary.response?.players[0]?.profileurl,
     friend_code: '1092140375',
-    avatar: summary.response.players[0]?.avatarfull,
-    timecreated: summary.response.players[0]?.timecreated,
-    personastate: summary.response.players[0]?.personastate,
+    avatar: summary.response?.players[0]?.avatarfull,
+    timecreated: summary.response?.players[0]?.timecreated,
+    personastate: summary.response?.players[0]?.personastate,
     lastlogoff: new Date(
-      Number(summary.response.players[0]?.lastlogoff * 1000)
+      Number(summary.response?.players[0]?.lastlogoff * 1000)
     ),
-    games_owned: ownedGames.response.game_count,
+    games_owned: ownedGames.response?.game_count,
     recently_played: recentlyPlayedGamesCensored,
   }
 
