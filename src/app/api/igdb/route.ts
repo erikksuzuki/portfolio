@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
 
   const testSupabaseTokenData = {
     query,
-    message: 'This is a test response from the IGDB API route.',
+    message: 'This is a test response from the IGDB API route',
     // existingTokenData,
     // now,
     // expiredTime,
