@@ -1,19 +1,19 @@
-import { createClient } from '@/utils/supabase/server'
+// import { createClient } from '@/utils/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { refreshIGDBToken } from './refreshIGDBToken'
+// import { refreshIGDBToken } from './refreshIGDBToken'
 
 export async function GET(request: NextRequest) {
   const searchParams = new URL(request.url).searchParams
   const query: any = searchParams.get('query')
-  const { data: existingTokenData } = await createClient()
-    .from('twitch')
-    .select('*')
-    .single()
-  const now = new Date().getTime()
-  const expiredTime = existingTokenData.expires_at
-    ? new Date(existingTokenData.expires_at).getTime()
-    : new Date().getTime() - 3600000 // Default to 1 hour if no expiration time is set
-  const tokenHasExpired: boolean = now > expiredTime
+  // const { data: existingTokenData } = await createClient()
+  //   .from('twitch')
+  //   .select('*')
+  //   .single()
+  // const now = new Date().getTime()
+  // const expiredTime = existingTokenData.expires_at
+  //   ? new Date(existingTokenData.expires_at).getTime()
+  //   : new Date().getTime() - 3600000 // Default to 1 hour if no expiration time is set
+  // const tokenHasExpired: boolean = now > expiredTime
   //
   // async function fetchGames(accessToken: string) {
   //   const res = await fetch('https://api.igdb.com/v4/games', {
@@ -44,10 +44,11 @@ export async function GET(request: NextRequest) {
 
   const testSupabaseTokenData = {
     query,
-    existingTokenData,
-    now,
-    expiredTime,
-    tokenHasExpired,
+    message: 'This is a test response from the IGDB API route.',
+    // existingTokenData,
+    // now,
+    // expiredTime,
+    // tokenHasExpired,
   }
 
   // return NextResponse.json(igdbData)
