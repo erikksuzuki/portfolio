@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     )
 
-    response.headers.set('Access-Control-Allow-Origin', '*')
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
       'Access-Control-Allow-Headers',
@@ -64,7 +64,7 @@ export async function OPTIONS(request: NextRequest) {
   return new Response(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': 'http://localhost:5173',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
