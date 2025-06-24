@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
         output: {
           type: 'image',
           format: 'png',
-          dpi: 36,
+          dpi: 144,
         },
       })
     )
