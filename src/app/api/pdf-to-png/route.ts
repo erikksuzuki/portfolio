@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.PDF4ME_KEY!
     const pdfBuffer = await pdfFile.arrayBuffer()
 
-    const pdf4meResponse = await fetch('https://api.pdf4me.com/v1/PdfToImage', {
+    const pdf4meResponse = await fetch('https://api.pdf4me.com/PdfToImage', {
       method: 'POST',
       headers: {
         Authorization: `Basic ${apiKey}`,
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     const dataUri = `data:${contentType};base64,${base64Image}`
 
     const response = NextResponse.json({ base64: dataUri })
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+    response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
       'Access-Control-Allow-Headers',
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     return response
   } catch (err: any) {
     const response = NextResponse.json({ error: err.message }, { status: 500 })
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+    response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
       'Access-Control-Allow-Headers',
@@ -57,7 +57,7 @@ export async function OPTIONS() {
   return new Response(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin': 'http://localhost:5173',
+      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
