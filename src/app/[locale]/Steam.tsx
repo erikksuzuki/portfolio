@@ -35,7 +35,7 @@ const SteamSection = () => {
   }, [playerData])
 
   useEffect(() => {
-    playerData && getAndSetGameData(playerData?.data?.recently_played[0].appid)
+    playerData && getAndSetGameData(playerData?.data?.recently_played[0]?.appid)
   }, [playerData])
 
   return (
