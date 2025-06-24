@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
-  const pdf4meKey = process.env.PDF4ME_KEY!
+  const apiKey = process.env.PDF4ME_KEY!
   const formData = await req.formData()
   const file = formData.get('file') as File
 
@@ -15,34 +15,33 @@ export async function POST(req: NextRequest) {
   const forwardForm = new FormData()
   forwardForm.append('file', file)
 
-  const pdf4meRes = await fetch('https://api.pdf4me.com/v1/PdfToImage', {
+  const res = await fetch('https://api.pdf4me.com/v1/PdfToImage', {
     method: 'POST',
     headers: {
-      Authorization: `Basic ${pdf4meKey}`,
+      Authorization: `Basic ${apiKey}`,
     },
     body: forwardForm,
   })
 
-  if (!pdf4meRes.ok) {
-    const errorText = await pdf4meRes.text()
-    return new Response(errorText, {
-      status: pdf4meRes.status,
+  if (!res.ok) {
+    return new Response(await res.text(), {
+      status: res.status,
       headers: corsHeaders,
     })
   }
 
-  const imageBlob = await pdf4meRes.blob()
+  const blob = await res.blob()
 
-  return new Response(imageBlob, {
+  return new Response(blob, {
     status: 200,
     headers: {
       ...corsHeaders,
-      'Content-Type': imageBlob.type || 'image/png',
+      'Content-Type': blob.type,
     },
   })
 }
 
-export async function OPTIONS() {
+export function OPTIONS() {
   return new Response(null, {
     status: 204,
     headers: corsHeaders,
@@ -51,7 +50,6 @@ export async function OPTIONS() {
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Access-Control-Max-Age': '86400',
 }
