@@ -35,17 +35,20 @@ export async function POST(request: NextRequest) {
     const dataUri = `data:${contentType};base64,${base64Image}`
 
     // 5. Return JSON with base64 data URI, including CORS headers
-    return NextResponse.json(
-      { base64: dataUri },
+    const response = NextResponse.json(
       {
-        status: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*', // allow any origin
-          'Access-Control-Allow-Methods': 'POST,OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        },
-      }
+        base64: dataUri,
+      },
+      { status: 200 }
     )
+
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    response.headers.set('Access-Control-Allow-Methods', 'GET,OPTIONS')
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
+    // Note: Do NOT set Access-Control-Allow-Credentials with '*' origin
+    // because browsers block this combination
+
+    return response
   } catch (err: any) {
     console.error('Error in PDF4me proxy:', err)
     return NextResponse.json(
