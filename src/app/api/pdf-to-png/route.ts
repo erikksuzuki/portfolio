@@ -1,29 +1,7 @@
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist'
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.mjs'
-import { createCanvas } from 'canvas'
+import { NextRequest } from 'next/server'
 
-GlobalWorkerOptions.workerSrc = pdfjsWorker
-
-// CORS support
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  })
-}
-
-export async function POST(req: Request) {
-  const contentType = req.headers.get('content-type') || ''
-  if (!contentType.includes('multipart/form-data')) {
-    return new Response(JSON.stringify({ error: 'Invalid Content-Type' }), {
-      status: 400,
-    })
-  }
-
+export async function POST(req: NextRequest) {
+  const pdf4meKey = process.env.PDF4ME_KEY!
   const formData = await req.formData()
   const file = formData.get('file') as File
 
@@ -33,24 +11,40 @@ export async function POST(req: Request) {
     })
   }
 
-  const arrayBuffer = await file.arrayBuffer()
-  const pdf = await getDocument({ data: new Uint8Array(arrayBuffer) }).promise
-  const page = await pdf.getPage(1)
+  const forwardForm = new FormData()
+  forwardForm.append('file', file)
 
-  const scale = 2.0
-  const viewport = page.getViewport({ scale })
+  const pdf4meRes = await fetch('https://api.pdf4me.com/v1/PdfToImage', {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${pdf4meKey}`,
+    },
+    body: forwardForm,
+  })
 
-  const canvas = createCanvas(viewport.width, viewport.height)
-  const context = canvas.getContext('2d') as unknown as CanvasRenderingContext2D
-  await page.render({ canvasContext: context, viewport }).promise
+  if (!pdf4meRes.ok) {
+    const errorText = await pdf4meRes.text()
+    return new Response(errorText, { status: pdf4meRes.status })
+  }
 
-  const base64 = canvas.toDataURL('image/png')
+  const imageBlob = await pdf4meRes.blob()
 
-  return new Response(JSON.stringify({ base64 }), {
+  return new Response(imageBlob, {
     status: 200,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': imageBlob.type,
       'Access-Control-Allow-Origin': '*',
+    },
+  })
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
   })
 }
