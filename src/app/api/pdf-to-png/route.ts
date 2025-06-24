@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+import pdf4me from 'pdf4me'
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
   const pdfFile = formData.get('file') as File
-
   if (!pdfFile) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
   }
@@ -11,47 +11,28 @@ export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.PDF4ME_KEY!
     const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer())
-    const base64Pdf = pdfBuffer.toString('base64')
 
-    const body = {
+    const pdf4meClient = pdf4me.createClient(apiKey)
+
+    const createImagesReq = {
       document: {
-        docData: base64Pdf,
+        docData: pdfBuffer.toString('base64'),
       },
       imageAction: {
+        pageSelection: { pageNrs: [1] },
         imageQuality: 90,
-        widthPixel: 1000,
-        heightPixel: 1000,
+        widthPixel: 2000,
+        heightPixel: 2000,
         imageExtension: 'Jpeg',
       },
     }
 
-    const pdf4meResponse = await fetch(
-      'https://api.pdf4me.com/Make/CreateImages',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Basic ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      }
-    )
+    const createImagesRes = await pdf4meClient.createImages(createImagesReq)
+    const base64Image = createImagesRes.document.pages[0].thumbnail
 
-    if (!pdf4meResponse.ok) {
-      const errText = await pdf4meResponse.text()
-      throw new Error(`PDF4me error ${pdf4meResponse.status}: ${errText}`)
-    }
+    const dataUri = `data:image/jpeg;base64,${base64Image}`
 
-    const result = await pdf4meResponse.json()
-
-    const images = result.document.pages.map(
-      (page: any) => `data:image/jpeg;base64,${page.thumbnail}`
-    )
-    const response = NextResponse.json(
-      { base64Images: images },
-      { status: 200 }
-    )
-
+    const response = NextResponse.json({ base64: dataUri })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
@@ -60,7 +41,7 @@ export async function POST(request: NextRequest) {
     )
     return response
   } catch (err: any) {
-    console.error('PDF4me proxy error:', err.message)
+    console.error(err)
     const response = NextResponse.json({ error: err.message }, { status: 500 })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
