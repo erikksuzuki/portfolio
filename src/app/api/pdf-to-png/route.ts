@@ -41,7 +41,14 @@ export async function POST(request: NextRequest) {
     )
     return response
   } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+    const response = NextResponse.json({ error: err.message }, { status: 500 })
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
+    response.headers.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    )
+    return response
   }
 }
 
