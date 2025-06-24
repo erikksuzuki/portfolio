@@ -24,14 +24,14 @@ export async function POST(request: NextRequest) {
         imageQuality: 90,
         widthPixel: 2000,
         heightPixel: 2000,
-        imageExtension: 'Png',
+        imageExtension: 'Jpeg',
       },
     }
 
     const createImagesRes = await pdf4meClient.createImages(createImagesReq)
     const base64Image = createImagesRes.document.pages[0].thumbnail
 
-    const dataUri = `data:image/png;base64,${base64Image}`
+    const dataUri = `data:image/jpeg;base64,${base64Image}`
 
     const response = NextResponse.json({ base64: dataUri })
     response.headers.set('Access-Control-Allow-Origin', '*')
