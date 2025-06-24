@@ -23,8 +23,8 @@ export async function POST(request: NextRequest) {
       imageAction: {
         pageSelection: { pageNrs: [1] },
         imageQuality: 90,
-        widthPixel: 2000,
-        heightPixel: 2000,
+        widthPixel: 1000,
+        heightPixel: 1000,
         imageExtension: 'Jpeg',
       },
     }
