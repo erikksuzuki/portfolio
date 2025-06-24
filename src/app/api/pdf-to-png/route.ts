@@ -12,6 +12,7 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.PDF4ME_KEY!
     const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer())
 
+    // @ts-expect-error pdf4me types are not compatible with Next.js
     const pdf4meClient = pdf4me.createClient(apiKey)
 
     const createImagesReq = {
