@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Buffer } from 'buffer'
 import * as pdf4me from 'pdf4me'
 
 export async function POST(request: NextRequest) {
@@ -13,7 +12,6 @@ export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.PDF4ME_KEY!
     const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer())
-
     const pdf4meClient = createClient(apiKey)
 
     const createImagesReq = {
@@ -44,7 +42,7 @@ export async function POST(request: NextRequest) {
     return response
   } catch (err: any) {
     console.error(err)
-    const response = NextResponse.json({ error: err }, { status: 500 })
+    const response = NextResponse.json({ error: err.message }, { status: 500 })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
