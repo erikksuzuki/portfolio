@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import * as pdf4me from 'pdf4me'
+import pdf4me from 'pdf4me'
 
 export async function POST(request: NextRequest) {
-  const createClient = (pdf4me as any).createClient
+  // const createClient = (pdf4me as any).createClient
   const formData = await request.formData()
   const pdfFile = formData.get('file') as File
   if (!pdfFile) {
@@ -13,7 +13,8 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.PDF4ME_KEY!
     const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer())
 
-    const pdf4meClient = createClient(apiKey)
+    // @ts-ignore typescript definitions don't exist for nextjs
+    const pdf4meClient = pdf4me.createClient(apiKey)
 
     const createImagesReq = {
       document: {
