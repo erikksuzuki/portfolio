@@ -1,40 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server'
-import pdf4me from 'pdf4me'
+import axios from 'axios'
+import FormData from 'form-data'
+import { Buffer } from 'buffer'
 
 export async function POST(request: NextRequest) {
-  // const createClient = (pdf4me as any).createClient
   const formData = await request.formData()
-  const pdfFile = formData.get('file') as File
-  if (!pdfFile) {
+  const file = formData.get('file') as File
+
+  if (!file) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
   }
 
   try {
-    const apiKey = process.env.PDF4ME_KEY!
-    const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer())
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
 
-    // @ts-ignore typescript definitions don't exist for nextjs
-    const pdf4meClient = pdf4me.createClient(apiKey)
+    const uploadForm = new FormData()
+    uploadForm.append(
+      'instructions',
+      JSON.stringify({
+        parts: [{ file: 'document' }],
+        output: {
+          type: 'image',
+          format: 'png',
+          dpi: 500,
+        },
+      })
+    )
+    uploadForm.append('document', buffer, {
+      filename: 'document.pdf',
+      contentType: 'application/pdf',
+    })
 
-    const createImagesReq = {
-      document: {
-        docData: pdfBuffer.toString('base64'),
-      },
-      imageAction: {
-        pageSelection: { pageNrs: [1] },
-        imageQuality: 90,
-        widthPixel: 1000,
-        heightPixel: 1000,
-        imageExtension: 'Jpeg',
-      },
-    }
+    const serviceResponse = await axios.post(
+      'https://api.pspdfkit.com/build',
+      uploadForm,
+      {
+        headers: {
+          ...uploadForm.getHeaders(),
+          Authorization: `Bearer ${process.env.PSPDFKIT_API_KEY}`,
+        },
+        responseType: 'arraybuffer',
+      }
+    )
 
-    const createImagesRes = await pdf4meClient.createImages(createImagesReq)
-    const base64Image = createImagesRes.document.pages[0].thumbnail
+    const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
-    const dataUri = `data:image/jpeg;base64,${base64Image}`
-
-    const response = NextResponse.json({ base64: dataUri })
+    const response = NextResponse.json({
+      image: `data:image/png;base64,${base64}`,
+    })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
@@ -43,8 +57,8 @@ export async function POST(request: NextRequest) {
     )
     return response
   } catch (err: any) {
-    console.error(err)
-    const response = NextResponse.json({ error: err.message }, { status: 500 })
+    const message = await parseStreamError(err)
+    const response = NextResponse.json({ error: message }, { status: 500 })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
@@ -53,6 +67,24 @@ export async function POST(request: NextRequest) {
     )
     return response
   }
+}
+
+async function parseStreamError(err: any): Promise<string> {
+  try {
+    const buffer = await streamToBuffer(err.response?.data)
+    return buffer.toString('utf8')
+  } catch {
+    return 'Unknown error'
+  }
+}
+
+function streamToBuffer(stream: any): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: Uint8Array[] = []
+    stream.on('data', (chunk: any) => chunks.push(chunk))
+    stream.on('end', () => resolve(Buffer.concat(chunks)))
+    stream.on('error', reject)
+  })
 }
 
 export async function OPTIONS() {
