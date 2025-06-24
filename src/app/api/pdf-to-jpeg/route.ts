@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import pdf4me from 'pdf4me'
 
 export async function POST(request: NextRequest) {
-  // const createClient = (pdf4me as any).createClient
   const formData = await request.formData()
   const pdfFile = formData.get('file') as File
   if (!pdfFile) {
@@ -13,7 +12,6 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.PDF4ME_KEY!
     const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer())
 
-    // @ts-ignore typescript definitions don't exist for nextjs
     const pdf4meClient = pdf4me.createClient(apiKey)
 
     const createImagesReq = {
@@ -23,8 +21,8 @@ export async function POST(request: NextRequest) {
       imageAction: {
         pageSelection: { pageNrs: [1] },
         imageQuality: 90,
-        widthPixel: 1000,
-        heightPixel: 1000,
+        widthPixel: 2000,
+        heightPixel: 2000,
         imageExtension: 'Jpeg',
       },
     }
