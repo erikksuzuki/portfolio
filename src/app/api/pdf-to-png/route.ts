@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
   if (!file || file.type !== 'application/pdf') {
     return new Response(JSON.stringify({ error: 'Invalid file' }), {
       status: 400,
+      headers: corsHeaders,
     })
   }
 
@@ -24,7 +25,10 @@ export async function POST(req: NextRequest) {
 
   if (!pdf4meRes.ok) {
     const errorText = await pdf4meRes.text()
-    return new Response(errorText, { status: pdf4meRes.status })
+    return new Response(errorText, {
+      status: pdf4meRes.status,
+      headers: corsHeaders,
+    })
   }
 
   const imageBlob = await pdf4meRes.blob()
@@ -32,8 +36,8 @@ export async function POST(req: NextRequest) {
   return new Response(imageBlob, {
     status: 200,
     headers: {
-      'Content-Type': imageBlob.type,
-      'Access-Control-Allow-Origin': '*',
+      ...corsHeaders,
+      'Content-Type': imageBlob.type || 'image/png',
     },
   })
 }
@@ -41,10 +45,13 @@ export async function POST(req: NextRequest) {
 export async function OPTIONS() {
   return new Response(null, {
     status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
+    headers: corsHeaders,
   })
+}
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Max-Age': '86400',
 }
