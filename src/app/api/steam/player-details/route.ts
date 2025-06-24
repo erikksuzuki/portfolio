@@ -100,13 +100,15 @@ export async function GET(request: NextRequest) {
 
   const recentlyPlayedGamesCensored = recentlyPlayedGames.filter(
     (game: any) => {
-      if (game.appid === 1422450) return false
-      if (!game.content_descriptorids) return true
-      if (
-        game.content_descriptorids.includes(1) &&
-        game.content_descriptorids.includes(5)
-      )
-        return false
+      if (game.content_descriptorids) {
+        return (
+          game.appid !== 1422450 &&
+          !game.content_descriptorids.includes(1) &&
+          !game.content_descriptorids.includes(5)
+        )
+      } else {
+        return game.appid !== 1422450
+      }
     }
   )
 
