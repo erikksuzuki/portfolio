@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 
 export async function POST(request: NextRequest) {
+  const { filename } = await request.json()
   const contentType = request.headers.get('content-type') || ''
 
   let buffer
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
       })
     )
     uploadForm.append('document', buffer, {
-      filename: 'document.pdf',
+      filename,
       contentType: 'application/pdf',
     })
 
@@ -56,8 +57,9 @@ export async function POST(request: NextRequest) {
     const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
     const response = NextResponse.json({
-      base64: `data:image/png;base64,${base64}`,
+      filename,
       sessionId: randomUUID(),
+      base64: `data:image/png;base64,${base64}`,
     })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
