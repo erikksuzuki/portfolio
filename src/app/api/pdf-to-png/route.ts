@@ -4,7 +4,6 @@ import { Buffer } from 'buffer'
 
 export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server'
-import getRawBody from 'raw-body'
 
 export async function POST(request: NextRequest) {
   const contentType = request.headers.get('content-type') || ''
@@ -19,7 +18,8 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
   } else {
-    buffer = await getRawBody(request.body as any)
+    const { base64 } = await request.json()
+    buffer = Buffer.from(base64, 'base64')
   }
 
   try {
