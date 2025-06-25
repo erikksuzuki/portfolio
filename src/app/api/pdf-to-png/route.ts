@@ -4,6 +4,7 @@ import { Buffer } from 'buffer'
 
 export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server'
+import { randomUUID } from 'crypto'
 
 export async function POST(request: NextRequest) {
   const contentType = request.headers.get('content-type') || ''
@@ -56,6 +57,7 @@ export async function POST(request: NextRequest) {
 
     const response = NextResponse.json({
       base64: `data:image/png;base64,${base64}`,
+      sessionId: randomUUID(),
     })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
