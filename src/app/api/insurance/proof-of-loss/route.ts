@@ -5,7 +5,7 @@ import { ChatCompletionMessageParam } from 'openai/resources/index.mjs'
 // Initialize OpenAI (assumes env var OPENAI_API_KEY)
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const { base64Image } = await req.json()
   if (!base64Image) {
     return NextResponse.json(
@@ -72,7 +72,7 @@ export async function GET(req: NextRequest) {
 
     const response = NextResponse.json({ data })
     response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
       'Access-Control-Allow-Headers',
       'Content-Type, Authorization'
@@ -85,7 +85,7 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     )
     response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
       'Access-Control-Allow-Headers',
       'Content-Type, Authorization'
