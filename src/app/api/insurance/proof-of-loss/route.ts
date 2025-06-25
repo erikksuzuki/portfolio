@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs'
 
+import { zodResponseFormat } from 'openai/helpers/zod.mjs'
+import { insuranceClaimSchema } from 'types/insurance/InsuranceTypes'
+
 // Initialize OpenAI (assumes env var OPENAI_API_KEY)
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
@@ -38,7 +41,7 @@ export async function POST(req: NextRequest) {
           content: [
             {
               type: 'text',
-              text: `Get the data from this insurance form.`, // If form does not appear to be signed by a notary public (blank form field), set notaryPublicSignatureExists to false. If a particular data point seems to be missing, set it to null, "null", or false depending on the data type`,
+              text: `Get the data from this insurance form. If form does not appear to be signed by a notary public (blank form field), set notaryPublicSignatureExists to false. If a particular data point seems to be missing, set it to null, "null", or false depending on the data type`,
             },
             {
               type: 'image_url',
@@ -49,7 +52,10 @@ export async function POST(req: NextRequest) {
           ],
         },
       ] as ChatCompletionMessageParam[],
-      // Add `response_format` here if you want to enforce a schema:
+      response_format: zodResponseFormat(
+        insuranceClaimSchema,
+        'proof_of_loss_data' // Must match pattern: ^[a-zA-Z0-9_-]+$
+      ),
       // response_format: zodResponseFormat(insuranceClaimSchema, "proof_of_loss_data")
     })
 
