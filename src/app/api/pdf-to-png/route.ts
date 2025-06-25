@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 
 export async function POST(request: NextRequest) {
-  const { filename } = await request.json()
+  let extractedFilename
   const contentType = request.headers.get('content-type') || ''
 
   let buffer
@@ -15,12 +15,14 @@ export async function POST(request: NextRequest) {
   if (contentType.includes('multipart/form-data')) {
     const formData = await request.formData()
     const file = formData.get('file') as File
+    extractedFilename = file.name
     if (!file) throw new Error('No file uploaded')
 
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
   } else {
-    const { base64 } = await request.json()
+    const { base64, filename } = await request.json()
+    extractedFilename = filename
     buffer = Buffer.from(base64, 'base64')
   }
 
@@ -38,7 +40,7 @@ export async function POST(request: NextRequest) {
       })
     )
     uploadForm.append('document', buffer, {
-      filename,
+      filename: extractedFilename,
       contentType: 'application/pdf',
     })
 
@@ -57,7 +59,7 @@ export async function POST(request: NextRequest) {
     const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
     const response = NextResponse.json({
-      filename,
+      filename: extractedFilename,
       sessionId: randomUUID(),
       base64: `data:image/png;base64,${base64}`,
     })
