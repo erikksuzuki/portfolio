@@ -1,20 +1,28 @@
-import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
 import FormData from 'form-data'
 import { Buffer } from 'buffer'
 
-export async function POST(request: NextRequest) {
-  const formData = await request.formData()
-  const file = formData.get('file') as File
+export const runtime = 'nodejs'
+import { NextRequest, NextResponse } from 'next/server'
+import getRawBody from 'raw-body'
 
-  if (!file) {
-    return NextResponse.json({ error: 'No file provided' }, { status: 400 })
+export async function POST(request: NextRequest) {
+  const contentType = request.headers.get('content-type') || ''
+
+  let buffer
+
+  if (contentType.includes('multipart/form-data')) {
+    const formData = await request.formData()
+    const file = formData.get('file') as File
+    if (!file) throw new Error('No file uploaded')
+
+    const arrayBuffer = await file.arrayBuffer()
+    buffer = Buffer.from(arrayBuffer)
+  } else {
+    buffer = await getRawBody(request.body as any)
   }
 
   try {
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = Buffer.from(arrayBuffer)
-
     const uploadForm = new FormData()
     uploadForm.append(
       'instructions',
@@ -23,7 +31,7 @@ export async function POST(request: NextRequest) {
         output: {
           type: 'image',
           format: 'png',
-          dpi: 144,
+          dpi: 108,
         },
       })
     )
