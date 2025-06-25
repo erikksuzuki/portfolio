@@ -3,7 +3,7 @@ import OpenAI from 'openai'
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs'
 
 import { zodResponseFormat } from 'openai/helpers/zod.mjs'
-import { insuranceClaimSchema } from '../../../../../types/insurance/InsuranceTypes'
+import { insuranceClaimSchema } from '../../../../types/insurance/InsuranceTypes'
 
 // Initialize OpenAI (assumes env var OPENAI_API_KEY)
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
