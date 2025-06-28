@@ -56,12 +56,12 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    const base64 = Buffer.from(serviceResponse.data).toString('base64')
+    // const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
     const response = NextResponse.json({
       filename: extractedFilename,
       sessionId: randomUUID(),
-      base64: `data:image/png;base64,${base64}`,
+      rawData: serviceResponse,
     })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
