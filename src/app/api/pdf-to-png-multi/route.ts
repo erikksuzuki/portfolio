@@ -75,7 +75,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     } else {
-      const buffer = Buffer.from(base64, 'base64')
+      const cleaned = base64.replace(/^data:application\/pdf;base64,/, '')
+      const buffer = Buffer.from(cleaned, 'base64')
       return pdfToPngMulti(buffer, filename)
     }
   } else {
