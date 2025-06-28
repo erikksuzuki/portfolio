@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
         parts: [{ file: 'document' }],
         output: {
           type: 'image',
+          pages: { start: 0, end: -1 },
           format: 'png',
           dpi: 72,
         },
