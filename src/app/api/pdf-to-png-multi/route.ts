@@ -5,34 +5,25 @@ import { Buffer } from 'buffer'
 export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
-import AdmZip from 'adm-zip'
 
 export async function POST(request: NextRequest) {
   let extractedFilename
-  let extractedSessionId
   const contentType = request.headers.get('content-type') || ''
 
   let buffer
-
   if (contentType.includes('multipart/form-data')) {
+    // * from frontend web upload
     const formData = await request.formData()
     const file = formData.get('file') as File
     extractedFilename = file.name
-    extractedSessionId = randomUUID()
-
     if (!file) throw new Error('No file uploaded')
 
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
   } else {
-    const {
-      base64,
-      filename,
-      sessionId: sessionIdFromRequest,
-    } = await request.json()
+    // * from node upload
+    const { base64, filename } = await request.json()
     extractedFilename = filename
-    extractedSessionId = sessionIdFromRequest
-
     buffer = Buffer.from(base64, 'base64')
   }
 
@@ -43,9 +34,9 @@ export async function POST(request: NextRequest) {
       JSON.stringify({
         parts: [{ file: 'document' }],
         output: {
+          pages: { start: 0, end: 9 },
           type: 'image',
           format: 'png',
-          pages: 'all',
           dpi: 72,
         },
       })
@@ -67,25 +58,13 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    // Unzip the archive and extract PNGs
-    // const zip = new AdmZip(Buffer.from(serviceResponse.data))
-    // const pngEntries = zip
-    //   .getEntries()
-    //   .filter((e) => e.entryName.endsWith('.png'))
-    //
-    // const images = pngEntries.map((entry) => {
-    //   const data = entry.getData()
-    //   return `data:image/png;base64,${data.toString('base64')}`
-    // })
+    // const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
-    // Return all images in an array
     const response = NextResponse.json({
       filename: extractedFilename,
-      sessionId: extractedSessionId,
-      zip: serviceResponse.data,
-      // images, // Array of base64 PNGs, one per page
+      sessionId: randomUUID(),
+      serviceResponse: serviceResponse,
     })
-
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
