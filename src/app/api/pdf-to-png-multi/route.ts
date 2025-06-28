@@ -6,22 +6,13 @@ export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 
-function streamToString(stream: any) {
-  const chunks: any = []
-  return new Promise((resolve, reject) => {
-    stream.on('data', (chunk: any) => chunks.push(Buffer.from(chunk)))
-    stream.on('error', (err: any) => reject(err))
-    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
-  })
-}
-
 export async function POST(request: NextRequest) {
   let extractedFilename
   const contentType = request.headers.get('content-type') || ''
 
   let buffer
+
   if (contentType.includes('multipart/form-data')) {
-    // * from frontend web upload
     const formData = await request.formData()
     const file = formData.get('file') as File
     extractedFilename = file.name
@@ -30,7 +21,6 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
   } else {
-    // * from node upload
     const { base64, filename } = await request.json()
     extractedFilename = filename
     buffer = Buffer.from(base64, 'base64')
@@ -43,7 +33,6 @@ export async function POST(request: NextRequest) {
       JSON.stringify({
         parts: [{ file: 'document' }],
         output: {
-          pages: { start: 0, end: -1 },
           type: 'image',
           format: 'png',
           dpi: 72,
@@ -63,16 +52,17 @@ export async function POST(request: NextRequest) {
           ...uploadForm.getHeaders(),
           Authorization: `Bearer ${process.env.PSPDFKIT_API_KEY}`,
         },
-        responseType: 'stream',
+        responseType: 'arraybuffer',
       }
     )
+
+    const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
     const response = NextResponse.json({
       filename: extractedFilename,
       sessionId: randomUUID(),
-      serviceResponse: serviceResponse,
+      base64: `data:image/png;base64,${base64}`,
     })
-
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
@@ -81,9 +71,8 @@ export async function POST(request: NextRequest) {
     )
     return response
   } catch (err: any) {
-    const errorString = await streamToString(err.response.data)
-
-    const response = NextResponse.json({ error: errorString }, { status: 500 })
+    const message = await parseStreamError(err)
+    const response = NextResponse.json({ error: message }, { status: 500 })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
@@ -92,6 +81,24 @@ export async function POST(request: NextRequest) {
     )
     return response
   }
+}
+
+async function parseStreamError(err: any): Promise<string> {
+  try {
+    const buffer = await streamToBuffer(err.response?.data)
+    return buffer.toString('utf8')
+  } catch {
+    return 'Unknown error'
+  }
+}
+
+function streamToBuffer(stream: any): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: Uint8Array[] = []
+    stream.on('data', (chunk: any) => chunks.push(chunk))
+    stream.on('end', () => resolve(Buffer.concat(chunks)))
+    stream.on('error', reject)
+  })
 }
 
 export async function OPTIONS() {
