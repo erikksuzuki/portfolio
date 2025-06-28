@@ -23,6 +23,7 @@
     "adm-zip": "^0.5.16",
     "axios": "^1.10.0",
     "canvas": "^3.1.1",
+    "cloudmersive-convert-api-client": "^2.8.0",
     "clsx": "^2.1.1",
     "gsap": "^3.12.5",
     "humanize-duration": "^3.32.1",
