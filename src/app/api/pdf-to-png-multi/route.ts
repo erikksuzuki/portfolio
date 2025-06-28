@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   // Call Cloudmersive REST API
   const apiKey = process.env.CLOUDMERSIVE_KEY!
   const cloudmersiveResponse = await fetch(
-    'https://api.cloudmersive.com/convert/pdf/to/png-array',
+    'https://api.cloudmersive.com/convert/pdf/to/png',
     {
       method: 'POST',
       headers: {
