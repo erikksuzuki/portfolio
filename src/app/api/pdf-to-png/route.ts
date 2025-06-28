@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         parts: [{ file: 'document' }],
         output: {
           type: 'image',
-          pages: { start: 0, end: -1 },
+          // pages: { start: 0, end: -1 },
           format: 'png',
           dpi: 72,
         },
@@ -57,12 +57,13 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    const base64 = Buffer.from(serviceResponse.data).toString('base64')
+    // const base64 = Buffer.from(serviceResponse.data).toString('base64')
 
     const response = NextResponse.json({
       filename: extractedFilename,
       sessionId: randomUUID(),
-      base64: `data:image/png;base64,${base64}`,
+      response: serviceResponse,
+      // base64: `data:image/png;base64,${base64}`,
     })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
