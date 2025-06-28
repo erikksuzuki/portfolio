@@ -1,60 +1,58 @@
-import { Buffer } from 'buffer'
-
-export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
+import FormData from 'form-data'
+
+export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
-  var CloudmersiveConvertApiClient = require('cloudmersive-convert-api-client')
-  var defaultClient = CloudmersiveConvertApiClient.ApiClient.instance
-  var Apikey = defaultClient.authentications['Apikey']
-  Apikey.apiKey = process.env.CLOUDMERSIVE_KEY
+  const formData = await request.formData()
+  const file = formData.get('file') as File
 
-  try {
-    var apiInstance = new CloudmersiveConvertApiClient.ConvertDocumentApi()
-
-    const formData = await request.formData()
-    var inputFile = formData.get('file') as File
-
-    var cloudMersiveError
-    var cloudMersiveData
-    var cloudMersiveResponse
-
-    var callback = function (error: any, data: any, response: any) {
-      if (error) {
-        cloudMersiveError = error
-        console.error(error)
-      } else {
-        cloudMersiveData = data
-        cloudMersiveResponse = response
-        console.log('API called successfully. Returned data: ' + data)
-      }
-    }
-
-    apiInstance.convertDocumentPdfToPngArray(inputFile, callback)
-
-    const response = NextResponse.json({
-      sessionId: randomUUID(),
-      response: cloudMersiveResponse,
-      rawData: cloudMersiveData,
-    })
-    response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
-    response.headers.set(
-      'Access-Control-Allow-Headers',
-      'Content-Type, Authorization'
-    )
-    return response
-  } catch (err: any) {
-    const response = NextResponse.json({ error: err }, { status: 500 })
-    response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
-    response.headers.set(
-      'Access-Control-Allow-Headers',
-      'Content-Type, Authorization'
-    )
-    return response
+  if (!file) {
+    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
   }
+
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+
+  // Construct a new FormData for the Cloudmersive API
+  const uploadForm = new FormData()
+  uploadForm.append('file', buffer, file.name)
+
+  // Call Cloudmersive REST API
+  const apiKey = process.env.CLOUDMERSIVE_KEY!
+  const cloudmersiveResponse = await fetch(
+    'https://api.cloudmersive.com/convert/pdf/to/png-array',
+    {
+      method: 'POST',
+      headers: {
+        ...uploadForm.getHeaders(),
+        Apikey: apiKey,
+      },
+      body: uploadForm as any,
+    }
+  )
+
+  if (!cloudmersiveResponse.ok) {
+    const errText = await cloudmersiveResponse.text()
+    return NextResponse.json(
+      { error: errText },
+      { status: cloudmersiveResponse.status }
+    )
+  }
+
+  // Cloudmersive returns a zip file with images (PNG) for all pages.
+  const resultBuffer = Buffer.from(await cloudmersiveResponse.arrayBuffer())
+
+  // You can respond with base64, or save to storage, or return download link
+  return new NextResponse(resultBuffer, {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/zip',
+      'Content-Disposition': `attachment; filename="pages_${randomUUID()}.zip"`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
 }
 
 export async function OPTIONS() {
