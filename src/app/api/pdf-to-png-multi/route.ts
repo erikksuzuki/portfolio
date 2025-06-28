@@ -73,8 +73,7 @@ export async function POST(request: NextRequest) {
     )
     return response
   } catch (err: any) {
-    const message = await parseStreamError(err)
-    const response = NextResponse.json({ error: message }, { status: 500 })
+    const response = NextResponse.json({ error: err }, { status: 500 })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
@@ -83,24 +82,6 @@ export async function POST(request: NextRequest) {
     )
     return response
   }
-}
-
-async function parseStreamError(err: any): Promise<string> {
-  try {
-    const buffer = await streamToBuffer(err.response?.data)
-    return buffer.toString('utf8')
-  } catch {
-    return 'Unknown error'
-  }
-}
-
-function streamToBuffer(stream: any): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const chunks: Uint8Array[] = []
-    stream.on('data', (chunk: any) => chunks.push(chunk))
-    stream.on('end', () => resolve(Buffer.concat(chunks)))
-    stream.on('error', reject)
-  })
 }
 
 export async function OPTIONS() {
