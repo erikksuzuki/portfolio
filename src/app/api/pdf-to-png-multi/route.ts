@@ -39,8 +39,6 @@ export async function POST(request: NextRequest) {
     return new NextResponse(cloudResponse, {
       status: 200,
       headers: {
-        'Content-Type': 'application/zip',
-        'Content-Disposition': `attachment; filename="pages_${randomUUID()}.zip"`,
         'Access-Control-Allow-Origin': '*',
       },
     })
