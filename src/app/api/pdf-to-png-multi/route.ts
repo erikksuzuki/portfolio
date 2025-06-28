@@ -33,10 +33,11 @@ export async function POST(request: NextRequest) {
           ...uploadForm.getHeaders(),
           Apikey: apiKey,
         },
+        responseType: 'json', // receive parsed JSON
       }
     )
 
-    return new NextResponse(cloudResponse, {
+    return NextResponse.json(cloudResponse.data, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
