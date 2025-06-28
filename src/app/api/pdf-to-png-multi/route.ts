@@ -8,7 +8,10 @@ export const runtime = 'nodejs'
 
 async function pdfToPngMulti(buffer: any, filename: string) {
   const uploadForm = new FormData()
-  uploadForm.append('file', buffer, filename)
+  uploadForm.append('file', buffer, {
+    filename: filename,
+    contentType: 'application/pdf',
+  })
 
   const apiKey = process.env.CLOUDMERSIVE_KEY
   if (!apiKey) {
