@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
   // Use axios instead of fetch
   try {
-    const cloudResponse = await axios.post(
+    const cloudResponse: any = await axios.post(
       'https://api.cloudmersive.com/convert/pdf/to/png',
       uploadForm,
       {
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    return new NextResponse(cloudResponse.data, {
+    return new NextResponse(cloudResponse, {
       status: 200,
       headers: {
         'Content-Type': 'application/zip',
