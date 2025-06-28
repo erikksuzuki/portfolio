@@ -14,54 +14,39 @@ export async function POST(request: NextRequest) {
 
   const arrayBuffer = await file.arrayBuffer()
   const buffer = Buffer.from(arrayBuffer)
-
-  // Construct a new FormData for the Cloudmersive API
   const uploadForm = new FormData()
-  uploadForm.append('file', buffer, file.name)
+  uploadForm.append('file', buffer, file.name) // "file" is required!
 
-  // Call Cloudmersive REST API
-  const apiKey = process.env.CLOUDMERSIVE_KEY!
-  const cloudmersiveResponse = await fetch(
-    'https://api.cloudmersive.com/convert/pdf/to/png',
-    {
-      method: 'POST',
-      headers: {
-        ...uploadForm.getHeaders(),
-        Apikey: apiKey,
-      },
-      body: uploadForm as any,
-    }
-  )
-
-  if (!cloudmersiveResponse.ok) {
-    const errText = await cloudmersiveResponse.text()
-    return NextResponse.json(
-      { error: errText },
-      { status: cloudmersiveResponse.status }
-    )
+  const apiKey = process.env.CLOUDMERSIVE_KEY
+  if (!apiKey) {
+    return NextResponse.json({ error: 'No API key' }, { status: 500 })
   }
 
-  // Cloudmersive returns a zip file with images (PNG) for all pages.
-  const resultBuffer = Buffer.from(await cloudmersiveResponse.arrayBuffer())
+  // Debug logs
+  console.log('Uploading file:', file.name, 'size:', buffer.length)
+  console.log('API key present:', !!apiKey)
 
-  // You can respond with base64, or save to storage, or return download link
-  return new NextResponse(resultBuffer, {
+  const resp = await fetch('https://api.cloudmersive.com/convert/pdf/to/png', {
+    method: 'POST',
+    headers: {
+      ...uploadForm.getHeaders(),
+      Apikey: apiKey,
+    },
+    body: uploadForm as any,
+  })
+
+  if (!resp.ok) {
+    const errText = await resp.text()
+    return NextResponse.json({ error: errText }, { status: resp.status })
+  }
+
+  const zipBuffer = Buffer.from(await resp.arrayBuffer())
+  return new NextResponse(zipBuffer, {
     status: 200,
     headers: {
       'Content-Type': 'application/zip',
       'Content-Disposition': `attachment; filename="pages_${randomUUID()}.zip"`,
       'Access-Control-Allow-Origin': '*',
-    },
-  })
-}
-
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
   })
 }
