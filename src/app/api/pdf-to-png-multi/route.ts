@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 import FormData from 'form-data'
 import axios from 'axios'
+import { Buffer } from 'buffer'
 
 export const runtime = 'nodejs'
 
@@ -48,11 +49,7 @@ async function pdfToPngMulti(buffer: any, filename: string) {
     )
     return response
   } catch (err: any) {
-    console.error(err.response?.data || err.message)
-    const response = NextResponse.json(
-      { error: err.response?.data || err.message },
-      { status: 500 }
-    )
+    const response = NextResponse.json({ error: err }, { status: 500 })
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
     response.headers.set(
