@@ -6,31 +6,15 @@ import axios from 'axios'
 export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
-  const contentType = request.headers.get('content-type') || ''
-
   const formData = await request.formData()
   const file = formData.get('file') as File
-  let extractedFilename
-  let buffer
-
-  if (contentType.includes('multipart/form-data')) {
-    const formData = await request.formData()
-    const file = formData.get('file') as File
-    extractedFilename = file.name
-    if (!file) throw new Error('No file uploaded')
-
-    const arrayBuffer = await file.arrayBuffer()
-    buffer = Buffer.from(arrayBuffer)
-  } else {
-    const { base64, filename } = await request.json()
-    extractedFilename = filename
-    buffer = Buffer.from(base64, 'base64')
-  }
 
   if (!file) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
   }
 
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
   const uploadForm = new FormData()
   uploadForm.append('file', buffer, file.name)
 
