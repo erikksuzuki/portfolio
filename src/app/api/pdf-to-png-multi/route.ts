@@ -8,26 +8,27 @@ export const runtime = 'nodejs'
 export async function POST(request: NextRequest) {
   const contentType = request.headers.get('content-type') || ''
 
+  const { base64, filename } = await request.json()
+
   const formData = await request.formData()
   const file = formData.get('file') as File
 
   let extractedFilename
   let buffer
 
-  if (contentType.includes('multipart/form-data')) {
+  if (contentType.includes('multipart/form-data') && file) {
     extractedFilename = file.name
-    if (!file) throw new Error('No file uploaded')
-
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
-  } else {
-    const { base64, filename } = await request.json()
+  } else if (!!base64 && !!filename) {
     extractedFilename = filename
     buffer = Buffer.from(base64, 'base64')
+  } else {
+    throw new Error('No file or base64 provided')
   }
 
   const uploadForm = new FormData()
-  uploadForm.append('file', buffer, file.name)
+  uploadForm.append('file', buffer, extractedFilename)
 
   const apiKey = process.env.CLOUDMERSIVE_KEY
   if (!apiKey) {
