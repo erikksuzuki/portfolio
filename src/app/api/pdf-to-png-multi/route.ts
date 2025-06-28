@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
           ...uploadForm.getHeaders(),
           Authorization: `Bearer ${process.env.PSPDFKIT_API_KEY}`,
         },
-        responseType: 'arraybuffer',
+        responseType: 'stream',
       }
     )
 
