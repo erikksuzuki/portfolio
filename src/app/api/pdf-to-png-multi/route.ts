@@ -6,8 +6,6 @@ import axios from 'axios'
 export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
-  const contentType = request.headers.get('content-type') || ''
-
   const { base64, filename } = await request.json()
 
   const formData = await request.formData()
@@ -16,13 +14,13 @@ export async function POST(request: NextRequest) {
   let extractedFilename
   let buffer
 
-  if (contentType.includes('multipart/form-data') && file) {
+  if (!!base64 && !!filename) {
+    extractedFilename = filename
+    buffer = Buffer.from(base64, 'base64')
+  } else if (file) {
     extractedFilename = file.name
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
-  } else if (!!base64 && !!filename) {
-    extractedFilename = filename
-    buffer = Buffer.from(base64, 'base64')
   } else {
     throw new Error('No file or base64 provided')
   }
