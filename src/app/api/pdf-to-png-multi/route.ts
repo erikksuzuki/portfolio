@@ -9,6 +9,7 @@ import AdmZip from 'adm-zip'
 
 export async function POST(request: NextRequest) {
   let extractedFilename
+  let extractedSessionId
   const contentType = request.headers.get('content-type') || ''
 
   let buffer
@@ -17,13 +18,21 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     const file = formData.get('file') as File
     extractedFilename = file.name
+    extractedSessionId = randomUUID()
+
     if (!file) throw new Error('No file uploaded')
 
     const arrayBuffer = await file.arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
   } else {
-    const { base64, filename } = await request.json()
+    const {
+      base64,
+      filename,
+      sessionId: sessionIdFromRequest,
+    } = await request.json()
     extractedFilename = filename
+    extractedSessionId = sessionIdFromRequest
+
     buffer = Buffer.from(base64, 'base64')
   }
 
@@ -72,7 +81,7 @@ export async function POST(request: NextRequest) {
     // Return all images in an array
     const response = NextResponse.json({
       filename: extractedFilename,
-      sessionId: randomUUID(),
+      sessionId: extractedSessionId,
       zip: serviceResponse.data,
       // images, // Array of base64 PNGs, one per page
     })
