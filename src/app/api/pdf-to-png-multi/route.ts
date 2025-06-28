@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 import FormData from 'form-data'
+import axios from 'axios'
 
 export const runtime = 'nodejs'
 
@@ -15,38 +16,39 @@ export async function POST(request: NextRequest) {
   const arrayBuffer = await file.arrayBuffer()
   const buffer = Buffer.from(arrayBuffer)
   const uploadForm = new FormData()
-  uploadForm.append('file', buffer, file.name) // "file" is required!
+  uploadForm.append('file', buffer, file.name)
 
   const apiKey = process.env.CLOUDMERSIVE_KEY
   if (!apiKey) {
     return NextResponse.json({ error: 'No API key' }, { status: 500 })
   }
 
-  // Debug logs
-  console.log('Uploading file:', file.name, 'size:', buffer.length)
-  console.log('API key present:', !!apiKey)
+  // Use axios instead of fetch
+  try {
+    const cloudResponse = await axios.post(
+      'https://api.cloudmersive.com/convert/pdf/to/png',
+      uploadForm,
+      {
+        headers: {
+          ...uploadForm.getHeaders(),
+          Apikey: apiKey,
+        },
+      }
+    )
 
-  const resp = await fetch('https://api.cloudmersive.com/convert/pdf/to/png', {
-    method: 'POST',
-    headers: {
-      ...uploadForm.getHeaders(),
-      Apikey: apiKey,
-    },
-    body: uploadForm as any,
-  })
-
-  if (!resp.ok) {
-    const errText = await resp.text()
-    return NextResponse.json({ error: errText }, { status: resp.status })
+    return new NextResponse(cloudResponse.data, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/zip',
+        'Content-Disposition': `attachment; filename="pages_${randomUUID()}.zip"`,
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+  } catch (err: any) {
+    console.error(err.response?.data || err.message)
+    return NextResponse.json(
+      { error: err.response?.data || err.message },
+      { status: 500 }
+    )
   }
-
-  const zipBuffer = Buffer.from(await resp.arrayBuffer())
-  return new NextResponse(zipBuffer, {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/zip',
-      'Content-Disposition': `attachment; filename="pages_${randomUUID()}.zip"`,
-      'Access-Control-Allow-Origin': '*',
-    },
-  })
 }
