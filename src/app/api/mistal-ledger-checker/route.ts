@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Mistral } from '@mistralai/mistralai'
 
-export interface MistralDocumentRequest {
-  type: 'document_url'
-  documentUrl: string
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const body: MistralDocumentRequest = await request.json()
+    const { documentUrl } = await request.json()
 
     const apiKey = process.env.MISTRAL_API_KEY
     const client = new Mistral({ apiKey })
@@ -25,7 +20,7 @@ export async function POST(request: NextRequest) {
             },
             {
               type: 'document_url',
-              documentUrl: body.documentUrl,
+              documentUrl: documentUrl,
             },
           ],
         },
