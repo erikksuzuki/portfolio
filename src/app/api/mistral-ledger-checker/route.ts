@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 // import { Mistral } from '@mistralai/mistralai'
 
+export const runtime = 'nodejs'
 export async function POST(request: NextRequest) {
   const { documentUrl } = await request.json()
   try {
