@@ -32,10 +32,6 @@ export async function POST(request: NextRequest) {
 
     response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
-    response.headers.set(
-      'Access-Control-Allow-Headers',
-      'Content-Type, Authorization'
-    )
 
     return response
   } catch (err: any) {
@@ -44,11 +40,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
     response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
-    response.headers.set(
-      'Access-Control-Allow-Headers',
-      'Content-Type, Authorization'
-    )
+    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS')    response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
     return response
   }
 }
@@ -58,10 +50,6 @@ export async function OPTIONS(request: NextRequest) {
 
   response.headers.set('Access-Control-Allow-Origin', '*')
   response.headers.set('Access-Control-Allow-Methods', 'POST,OPTIONS')
-  response.headers.set(
-    'Access-Control-Allow-Headers',
-    'Content-Type, Authorization'
-  )
 
   return response
 }
