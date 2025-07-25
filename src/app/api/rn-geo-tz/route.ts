@@ -1,20 +1,25 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { find } from 'geo-tz'
+import { NextResponse } from 'next/server'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { lat, lon } = req.query
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const lat = parseFloat(searchParams.get('lat') || '')
+  const lon = parseFloat(searchParams.get('lon') || '')
 
-  if (!lat || !lon) {
-    return res.status(400).json({ error: 'Missing lat or lon' })
+  if (isNaN(lat) || isNaN(lon)) {
+    return NextResponse.json(
+      { error: 'Invalid or missing lat/lon' },
+      { status: 400 }
+    )
   }
 
-  const latitude = parseFloat(lat as string)
-  const longitude = parseFloat(lon as string)
-
   try {
-    const timezones = find(latitude, longitude) // returns an array
-    return res.status(200).json({ timezone: timezones[0] })
+    const timezones = find(lat, lon)
+    return NextResponse.json({ timezone: timezones[0] })
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to determine timezone' })
+    return NextResponse.json(
+      { error: 'Failed to determine timezone' },
+      { status: 500 }
+    )
   }
 }
