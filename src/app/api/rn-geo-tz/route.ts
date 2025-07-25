@@ -1,7 +1,6 @@
-import { find } from 'geo-tz'
-import { NextResponse } from 'next/server'
-
 export const runtime = 'nodejs'
+import { NextResponse } from 'next/server'
+import { find } from 'geo-tz'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
