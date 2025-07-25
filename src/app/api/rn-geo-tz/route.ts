@@ -15,11 +15,38 @@ export async function GET(req: Request) {
 
   try {
     const timezones = find(lat, lon)
-    return NextResponse.json({ timezone: timezones[0] })
+
+    const response = NextResponse.json({ timezone: timezones[0] })
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    response.headers.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    )
+    return response
   } catch (error) {
-    return NextResponse.json(
+    console.error(error)
+    const response = NextResponse.json(
       { error: 'Failed to determine timezone' },
       { status: 500 }
     )
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    response.headers.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    )
+    return response
   }
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
 }
