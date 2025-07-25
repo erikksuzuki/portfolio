@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const lat = parseFloat(searchParams.get('lat') || '')
-  const lon = parseFloat(searchParams.get('lon') || '')
+  const lat = Number(searchParams.get('lat') || '')
+  const lon = Number(searchParams.get('lon') || '')
 
   if (isNaN(lat) || isNaN(lon)) {
     return NextResponse.json(
