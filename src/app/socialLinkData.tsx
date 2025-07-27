@@ -40,7 +40,7 @@ export const socialLinkData: SocialLink[] = [
   },
   {
     name: 'Calendly',
-    href: 'https://calendly.com/erikksuzuki/one-hour-block',
+    href: 'https://calendly.com/erikksuzuki/generic-meeting',
     icon: <IconCalendly className="w-6 h-6 hover:text-[#DDDDDD]" />,
   },
 ]
